@@ -1,70 +1,122 @@
-# Getting Started with Create React App
+# 📖 Project Title
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 🌏 프로젝트 개요
 
-## Available Scripts
 
-In the project directory, you can run:
+## 🚀 프로젝트 목표
 
-### `npm start`
+- 팀원 간의 원활한 소통과 협업을 통해 프로젝트를 완성
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 📕 서비스 기능
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- 사용자 회원가입 및 로그인 
 
-### `npm test`
+## 🖥️ 기술 스택
+<img src="https://img.shields.io/badge/visualstudiocode-007ACC?style=flat-square&logo=visualstudiocode&logoColor=white"/>
+<img src="https://img.shields.io/badge/gitlab-FC6D26?style=flat-square&logo=gitlab&logoColor=white"/>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 💻 Frontend
 
-### `npm run build`
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=white"/>
+<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=CSS3&logoColor=white"/>
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat-square&logo=javascript&logoColor=white"/>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### ⌨️ Backend
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=Node.js&logoColor=white"/>
+<img src="https://img.shields.io/badge/postman-FF6C37?style=flat-square&logo=postman&logoColor=white"/>
+<img src="https://img.shields.io/badge/mongoose-880000?style=flat-square&logo=mongoose&logoColor=white"/>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### ☁️ Cloud Server
 
-### `npm run eject`
+<img src="https://img.shields.io/badge/amazonAWS-232F3E?style=flat-square&logo=amazonAWS&logoColor=white"/>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 📝 dependencies
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.0",
+    "multer": "^1.4.5-lts.1",
+    
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 📂 Directory 
+```
+src
+├── constrollers
+│   ├── adminController.js
+│   ├── authController.js
+│   ├── categoryController.js
+│   ├── orderController.js
+│   ├── productController.js
+│   └── userController.js
+├── middlewares
+│   └── validators
+│       ├── auth.js
+│       ├── objectId.js
+│       ├── order.js
+│       ├── product.js
+│       ├── user.js
+│       ├── validateError.js
+│       └── index.js
+│   ├── isAdmin.js
+│   └── isAuthenticated.js
+├── models
+│   └── schemas
+│       ├── category.js
+│       ├── order.js
+│       ├── product.js
+│       ├── user.js
+│       └── index.js
+│   └── index.js
+├── routes
+│   └── v1
+│       └── admin
+│           ├── adminCategoryRouter.js
+│           ├── adminOrderRouter.js
+│           ├── adminProductRouter.js
+│           ├── amdinUserRouter.js
+│           └── index.js
+│       ├── authRouter.js
+│       ├── categoryRouter.js
+│       ├── orderRouter.js
+│       ├── productRouter.js
+│       ├── uploadRouter.js
+│       ├── userRouter.js
+│       └── index.js
+│   └── index.js
+├── services
+│       ├── adminService.js
+│       ├── authService.js
+│       ├── categoryService.js
+│       ├── orderService.js
+│       ├── productService.js
+│       └── userService.js
+├── utils
+│       ├── asyncHandler.js
+│       └── hash-password.js
+├── views
+└── app.js
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 🕑개발 기간
+2023.12.11 ~ 2023.12.30
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20230301/u1f60b/u1f60b_u1f430.png?fbx" width="150px;" alt=""/><br /><sub><b>프론트엔드 팀장 : </b></sub></a><br /></td>
+      <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20201001/u1f994/u1f994_u1f30d.png?fbx" width="150px;" alt=""/><br /><sub><b>프론트엔드 팀원 : </b></sub></a><br /></td>
+      <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20230803/u1f438/u1f438_u1f30d.png?fbx" width="150px;" alt=""/><br /><sub><b>프론트엔드 팀원 : </b></sub></a><br /></td>
+      <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20201001/u1f9a5/u1f9a5_u1f30d.png?fbx" width="150px;" alt=""/><br /><sub><b>프론트엔드 팀원 : </b></sub></a><br /></td>
+            <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20210831/u1f43b/u1f43b_u1f3a7.png?fbx" width="150px;" alt=""/><br /><sub><b>백엔드 팀장 : </b></sub></a><br /></td>
+      <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20230803/u1f438/u1f438_u1f436.png?fbx" width="150px;" alt=""/><br /><sub><b>백엔드 팀원 : </b></sub></a><br /></td>
+     </tr>
+  </tbody>
+</table>
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+라이센스
+Copyright © 2023
