@@ -25,7 +25,7 @@
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
-  "proxy": "http://localhost:8080",
+  "proxy": "http://localhost:3000",
   "scripts": {
     "start": "react-scripts --max-http-header-size=1024 start",
     "build": "react-scripts build",
@@ -49,5 +49,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "css-loader": "^6.8.1",
+    "postcss": "^8.4.32",
+    "postcss-loader": "^7.3.3",
+    "style-loader": "^3.3.3",
+    "tailwindcss": "^3.3.6"
   }
 }
