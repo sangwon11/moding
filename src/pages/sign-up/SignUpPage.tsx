@@ -7,88 +7,108 @@ import Postcode from "../hooks/DaumPostPopUp";
 interface SignUpPageProps {}
 
 const SignUpPage: React.FC<SignUpPageProps> = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const [emailReg, setEmailReg] = useState<string>("");
-    const [passwordReg, setPasswordReg] = useState<string>("");
-    const [userNameReg, setUserNameReg] = useState<string>("");
-    const [phoneNumberReg, setPhoneNumberReg] = useState<string>("");
-    const [postcodeReg, setPostcodeReg] = useState<string>("");
-    const [addressReg, setAddressReg] = useState<string>("");
-    const [addressDetailReg, setAddressDetailReg] = useState<string>("");
+  const [emailReg, setEmailReg] = useState<string>("");
+  const [passwordReg, setPasswordReg] = useState<string>("");
+  const [userNameReg, setUserNameReg] = useState<string>("");
+  const [phoneNumberReg, setPhoneNumberReg] = useState<string>("");
+  const [postcodeReg, setPostcodeReg] = useState<string>("");
+  const [addressReg, setAddressReg] = useState<string>("");
+  const [addressDetailReg, setAddressDetailReg] = useState<string>("");
 
-    const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {setEmailReg(e.target.value);};
-    const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {setPasswordReg(e.target.value);};
-    const onChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {setUserNameReg(e.target.value);};
-    const onChangePhoneNumber = (e: React.ChangeEvent<HTMLInputElement>) => {setPhoneNumberReg(e.target.value.replace(/[^0-9]/g, ""));};
-    const onChangePostcode = (postcode: string) => {setPostcodeReg(postcode);};
-    const onChangeAddress = (address: string) => {setAddressReg(address);};
-    const onChangeAddressDetail = (e: React.ChangeEvent<HTMLInputElement>) => {setAddressDetailReg(e.target.value);};
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmailReg(e.target.value);
+  };
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPasswordReg(e.target.value);
+  };
+  const onChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserNameReg(e.target.value);
+  };
+  const onChangePhoneNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhoneNumberReg(e.target.value.replace(/[^0-9]/g, ""));
+  };
+  const onChangePostcode = (postcode: string) => {
+    setPostcodeReg(postcode);
+  };
+  const onChangeAddress = (address: string) => {
+    setAddressReg(address);
+  };
+  const onChangeAddressDetail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAddressDetailReg(e.target.value);
+  };
 
-    const insertData = async () => {
-        try {
-            const response = await axios.post("/api/v1/auth/sign-up", {
-                email: emailReg,
-                password: passwordReg,
-                username: userNameReg,
-                phoneNumber: phoneNumberReg,
-                postCode: postcodeReg,
-                address: addressReg,
-                addressDetail: addressDetailReg,
-            });
-            console.log(response);
-            } catch (error) {
-            console.log(error);
-        }
-    };
+  const insertData = async () => {
+    try {
+      const response = await axios.post("/api/v1/auth/sign-up", {
+        email: emailReg,
+        password: passwordReg,
+        username: userNameReg,
+        phoneNumber: phoneNumberReg,
+        postCode: postcodeReg,
+        address: addressReg,
+        addressDetail: addressDetailReg,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    const ConfirmAlert = () => {
-        if (window.confirm("추가하시겠습니까?")) {
-        insertData();
-        navigate("/");
-        } else {
-        return;
-        }
-    };
+  const ConfirmAlert = () => {
+    if (window.confirm("추가하시겠습니까?")) {
+      insertData();
+      navigate("/");
+    } else {
+      return;
+    }
+  };
 
   return (
     <Container>
       <MarkUp>회원추가</MarkUp>
       <GridTable>
         <GridCell>
-            <Tag>이메일</Tag>
-            <InputBox onChange={onChangeEmail} value={emailReg} />
+          <Tag>이메일</Tag>
+          <InputBox onChange={onChangeEmail} value={emailReg} />
         </GridCell>
 
         <GridCell>
-            <Tag>비밀번호</Tag>
-            <InputBox onChange={onChangePassword} value={passwordReg} />
+          <Tag>비밀번호</Tag>
+          <InputBox onChange={onChangePassword} value={passwordReg} />
         </GridCell>
 
         <GridCell>
-            <Tag>이름</Tag>
-            <InputBox onChange={onChangeUserName} value={userNameReg} />
+          <Tag>이름</Tag>
+          <InputBox onChange={onChangeUserName} value={userNameReg} />
         </GridCell>
 
         <GridCell>
-            <Tag>전화번호</Tag>
-            <InputBox onChange={onChangePhoneNumber} value={phoneNumberReg} maxLength={15}/>
+          <Tag>전화번호</Tag>
+          <InputBox
+            onChange={onChangePhoneNumber}
+            value={phoneNumberReg}
+            maxLength={15}
+          />
         </GridCell>
 
         <GridCell>
-            <AddressBox>
-                <Tag>주소,우편번호</Tag>
-                <Postcode onChangeAddress={onChangeAddress} onChangePostcode={onChangePostcode}/>
-            </AddressBox>
-            <InputBox value={postcodeReg} />
-            <InputBox value={addressReg} />
+          <AddressBox>
+            <Tag>주소,우편번호</Tag>
+            <Postcode
+              onChangeAddress={onChangeAddress}
+              onChangePostcode={onChangePostcode}
+            />
+          </AddressBox>
+          <InputBox value={postcodeReg} />
+          <InputBox value={addressReg} />
         </GridCell>
 
-          <GridCell>
-            <Tag>상세주소</Tag>
-            <InputBox
-              onChange={onChangeAddressDetail} value={addressDetailReg}/>
-          </GridCell>
+        <GridCell>
+          <Tag>상세주소</Tag>
+          <InputBox onChange={onChangeAddressDetail} value={addressDetailReg} />
+        </GridCell>
 
         <SubmitBtn onClick={ConfirmAlert}>추가</SubmitBtn>
       </GridTable>
@@ -158,24 +178,24 @@ const InputBox = styled.input`
     ${checkInputLengthFocus};
   }
 `;
-const SelectBox = styled.select`
-  border: solid 1px black;
-  position: relative;
-  width: 105%;
-  font-size: 1rem;
-  border-radius: 4px;
-  flex-grow: 1;
-  height: 3rem;
-  outline: none;
-  overflow: hidden;
-  padding: 0;
-  padding-inline-end: 0.5rem;
-  padding-inline-start: 0.5rem;
-  background: none;
-  &:focus {
-    outline: none;
-  }
-`;
+// const SelectBox = styled.select`
+//   border: solid 1px black;
+//   position: relative;
+//   width: 105%;
+//   font-size: 1rem;
+//   border-radius: 4px;
+//   flex-grow: 1;
+//   height: 3rem;
+//   outline: none;
+//   overflow: hidden;
+//   padding: 0;
+//   padding-inline-end: 0.5rem;
+//   padding-inline-start: 0.5rem;
+//   background: none;
+//   &:focus {
+//     outline: none;
+//   }
+// `;
 const AddressBox = styled.div`
   display: inline-flex;
   padding: 0px;

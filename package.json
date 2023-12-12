@@ -20,6 +20,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.1",
     "react-scripts": "5.0.1",
+    "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.1",
     "ts-node": "^10.9.2",
     "typescript": "^4.9.5",
@@ -51,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-slick": "^0.23.12",
     "autoprefixer": "^10.4.16",
     "css-loader": "^6.8.1",
     "postcss": "^8.4.32",
