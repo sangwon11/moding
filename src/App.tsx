@@ -7,11 +7,11 @@ import Header from './components/Header';
 function App() {
   return (
     <BrowserRouter>
-      <div>
+      <div className='bg-[#03000C] v-screen h-screen'>
       <Header>
         <Routes>
-        <Route path="/" element={<MainPage />} />
-          <Route path="/sign-up" element={<SignUpPage />} />
+          <Route path="/asd" element={<MainPage />} />
+          <Route path="/" element={<SignUpPage />} />
         </Routes>
         </Header>
       </div>

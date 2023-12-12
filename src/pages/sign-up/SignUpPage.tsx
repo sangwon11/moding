@@ -6,7 +6,7 @@ import Postcode from "../hooks/DaumPostPopUp";
 
 interface SignUpPageProps {}
 
-const SignUpPage: React.FC<SignUpPageProps> = () => {
+const SignUpPage = (props: SignUpPageProps) => {
     const navigate = useNavigate();
 
     const [emailReg, setEmailReg] = useState<string>("");

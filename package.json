@@ -53,6 +53,7 @@
   "devDependencies": {
     "autoprefixer": "^10.4.16",
     "css-loader": "^6.8.1",
+    "nodemon": "^3.0.2",
     "postcss": "^8.4.32",
     "postcss-loader": "^7.3.3",
     "style-loader": "^3.3.3",

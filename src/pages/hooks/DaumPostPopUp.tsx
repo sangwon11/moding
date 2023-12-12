@@ -2,7 +2,12 @@ import React from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import styled from 'styled-components';
 
-function Postcode(props: any) {
+interface PostcodProps{
+  onChangePostcode: (address: string) => void,
+  onChangeAddress: (address: string) => void,
+}
+
+const Postcode = (props: PostcodProps) => {
   const open = useDaumPostcodePopup("https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js");
 
   const handleComplete = (data: any) => {
