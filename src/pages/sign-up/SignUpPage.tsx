@@ -178,24 +178,26 @@ const InputBox = styled.input`
     ${checkInputLengthFocus};
   }
 `;
-// const SelectBox = styled.select`
-//   border: solid 1px black;
-//   position: relative;
-//   width: 105%;
-//   font-size: 1rem;
-//   border-radius: 4px;
-//   flex-grow: 1;
-//   height: 3rem;
-//   outline: none;
-//   overflow: hidden;
-//   padding: 0;
-//   padding-inline-end: 0.5rem;
-//   padding-inline-start: 0.5rem;
-//   background: none;
-//   &:focus {
-//     outline: none;
-//   }
-// `;
+// 또는 ESLint 경고 무시
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const SelectBox = styled.select`
+  border: solid 1px black;
+  position: relative;
+  width: 105%;
+  font-size: 1rem;
+  border-radius: 4px;
+  flex-grow: 1;
+  height: 3rem;
+  outline: none;
+  overflow: hidden;
+  padding: 0;
+  padding-inline-end: 0.5rem;
+  padding-inline-start: 0.5rem;
+  background: none;
+  &:focus {
+    outline: none;
+  }
+`;
 const AddressBox = styled.div`
   display: inline-flex;
   padding: 0px;

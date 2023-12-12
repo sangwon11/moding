@@ -88,64 +88,85 @@ const MainPage: React.FC = () => {
               <div className="flex flex-wrap -mx-2">
                 <div className="w-1/3 px-2 mb-4">
                   <img
-                    src="/path/to/image1.jpg"
+                    src="/images/computer.jpg"
                     alt="추천상품 1"
                     className="w-full h-auto object-cover"
                   />
                 </div>
                 <div className="w-1/3 px-2 mb-4">
                   <img
-                    src="/path/to/image2.jpg"
+                    src="/images/computer.jpg"
                     alt="추천상품 2"
                     className="w-full h-auto object-cover"
                   />
                 </div>
                 <div className="w-1/3 px-2 mb-4">
                   <img
-                    src="/path/to/image3.jpg"
+                    src="/images/computer.jpg"
                     alt="추천상품 3"
                     className="w-full h-auto object-cover"
                   />
                 </div>
                 <div className="w-1/3 px-2 mb-4">
                   <img
-                    src="/path/to/image3.jpg"
+                    src="/images/computer.jpg"
                     alt="추천상품 4"
                     className="w-full h-auto object-cover"
                   />
                 </div>
                 <div className="w-1/3 px-2 mb-4">
                   <img
-                    src="/path/to/image3.jpg"
+                    src="/images/computer.jpg"
                     alt="추천상품 5"
                     className="w-full h-auto object-cover"
                   />
                 </div>
                 <div className="w-1/3 px-2 mb-4">
                   <img
-                    src="/path/to/image3.jpg"
+                    src="/images/computer.jpg"
                     alt="추천상품 6"
                     className="w-full h-auto object-cover"
                   />
                 </div>
                 <div className="w-1/3 px-2 mb-4">
                   <img
-                    src="/path/to/image3.jpg"
+                    src="/images/computer.jpg"
                     alt="추천상품 7"
                     className="w-full h-auto object-cover"
                   />
                 </div>
                 <div className="w-1/3 px-2 mb-4">
                   <img
-                    src="/path/to/image3.jpg"
+                    src="/images/computer.jpg"
                     alt="추천상품 8"
                     className="w-full h-auto object-cover"
                   />
                 </div>
                 <div className="w-1/3 px-2 mb-4">
                   <img
-                    src="/path/to/image3.jpg"
+                    src="/images/computer.jpg"
                     alt="추천상품 9"
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+                <div className="w-1/3 px-2 mb-4">
+                  <img
+                    src="/images/computer.jpg"
+                    alt="추천상품 10"
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+                <div className="w-1/3 px-2 mb-4">
+                  <img
+                    src="/images/computer.jpg"
+                    alt="추천상품 11"
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+                <div className="w-1/3 px-2 mb-4">
+                  <img
+                    src="/images/computer.jpg"
+                    alt="추천상품 12"
                     className="w-full h-auto object-cover"
                   />
                 </div>
@@ -158,21 +179,21 @@ const MainPage: React.FC = () => {
               <div className="flex flex-wrap -mx-2">
                 <div className="w-1/3 px-2 mb-4">
                   <img
-                    src="/path/to/image1.jpg"
+                    src="/images/all.jpg"
                     alt="인기상승 1"
                     className="w-full h-auto object-cover"
                   />
                 </div>
                 <div className="w-1/3 px-2 mb-4">
                   <img
-                    src="/path/to/image2.jpg"
+                    src="/images/all.jpg"
                     alt="인기상승 2"
                     className="w-full h-auto object-cover"
                   />
                 </div>
                 <div className="w-1/3 px-2 mb-4">
                   <img
-                    src="/path/to/image3.jpg"
+                    src="/images/all.jpg"
                     alt="인기상승 3"
                     className="w-full h-auto object-cover"
                   />
@@ -186,21 +207,21 @@ const MainPage: React.FC = () => {
               <div className="flex flex-wrap -mx-2">
                 <div className="w-1/3 px-2 mb-4">
                   <img
-                    src="/path/to/image1.jpg"
+                    src="/images/console.jpg"
                     alt="펀딩랭킹 1"
                     className="w-full h-auto object-cover"
                   />
                 </div>
                 <div className="w-1/3 px-2 mb-4">
                   <img
-                    src="/path/to/image2.jpg"
+                    src="/images/console.jpg"
                     alt="펀딩랭킹 2"
                     className="w-full h-auto object-cover"
                   />
                 </div>
                 <div className="w-1/3 px-2 mb-4">
                   <img
-                    src="/path/to/image3.jpg"
+                    src="/images/console.jpg"
                     alt="펀딩랭킹 3"
                     className="w-full h-auto object-cover"
                   />
