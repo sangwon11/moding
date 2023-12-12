@@ -10,8 +10,8 @@ function App() {
       <div className='bg-[#03000C] v-screen h-screen'>
         <Header />
         <Routes>
-          <Route path="/asd" element={<MainPage />} />
-          <Route path="/" element={<SignUpPage />} />
+          <Route path="/" element={<MainPage />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
         </Routes>
       </div>
     </BrowserRouter>
