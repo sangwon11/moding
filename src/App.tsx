@@ -8,12 +8,11 @@ function App() {
   return (
     <BrowserRouter>
       <div className='bg-[#03000C] v-screen h-screen'>
-      <Header>
+        <Header />
         <Routes>
           <Route path="/asd" element={<MainPage />} />
           <Route path="/" element={<SignUpPage />} />
         </Routes>
-        </Header>
       </div>
     </BrowserRouter>
   );
