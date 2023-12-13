@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 import userSchema from "./schemas/user";
+import fundingSchema from "./schemas/funding";
 
-const userModel = mongoose.model('user', userSchema);
+const userModel = mongoose.model("user", userSchema);
 
-export default userModel;
+const fundingModel = mongoose.model("funding", fundingSchema);
+
+export default { userModel, fundingModel };
