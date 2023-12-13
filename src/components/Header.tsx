@@ -6,7 +6,7 @@ interface HeaderProps {}
 const Header = (props: HeaderProps) => {
   const navigate = useNavigate();
 
-  const [userState, setUserState] = useState<string>("Logo");
+  const [userState, setUserState] = useState<string>("Logout");
   const [navState, setNavState] = useState<string>("Nav");
   const [searchInput, setSearchInput] = useState<string>("");
 
@@ -41,7 +41,7 @@ const Header = (props: HeaderProps) => {
       <div className="text-3xl font-bold w-1/12">Logo</div>
 
       {/*Nav and Search*/}
-      <div className="flex w-9/12 mx-12 justify-between items-center">
+      <div className="flex w-9/12 mx-12 justify-between items-center ">
 
         {/*Nav*/}
         <nav

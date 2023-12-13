@@ -7,7 +7,7 @@ import Header from './components/Header';
 function App() {
   return (
     <BrowserRouter>
-      <div className='bg-[#03000C] v-screen h-screen'>
+      <div className='scrollbar bg-[#03000C] v-screen min-h-screen h-auto'>
         <Header />
         <Routes>
           <Route path="/" element={<MainPage />} />
