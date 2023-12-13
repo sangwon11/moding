@@ -7,6 +7,11 @@ const fundingSchema = new Schema(
       required: true,
       ref: "User",
     },
+    category: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "Category",
+    },
     goalAmount: {
       type: Number,
       required: true,

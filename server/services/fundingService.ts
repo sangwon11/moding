@@ -3,101 +3,39 @@ import CustomError from "../utils/customError";
 
 const { fundingModel } = models;
 
+// 필터링 조건을 정의하는 타입 또는 인터페이스를 생성합니다.
+export interface FundingFilter {
+  categoryId?: string;
+  startDate?: string;
+  endDate?: string;
+}
+
 const fundingService = {
-  // 펀딩 랭킹
-  async getFundingRankingByAchievement() {
+  async getAllFundings({ categoryId, startDate, endDate }: FundingFilter) {
     try {
-      const fundings = await fundingModel.find().lean().exec();
+      const query: any = {};
 
-      const fundingsWithAchievement = fundings.map((funding) => {
-        const achievement = (funding.currentAmount / funding.goalAmount) * 100;
-        return { ...funding, achievement };
-      });
-
-      const sortedFundings = fundingsWithAchievement.sort(
-        (a, b) => b.achievement - a.achievement
-      );
-
-      return sortedFundings;
-    } catch (error) {
-      // 'error'가 'Error' 인스턴스인지 확인합니다.
-      if (error instanceof Error) {
-        console.error(`Error fetching funding ranking: ${error.message}`);
-        throw new CustomError(
-          `Error fetching funding ranking: ${error.message}`,
-          500
-        );
-      } else {
-        // 'error'가 'Error' 타입이 아니라면, 일반적인 오류 메시지를 생성합니다.
-        console.error("An unknown error occurred.");
-        throw new CustomError("An unknown error occurred.", 500);
+      if (categoryId) {
+        query.categoryId = categoryId;
       }
-    }
-  },
-  async getPopularity() {
-    try {
-      const fundings = await fundingModel.find().lean().exec();
 
-      const popularityData = fundings.map((funding) => {
-        const popularity = funding.currentAmount;
-        return { ...funding, popularity };
-      });
-
-      popularityData.sort((a, b) => b.popularity - a.popularity);
-
-      return popularityData;
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error(
-          `Error calculating popularity by currentAmount: ${error.message}`
-        );
-        throw new CustomError(
-          `Error calculating popularity by currentAmount: ${error.message}`,
-          500
-        );
-      } else {
-        console.error("An unknown error occurred.");
-        throw new CustomError("An unknown error occurred.", 500);
+      if (startDate && endDate) {
+        query.createdAt = {
+          $gte: new Date(startDate),
+          $lte: new Date(endDate),
+        };
       }
-    }
-  },
-  async getUpcoming() {
-    try {
-      const currentDate = new Date();
 
-      const fundings = await fundingModel.find({
-        startDate: { $gt: currentDate },
-      });
-
+      const fundings = await fundingModel.find(query).lean();
       return fundings;
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error(`Error getting upcoming popularity: ${error.message}`);
-        throw new CustomError(
-          `Error getting upcoming popularity: ${error.message}`,
-          500
-        );
-      }
-    }
-  },
-  async getPreorderFundings() {
-    try {
-      const prerorderFundings = await fundingModel.find({
-        preorder: true,
-      });
-
-      return prerorderFundings;
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error(`Error getting preorder fundings: ${error.message}`);
-        throw new CustomError(
-          `Error getting preorder fundings: ${error.message}`,
-          500
-        );
-      } else {
-        console.error("An unknown error occurred.");
-        throw new CustomError("An unknown error occurred.", 500);
-      }
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      console.error(`Error fetching filtered fundings: ${errorMessage}`);
+      throw new CustomError(
+        `Error fetching filtered fundings: ${errorMessage}`,
+        500
+      );
     }
   },
 };
