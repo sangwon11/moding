@@ -49,7 +49,7 @@ function SignUpPage() {
       });
       if (response.status === 201) {
         window.alert("성공적으로 가입되었습니다.");
-      } else if (response.status === 406) {
+      } else if (response.status === 409) {
         window.alert("이미 존재하는 이메일입니다.");
       } else {
         navigate("/404");
