@@ -106,14 +106,14 @@ const Header = (props: HeaderProps) => {
       </div>
 
       {/*Gnb*/}
-      <div className="flex w-2/12 min-w-fit text-lg text-center space-x-2 justify-between">
+      <div className="flex w-2/12 min-w-fit text-lg font-bold text-center space-x-2 justify-between">
         {userState === "Logout" ? (
           <>
-            <button className="bg-[#D9D9D9]/[.1] w-32 h-12 rounded-3xl font-bold">
+            <button className="bg-[#D9D9D9]/[.1] w-32 h-12 rounded-3xl">
               로그인
             </button>
             <button
-              className="bg-[#D9D9D9]/[.1] w-32 h-12 rounded-3xl font-bold"
+              className="bg-[#D9D9D9]/[.1] w-32 h-12 rounded-3xl"
               onClick={() => navigate("/sign-up")}
             >
               회원가입

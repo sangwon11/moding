@@ -1,6 +1,4 @@
-import React from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import styled from 'styled-components';
 
 interface PostcodProps{
   onChangePostcode: (address: string) => void,

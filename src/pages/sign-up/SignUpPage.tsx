@@ -71,10 +71,16 @@ function SignUpPage() {
 
   return (
     <div className="py-28 flex flex-col items-center">
-      <div className="flex justify-between w-[600px]">
-        <div className="bg-[#D9D9D9]/[.1] w-[150px] h-[52px] pb-8 rounded-[24px]"></div>
-        <div className="w-[240px] h-[60px] rounded-tr-[24px] border-b-[60px] border-b-[#D9D9D9]/[.1] border-r-[60px] border-r-[#D9D9D9]/[.1] border-l-[60px] border-l-transparent"></div>
+      {/*nav*/}
+      <div className="flex justify-between w-[600px] text-lg font-bold text-white text-center">
+        {/*nav left*/}
+        <button className="bg-[#D9D9D9]/[.1] w-[150px] h-[52px] rounded-[24px]">로그인</button>
+        {/*nav right*/}
+        <div className="w-[240px] h-[60px] rounded-tr-[24px] border-b-[60px] border-b-[#D9D9D9]/[.1] border-r-[60px] border-r-[#D9D9D9]/[.1] border-l-[60px] border-l-transparent">
+          <button className="w-[150px] h-[52px]" >회원가입</button>
+        </div>
       </div>
+      {/*회원가입*/}
       <div className="bg-[#D9D9D9]/[.1] w-[600px] h-[800px] text-white text-lg font-bold rounded-[24px] rounded-tr-[0px] flex flex-col space-y-8 justify-center items-center">
         <input
           className="bg-[#D9D9D9]/[.1] w-[400px] h-14 ps-8 pe-8 outline-none rounded-[24px] placeholder:text-white/[0.5]"
