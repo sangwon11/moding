@@ -24,7 +24,6 @@ const authController = {
       });
     } catch (error) {
       if (error instanceof CustomError) {
-        console.log(error)
         res.status(error.status).json({
           error: {
             message: error.message,

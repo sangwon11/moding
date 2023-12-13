@@ -3,9 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Postcode from "../hooks/DaumPostPopUp";
 
-interface SignUpPageProps {}
-
-const SignUpPage = (props: SignUpPageProps) => {
+function SignUpPage() {
   const navigate = useNavigate();
 
   const [emailReg, setEmailReg] = useState<string>("");
@@ -49,9 +47,16 @@ const SignUpPage = (props: SignUpPageProps) => {
         address: addressReg,
         addressDetail: addressDetailReg,
       });
-      console.log(response);
+      if (response.status === 201) {
+        window.alert("성공적으로 가입되었습니다.");
+      } else if (response.status === 406) {
+        window.alert("이미 존재하는 이메일입니다.");
+      } else {
+        navigate("/404");
+      }
     } catch (error) {
       console.log(error);
+      navigate("/404");
     }
   };
 
