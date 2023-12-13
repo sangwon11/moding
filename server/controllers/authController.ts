@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
-import authService from '../services/authService';
-import CustomError from '../utils/customError';
+import { Request, Response } from "express";
+import authService from "../services/authService";
+import CustomError from "../utils/customError";
 
 interface SignUpParams {
   email: string;
@@ -35,11 +35,31 @@ const authController = {
         // 다른 예외 처리
         res.status(500).json({
           error: {
-            message: 'Internal Server Error',
+            message: "Internal Server Error",
             status: 500,
           },
           data: null,
         });
+      }
+    }
+  },
+  async authSignIn(req: Request, res: Response) {
+    try {
+      const { email, password } = req.body;
+      if (!email || !password) {
+        return res
+          .status(400)
+          .json({ error: "Email and password are required." });
+      }
+
+      const result = await authService.SignIn({ email, password });
+
+      res.status(200).json(result);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        res.status(error.status).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "An unknown error occurred" });
       }
     }
   },

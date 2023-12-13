@@ -5,6 +5,7 @@
   "dependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/jest": "^27.5.2",
+    "@types/jsonwebtoken": "^9.0.5",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^16.18.68",
     "@types/react": "^18.2.43",
@@ -14,6 +15,7 @@
     "body-parser": "^1.20.2",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.3",
     "react": "^18.2.0",
     "react-daum-postcode": "^3.1.3",
