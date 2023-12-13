@@ -65,9 +65,12 @@ const SignUpPage = (props: SignUpPageProps) => {
   };
 
   return (
-    <div className="py-28 flex justify-center">
-      <div></div>
-      <div className="bg-[#D9D9D9]/[.1] w-[600px] h-[800px] text-white text-lg font-bold rounded-[24px] flex flex-col space-y-8 justify-center items-center">
+    <div className="py-28 flex flex-col items-center">
+      <div className="flex justify-between w-[600px]">
+        <div className="bg-[#D9D9D9]/[.1] w-[150px] h-[52px] pb-8 rounded-[24px]"></div>
+        <div className="w-[240px] h-[60px] rounded-tr-[24px] border-b-[60px] border-b-[#D9D9D9]/[.1] border-r-[60px] border-r-[#D9D9D9]/[.1] border-l-[60px] border-l-transparent"></div>
+      </div>
+      <div className="bg-[#D9D9D9]/[.1] w-[600px] h-[800px] text-white text-lg font-bold rounded-[24px] rounded-tr-[0px] flex flex-col space-y-8 justify-center items-center">
         <input
           className="bg-[#D9D9D9]/[.1] w-[400px] h-14 ps-8 pe-8 outline-none rounded-[24px] placeholder:text-white/[0.5]"
           placeholder="이메일 입력"

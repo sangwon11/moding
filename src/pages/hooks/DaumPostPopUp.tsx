@@ -39,17 +39,3 @@ const Postcode = (props: PostcodProps) => {
 };
 
 export default Postcode;
-
-const SearchAddressBtn = styled.button`
-    align-items: center;
-    border-radius: 4px;
-    justify-content: center;
-    width: 80px;
-    border: none;
-    background-color: #0058a3;
-    color: white;
-    cursor: pointer;
-    margin: 0 0 0 15px;
-    height: 80%;
-
-`
