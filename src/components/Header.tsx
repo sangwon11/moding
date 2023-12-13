@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {}
 
-const Header = (props: HeaderProps) => {
+function Header(props: HeaderProps){
   const navigate = useNavigate();
 
   const [userState, setUserState] = useState<string>("Logout");
