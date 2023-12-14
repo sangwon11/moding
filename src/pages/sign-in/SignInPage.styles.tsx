@@ -22,11 +22,11 @@ export const NavLeftButton = tw.button`
 `;
 
 export const NavRightContainer = tw.div`
-bg-[#D9D9D9]/[.1]  w-[150px] h-[52px] rounded-[24px] border-t-[10px]
+    bg-[#D9D9D9]/[.1]  w-[150px] h-[52px] rounded-[24px]
 `;
 
 export const NavRightButton = tw(Link)<NavLinkProps>`
-  w-[150px] h-[52px] 
+  w-[150px] h-[52px] flex items-center justify-center
 `;
 
 export const StyledForm = tw.div`
