@@ -1,7 +1,7 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import SignUpPage from "./pages/sign-up/SignUpPage";
 import MainPage from "./pages/main/MainPage";
-import Header from "./components/Header";
+import Header from "./components/header/Header";
 import ErrorPage from "./pages/Error/ErrorPage";
 import Main from "./pages/hooks/custompopup/main";
 

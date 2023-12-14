@@ -6,9 +6,9 @@ interface HeaderProps {}
 function Header(props: HeaderProps){
   const navigate = useNavigate();
 
-  const [userState, setUserState] = useState<string>("Logout");
-  const [navState, setNavState] = useState<string>("Nav");
-  const [searchInput, setSearchInput] = useState<string>("");
+  const [userState, setUserState] = useState("Logout");
+  const [navState, setNavState] = useState("Nav");
+  const [searchInput, setSearchInput] = useState("");
 
   const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value);
@@ -62,7 +62,7 @@ function Header(props: HeaderProps){
             <img
               className="w-8"
               alt=""
-              src={require("../assets/svg/menu_icon.svg").default}
+              src={require("../../assets/svg/menu_icon.svg").default}
             ></img>
           </button>
           {navItems.map((item, index) => (
@@ -87,10 +87,10 @@ function Header(props: HeaderProps){
           }`}
         >
           <input
-            className={`bg-transparent text-xl transition-all outline-none ease-in duration-1000 ${
+            className={`bg-transparent text-xl transition-all outline-none ease-in ${
               navState === "Nav"
-                ? "invisible w-0 duration-0"
-                : "visible w-[520px] mx-8"
+                ? "invisible w-[0px] duration-100"
+                : "visible w-[520px] mx-8 duration-1000"
             }`}
             value={searchInput}
             onChange={onChangeSearchInput}
@@ -99,7 +99,7 @@ function Header(props: HeaderProps){
             <img
               className="w-10"
               alt=""
-              src={require("../assets/svg/search_icon.svg").default}
+              src={require("../../assets/svg/search_icon.svg").default}
             ></img>
           </button>
         </div>
@@ -125,14 +125,14 @@ function Header(props: HeaderProps){
             <img
               className="w-8 m-auto"
               alt=""
-              src={require("../assets/svg/heart_icon.svg").default}
+              src={require("../../assets/svg/heart_icon.svg").default}
             ></img>
           </button>
 					<button className="bg-[#D9D9D9]/[.1] w-14 h-12 rounded-3xl" onClick={searchFunction}>
             <img
               className="w-8 m-auto"
               alt=""
-              src={require("../assets/svg/user_icon.svg").default}
+              src={require("../../assets/svg/user_icon.svg").default}
             ></img>
           </button>
             <button

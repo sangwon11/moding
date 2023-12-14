@@ -31,7 +31,7 @@ const Postcode = (props: PostcodProps) => {
   };
 
   return (
-    <button className='bg-[#788FE2] w-[180px] h-14 ps-8 pe-8 outline-none rounded-[24px]' onClick={handleClick}>주소검색
+    <button className='bg-[#788FE2] w-[180px] h-14 ps-8 pe-8 outline-none font-bold rounded-[24px]' onClick={handleClick}>주소검색
     </button>
   );
 };
