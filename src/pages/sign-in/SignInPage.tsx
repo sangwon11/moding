@@ -26,7 +26,7 @@ const NavLeftButton = tw.button`
 
 
 const NavRightContainer = tw.div`
-bg-[#D9D9D9]/[.1] bg-opacity-10 w-[150px] h-[52px] rounded-[24px] border-t-[10px]
+bg-[#D9D9D9]/[.1]  w-[150px] h-[52px] rounded-[24px] border-t-[10px]
 `;
 
 
