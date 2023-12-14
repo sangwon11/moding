@@ -49,21 +49,23 @@ function SignUpPage() {
       });
       if (response.status === 201) {
         window.alert("성공적으로 가입되었습니다.");
-      } else if (response.status === 409) {
+        navigate("/");
+      } else {
+        window.alert("이미 존재하는 이메일입니다.");
+      }
+    } catch (error) {
+      console.log(error);
+      if (error === 409) {
         window.alert("이미 존재하는 이메일입니다.");
       } else {
         navigate("/404");
       }
-    } catch (error) {
-      console.log(error);
-      navigate("/404");
     }
   };
 
   const ConfirmAlert = () => {
     if (window.confirm("추가하시겠습니까?")) {
       insertData();
-      navigate("/");
     } else {
       return;
     }
@@ -74,10 +76,12 @@ function SignUpPage() {
       {/*nav*/}
       <div className="flex justify-between w-[600px] text-lg font-bold text-white text-center">
         {/*nav left*/}
-        <button className="bg-[#D9D9D9]/[.1] w-[150px] h-[52px] rounded-[24px]">로그인</button>
+        <button className="bg-[#D9D9D9]/[.1] w-[150px] h-[52px] rounded-[24px]">
+          로그인
+        </button>
         {/*nav right*/}
         <div className="w-[240px] h-[60px] rounded-tr-[24px] border-b-[60px] border-b-[#D9D9D9]/[.1] border-r-[60px] border-r-[#D9D9D9]/[.1] border-l-[60px] border-l-transparent">
-          <button className="w-[150px] h-[52px]" >회원가입</button>
+          <button className="w-[150px] h-[52px]">회원가입</button>
         </div>
       </div>
       {/*회원가입*/}
@@ -129,14 +133,16 @@ function SignUpPage() {
             className="bg-[#D9D9D9]/[.1] w-[180px] h-14 ps-8 pe-8 outline-none rounded-[24px] placeholder:text-white/[0.5]"
             placeholder="우편번호"
             value={postcodeReg}
-            disabled/>
+            disabled
+          />
         </div>
 
         <input
           className="bg-[#D9D9D9]/[.1] w-[400px] h-14 ps-8 pe-8 outline-none rounded-[24px] placeholder:text-white/[0.5]"
           placeholder="주소"
           value={addressReg}
-          disabled/>
+          disabled
+        />
 
         <input
           className="bg-[#D9D9D9]/[.1] w-[400px] h-14 ps-8 pe-8 outline-none rounded-[24px] placeholder:text-white/[0.5]"
@@ -156,6 +162,6 @@ function SignUpPage() {
       </div>
     </div>
   );
-};
+}
 
 export default SignUpPage;
