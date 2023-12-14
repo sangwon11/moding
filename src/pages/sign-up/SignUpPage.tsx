@@ -51,14 +51,16 @@ function SignUpPage() {
         window.alert("성공적으로 가입되었습니다.");
         navigate("/");
       } else {
-        window.alert("이미 존재하는 이메일입니다.");
       }
     } catch (error) {
       console.log(error);
-      if (error === 409) {
-        window.alert("이미 존재하는 이메일입니다.");
-      } else {
-        navigate("/404");
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          if (error.response.status === 409) {
+            window.alert("이미 존재하는 이메일입니다.");
+          } else {
+          }
+        }
       }
     }
   };
