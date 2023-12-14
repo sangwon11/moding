@@ -1,6 +1,4 @@
-import React from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import styled from 'styled-components';
 
 interface PostcodProps{
   onChangePostcode: (address: string) => void,
@@ -33,23 +31,9 @@ const Postcode = (props: PostcodProps) => {
   };
 
   return (
-    <SearchAddressBtn onClick={handleClick}>주소검색
-    </SearchAddressBtn>
+    <button className='bg-[#788FE2] w-[180px] h-14 ps-8 pe-8 outline-none rounded-[24px]' onClick={handleClick}>주소검색
+    </button>
   );
 };
 
 export default Postcode;
-
-const SearchAddressBtn = styled.button`
-    align-items: center;
-    border-radius: 4px;
-    justify-content: center;
-    width: 80px;
-    border: none;
-    background-color: #0058a3;
-    color: white;
-    cursor: pointer;
-    margin: 0 0 0 15px;
-    height: 80%;
-
-`

@@ -1,9 +1,10 @@
 // npx ts-node index.ts
 
 import mongoose from "mongoose";
-import Express from "express";
+import Express, { Request, Response, NextFunction } from "express";
 import router from './routes';
 import bodyParser from "body-parser";
+import CustomError from "./utils/customError";
 require('dotenv').config({ path: '../.env' });
 
 const app = Express();
@@ -26,3 +27,14 @@ app.use("/api", router);
 app.listen(port, () => {
     console.log(`localhost:${port} connected`)
 })
+
+app.use((error:CustomError, req:Request, res:Response, next:NextFunction) => {
+  console.log(error)
+  if (error.status !== undefined && Math.floor(error.status / 100) === 5) {
+     console.error(error);
+  }
+  res.status(error.status ?? 500).json({
+    error: error.message,
+    data: null,
+  });
+});

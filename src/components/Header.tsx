@@ -3,11 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {}
 
-const Header = (props: HeaderProps) => {
+function Header(props: HeaderProps){
   const navigate = useNavigate();
-  // 또는 ESLint 경고 무시
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [userState, setUserState] = useState<string>("Logo");
+
+  const [userState, setUserState] = useState<string>("Logout");
   const [navState, setNavState] = useState<string>("Nav");
   const [searchInput, setSearchInput] = useState<string>("");
 
@@ -42,7 +41,8 @@ const Header = (props: HeaderProps) => {
       <div className="text-3xl font-bold w-1/12">Logo</div>
 
       {/*Nav and Search*/}
-      <div className="flex w-9/12 mx-12 justify-between items-center">
+      <div className="flex w-9/12 mx-12 justify-between items-center ">
+
         {/*Nav*/}
         <nav
           className={`bg-[#D9D9D9]/[.1] h-12 mx-4 flex relative rounded-3xl text-centerjustify-between transition-all ease-in ${
@@ -106,14 +106,14 @@ const Header = (props: HeaderProps) => {
       </div>
 
       {/*Gnb*/}
-      <div className="flex w-2/12 min-w-fit text-lg text-center space-x-2 justify-between">
+      <div className="flex w-2/12 min-w-fit text-lg font-bold text-center space-x-2 justify-between">
         {userState === "Logout" ? (
           <>
-            <button className="bg-[#D9D9D9]/[.1] w-32 h-12 rounded-3xl font-bold">
+            <button className="bg-[#D9D9D9]/[.1] w-32 h-12 rounded-3xl">
               로그인
             </button>
             <button
-              className="bg-[#D9D9D9]/[.1] w-32 h-12 rounded-3xl font-bold"
+              className="bg-[#D9D9D9]/[.1] w-32 h-12 rounded-3xl"
               onClick={() => navigate("/sign-up")}
             >
               회원가입
@@ -121,26 +121,20 @@ const Header = (props: HeaderProps) => {
           </>
         ) : (
           <>
-            <button
-              className="bg-[#D9D9D9]/[.1] w-14 h-12 rounded-3xl ml-2 "
-              onClick={searchFunction}
-            >
-              <img
-                className="w-8 m-auto"
-                alt=""
-                src={require("../assets/svg/heart_icon.svg").default}
-              ></img>
-            </button>
-            <button
-              className="bg-[#D9D9D9]/[.1] w-14 h-12 rounded-3xl"
-              onClick={searchFunction}
-            >
-              <img
-                className="w-8 m-auto"
-                alt=""
-                src={require("../assets/svg/user_icon.svg").default}
-              ></img>
-            </button>
+						<button className="bg-[#D9D9D9]/[.1] w-14 h-12 rounded-3xl ml-2 " onClick={searchFunction}>
+            <img
+              className="w-8 m-auto"
+              alt=""
+              src={require("../assets/svg/heart_icon.svg").default}
+            ></img>
+          </button>
+					<button className="bg-[#D9D9D9]/[.1] w-14 h-12 rounded-3xl" onClick={searchFunction}>
+            <img
+              className="w-8 m-auto"
+              alt=""
+              src={require("../assets/svg/user_icon.svg").default}
+            ></img>
+          </button>
             <button
               className="bg-[#D9D9D9]/[.1] w-32 h-12 rounded-3xl font-bold"
               onClick={() => navigate("/")}

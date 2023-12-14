@@ -2,115 +2,203 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Postcode from "../hooks/DaumPostPopUp";
+import tw from "tailwind-styled-components";
 
-interface SignUpPageProps {}
 
-const SignUpPage = (props: SignUpPageProps) => {
+function SignUpPage() {
   const navigate = useNavigate();
+  
+  const [emailValue, setEmailValue] = useState(false)
 
-  const [emailReg, setEmailReg] = useState<string>("");
-  const [passwordReg, setPasswordReg] = useState<string>("");
-  const [userNameReg, setUserNameReg] = useState<string>("");
-  const [phoneNumberReg, setPhoneNumberReg] = useState<string>("");
-  const [postcodeReg, setPostcodeReg] = useState<string>("");
-  const [addressReg, setAddressReg] = useState<string>("");
-  const [addressDetailReg, setAddressDetailReg] = useState<string>("");
+  const [valueData, setValueData] = useState({
+    email: false,
+  });
 
-  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmailReg(e.target.value);
+  const onChangeTag = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const booleanValue = value === 'true' ? true : value === 'false' ? false : value;
+    setValueData({ ...valueData, [name]: booleanValue });
   };
-  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordReg(e.target.value);
+  
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    username: "",
+    phoneNumber: "",
+    postCode: "",
+    address: "",
+    addressDetail: "",
+  });
+
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === 'email') {
+
+      const isValid = isEmailValid(value);
+      if (isValid) {
+        setEmailValue(false);
+      } else {
+        setEmailValue(true);
+      }
+    }
+    const sanitizedValue =
+      name === "phoneNumber" ? value.replace(/[^0-9]/g, "") : value;
+    setFormData({ ...formData, [name]: sanitizedValue });
   };
-  const onChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserNameReg(e.target.value);
-  };
-  const onChangePhoneNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhoneNumberReg(e.target.value.replace(/[^0-9]/g, ""));
-  };
-  const onChangePostcode = (postcode: string) => {
-    setPostcodeReg(postcode);
-  };
-  const onChangeAddress = (address: string) => {
-    setAddressReg(address);
-  };
-  const onChangeAddressDetail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAddressDetailReg(e.target.value);
+
+  const isEmailValid = (email: string): boolean => {
+    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    return emailRegex.test(email);
   };
 
   const insertData = async () => {
     try {
-      const response = await axios.post("/api/v1/auth/sign-up", {
-        email: emailReg,
-        password: passwordReg,
-        username: userNameReg,
-        phoneNumber: phoneNumberReg,
-        postCode: postcodeReg,
-        address: addressReg,
-        addressDetail: addressDetailReg,
-      });
-      console.log(response);
+      const response = await axios.post("/api/v1/auth/sign-up", formData);
+      if (response.status === 201) {
+        window.alert("성공적으로 가입되었습니다.");
+        navigate("/");
+      } else {
+      }
     } catch (error) {
       console.log(error);
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 409) {
+          window.alert("이미 존재하는 이메일입니다.");
+        } else {
+          navigate("404");
+        }
+      }
     }
   };
 
-  const ConfirmAlert = () => {
+  const confirmAlert = () => {
     if (window.confirm("추가하시겠습니까?")) {
       insertData();
-      navigate("/");
     } else {
       return;
     }
   };
 
+  const SetOnBlur = (e: React.FocusEvent<HTMLInputElement>, placeholder: string) =>(e.target.placeholder = placeholder);
+  
+  const SetOnFocus = (e: React.FocusEvent<HTMLInputElement>) =>(e.target.placeholder = "");
+
   return (
-    <div>
-      <p>회원추가</p>
-      <div>
-        <p>이메일</p>
-        <input onChange={onChangeEmail} value={emailReg} />
-      </div>
+    <Container>
+      <NavWrap>
+        <NavLeftBtn>로그인</NavLeftBtn>
+        <NavRightWrap>
+          <NavRightBtn>회원가입</NavRightBtn>
+        </NavRightWrap>
+      </NavWrap>
 
-      <div>
-        <p>비밀번호</p>
-        <input onChange={onChangePassword} value={passwordReg} />
-      </div>
-
-      <div>
-        <p>이름</p>
-        <input onChange={onChangeUserName} value={userNameReg} />
-      </div>
-
-      <div>
-        <p>전화번호</p>
-        <input
-          onChange={onChangePhoneNumber}
-          value={phoneNumberReg}
-          maxLength={15}
+      {/*회원가입*/}
+      <SignUpWrap>
+        <Input
+          placeholder="이메일 입력"
+          onFocus={(e) => SetOnFocus(e)}
+          onBlur={(e) => SetOnBlur(e,"이메일 입력")}
+          onChange={onChangeInput}
+          value={formData.email}
+          name="email"
         />
-      </div>
+        <UnderTag $length={emailValue}>올바른 이메일 형태가 아닙니다.</UnderTag>
 
-      <div>
-        <div>
-          <p>주소,우편번호</p>
+        <Input
+          placeholder="비밀번호 입력"
+          type="password"
+          onFocus={(e) => SetOnFocus(e)}
+          onBlur={(e) => SetOnBlur(e,"비밀번호 입력")}
+          onChange={onChangeInput}
+          value={formData.password}
+          name="password"
+        />
+
+        <Input
+          placeholder="이름 입력"
+          onFocus={(e) => SetOnFocus(e)}
+          onBlur={(e) => SetOnBlur(e,"이름 입력")}
+          onChange={onChangeInput}
+          value={formData.username}
+          name="username"
+        />
+
+        <Input
+          placeholder="전화번호 입력"
+          onFocus={(e) => SetOnFocus(e)}
+          onBlur={(e) => SetOnBlur(e,"전화번호 입력")}
+          onChange={onChangeInput}
+          value={formData.phoneNumber}
+          name="phoneNumber"
+          maxLength={11}
+        />
+
+        <AddressWrap>
           <Postcode
-            onChangeAddress={onChangeAddress}
-            onChangePostcode={onChangePostcode}
+            onChangeAddress={(newAddress) => {
+              setFormData((prevData) => ({ ...prevData, address: newAddress }));
+            }}
+            onChangePostcode={(newPostcode) => {
+              setFormData((prevData) => ({
+                ...prevData,
+                postCode: newPostcode,
+              }));
+            }}
           />
-        </div>
-        <input value={postcodeReg} />
-        <input value={addressReg} />
-      </div>
+          <HalfInput
+            placeholder="우편번호"
+            value={formData.postCode}
+            name="postCode"
+            disabled
+          />
+        </AddressWrap>
 
-      <div>
-        <p>상세주소</p>
-        <input onChange={onChangeAddressDetail} value={addressDetailReg} />
-      </div>
+        <Input placeholder="주소" value={formData.address} disabled />
 
-      <button onClick={ConfirmAlert}>추가</button>
-    </div>
+        <Input
+          placeholder="상세주소 입력"
+          onFocus={(e) => SetOnFocus(e)}
+          onBlur={(e) => SetOnBlur(e,"상세주소 입력")}
+          onChange={onChangeInput}
+          value={formData.addressDetail}
+          name="addressDetail"
+        />
+
+        <RegBtn onClick={confirmAlert}>회원가입하기</RegBtn>
+      </SignUpWrap>
+    </Container>
   );
-};
+}
 
 export default SignUpPage;
+
+interface UnderTagProps{
+  $length: boolean;
+}
+
+const UnderTag = tw.p<UnderTagProps>`
+  text-sm font-normal
+  ${(p) => (p.$length ? "text-red-500" : "text-transparent")}`
+
+const Container = tw.div`
+  py-28 flex flex-col items-center`;
+const NavWrap = tw.div`
+  flex justify-between w-[600px] text-lg font-bold text-white text-center`;
+const NavLeftBtn = tw.button`
+  bg-[#D9D9D9]/[.1] w-[150px] h-[52px] rounded-[24px]`;
+const NavRightWrap = tw.div`
+  w-[240px] h-[60px] rounded-tr-[24px] border-b-[60px] border-b-[#D9D9D9]/[.1] border-r-[60px] border-r-[#D9D9D9]/[.1] border-l-[60px] border-l-transparent`;
+const NavRightBtn = tw.button`
+  w-[150px] h-[52px]`;
+const SignUpWrap = tw.div`
+bg-[#D9D9D9]/[.1] w-[600px] h-[800px] text-white text-lg font-bold rounded-[24px] rounded-tr-[0px] flex flex-col pt-4 justify-center items-center`;
+
+const HalfInput = tw.input`
+bg-[#D9D9D9]/[.1] w-[180px] h-14 ps-8 pe-8 outline-none rounded-[24px] placeholder:text-white/[0.5] my-2`;
+const Input = tw.input`
+bg-[#D9D9D9]/[.1] w-[400px] h-14 ps-8 pe-8 outline-none rounded-[24px] placeholder:text-white/[0.5] my-2`;
+
+const AddressWrap = tw.div`
+space-x-10`;
+const RegBtn = tw.button`
+bg-[#D9D9D9]/[.5] w-[400px] h-14 ps-8 pe-8 outline-none rounded-[24px]`;
