@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick"; // 슬라이더 컴포넌트 임포트
+import axios from "axios";
+import "slick-carousel/slick/slick.css"; // 메인 슬라이드
+import "slick-carousel/slick/slick-theme.css";
 import "../main/Main.css";
+import Product from "../../components/Product";
+
 // 슬라이더 설정
 const sliderSettings = {
   dots: true,
@@ -14,9 +19,11 @@ interface ImageData {
   id: number;
   url: string;
   alt: string;
+  description: string; // 상품 설명
+  manufacturer: string; // 제조사
 }
 
-const MainPage: React.FC = () => {
+function MainPage() {
   const [activeTab, setActiveTab] = useState("recommend");
   const [recommendImages, setRecommendImages] = useState<ImageData[]>([]);
   const [popularImages, setPopularImages] = useState<ImageData[]>([]);
@@ -26,17 +33,17 @@ const MainPage: React.FC = () => {
   // json-server --watch public/data/data.json
 
   // 이미지 데이터를 가져오는 함수
-  const fetchImages = (
+  async function fetchImages(
     endpoint: string,
     setImages: React.Dispatch<React.SetStateAction<ImageData[]>>
-  ): void => {
-    fetch(`http://localhost:3000/${endpoint}`)
-      .then((response) => response.json())
-      .then((data) => setImages(data))
-      .catch((error) =>
-        console.error(`Fetching ${endpoint} images failed`, error)
-      );
-  };
+  ) {
+    try {
+      const response = await axios.get(`http://localhost:3000/${endpoint}`);
+      setImages(response.data);
+    } catch (error) {
+      console.error(`Fetching ${endpoint} images failed`, error);
+    }
+  }
 
   useEffect(() => {
     setActiveTab(activeTab); // 현재 활성화된 탭 설정
@@ -47,74 +54,37 @@ const MainPage: React.FC = () => {
     fetchImages("recommend", setRecommendImages);
   }, []);
 
+  // 탭이 바뀔 때마다 해당 이미지 데이터를 로드
   useEffect(() => {
-    // 탭이 바뀔 때마다 해당 이미지 데이터를 로드
-    if (activeTab === "recommend") {
-      fetchImages("recommend", setRecommendImages);
-    } else if (activeTab === "popular") {
-      fetchImages("popular", setPopularImages);
-    } else if (activeTab === "funding") {
-      fetchImages("funding", setFundingImages);
-    }
+    const loadData = async () => {
+      if (activeTab === "recommend") {
+        await fetchImages("recommend", setRecommendImages);
+      } else if (activeTab === "popular") {
+        await fetchImages("popular", setPopularImages);
+      } else if (activeTab === "funding") {
+        await fetchImages("funding", setFundingImages);
+      }
+    };
+    loadData();
   }, [activeTab]);
 
   // 탭 컨텐츠 렌더링 함수
-  // index 제거함 (초안)
-  const renderTabContent = (images: ImageData[]) => (
-    <div className="flex flex-wrap -mx-2">
-      {images.map((image) => (
-        <div key={image.id} className="w-1/3 px-2 mb-4">
-          <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200">
-            <img
-              src={image.url}
-              alt={image.alt}
-              className="object-cover object-center w-full h-full"
-            />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-  //   useEffect(() => {
-  //     // 가짜 이미지 데이터
-  //     const fakeRecommendData = [
-  //       { src: "/images/computer.jpg", alt: "추천상품 1" },
-  //       { src: "/images/computer.jpg", alt: "추천상품 2" },
-  //       { src: "/images/computer.jpg", alt: "추천상품 2" },
-  //       { src: "/images/computer.jpg", alt: "추천상품 2" },
-  //       { src: "/images/computer.jpg", alt: "추천상품 2" },
-  //       { src: "/images/computer.jpg", alt: "추천상품 2" },
-  //       { src: "/images/computer.jpg", alt: "추천상품 2" },
-  //       { src: "/images/computer.jpg", alt: "추천상품 2" },
-  //       { src: "/images/computer.jpg", alt: "추천상품 2" },
-  //       { src: "/images/computer.jpg", alt: "추천상품 2" },
-  //       { src: "/images/computer.jpg", alt: "추천상품 2" },
-  //       { src: "/images/computer.jpg", alt: "추천상품 2" },
-  //       // 여기에 추가 이미지 데이터를 넣을 수 있습니다.
-  //     ];
-  //     const fakePopularData = [
-  //       { src: "/images/all.jpg", alt: "인기상승 1" },
-  //       { src: "/images/all.jpg", alt: "인기상승 2" },
-  //       { src: "/images/all.jpg", alt: "인기상승 2" },
-  //       { src: "/images/computer.jpg", alt: "추천상품 2" },
-  //       { src: "/images/all.jpg", alt: "인기상승 2" },
-  //       // ... 추가 인기상승 이미지 데이터
-  //     ];
-
-  //     const fakeFundingData = [
-  //       { src: "/images/console.jpg", alt: "펀딩랭킹 1" },
-  //       { src: "/images/console.jpg", alt: "펀딩랭킹 2" },
-  //       { src: "/images/console.jpg", alt: "펀딩랭킹 1" },
-  //       { src: "/images/console.jpg", alt: "펀딩랭킹 2" },
-
-  //       // ... 추가 펀딩랭킹 이미지 데이터
-  //     ];
-
-  //     // 이미지 데이터를 상태에 설정
-  //     setRecommendImages(fakeRecommendData);
-  //     setPopularImages(fakePopularData);
-  //     setFundingImages(fakeFundingData);
-  //   }, []);
+  function renderTabContent(images: ImageData[]) {
+    return (
+      <div className="flex flex-wrap -mx-2">
+        {images.map((image) => (
+          <Product
+            key={image.id}
+            id={image.id}
+            url={image.url}
+            alt={image.alt}
+            description={image.description} // 설명 추가
+            manufacturer={image.manufacturer} // 제조사 추가
+          />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="main-page">
@@ -189,60 +159,10 @@ const MainPage: React.FC = () => {
             {activeTab === "recommend" && renderTabContent(recommendImages)}
             {activeTab === "popular" && renderTabContent(popularImages)}
             {activeTab === "funding" && renderTabContent(fundingImages)}
-            {/* {activeTab === "recommend" && (
-              <div className="flex flex-wrap -mx-2">
-                {recommendImages.map((image, index) => (
-                  <div key={index} className="w-1/3 px-2 mb-4">
-                    <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200">
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        className="object-cover object-center w-full h-full"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )} */}
-            {/* 추가 이미지들... */}
-
-            {/* 인기상승 탭 컨텐츠 */}
-            {/* {activeTab === "popular" && (
-              <div className="flex flex-wrap -mx-2">
-                {popularImages.map((image, index) => (
-                  <div key={index} className="w-1/3 px-2 mb-4">
-                    <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200">
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        className="object-cover object-center w-full h-full"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )} */}
-            {/* 펀딩랭킹 탭 컨텐츠 */}
-            {/* {activeTab === "funding" && (
-              <div className="flex flex-wrap -mx-2">
-                {fundingImages.map((image, index) => (
-                  <div key={index} className="w-1/3 px-2 mb-4">
-                    <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200">
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        className="object-cover object-center w-full h-full"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )} */}
           </div>
         </div>
 
         {/* 우측 섹션 - sticky 위치 지정 */}
-        {/* </div><div className="sticky top-10 w-1/4 mr-4 p-4 space-y-4 border p-10 rounded "> */}
         <div className="sticky top-10 w-1/4 mr-4 p-4 space-y-4 rounded bg-[#D9D9D9]/[.1] mt-[72.5px]">
           <h2 className="text-lg font-bold mb-2 text-white">신상품 랭킹</h2>
           <ul className="list-decimal pl-4 text-white">
@@ -258,6 +178,6 @@ const MainPage: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default MainPage;
