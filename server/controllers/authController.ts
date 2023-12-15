@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import authService from "../services/authService";
-import CustomError from "../utils/customError";
 
 interface SignUpParams {
   email: string;

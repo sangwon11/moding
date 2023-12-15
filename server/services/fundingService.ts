@@ -1,63 +1,22 @@
 import { fundingModel } from "../models";
 import CustomError from "../utils/customError";
 
-// 필터링 조건을 정의하는 타입 또는 인터페이스를 생성합니다.
-export interface FundingFilter {
-  categoryId?: string;
-  startDate?: string;
-  endDate?: string;
-}
+// 1. 펀딩을 전부다 불러오는거 2. 카테고리를 찾아서 해당 카테고리에 속한 모든 펀딩을 가져오는것. 3. 특정펀딩 Id 로만 가지고 오는것.
 
 const fundingService = {
-  async getAllFundings({ categoryId, startDate, endDate }: FundingFilter) {
-    try {
-      const query: any = {};
-
-      if (categoryId) {
-        query.categoryId = categoryId;
-      }
-
-      if (startDate && endDate) {
-        query.createdAt = {
-          $gte: new Date(startDate),
-          $lte: new Date(endDate),
-        };
-      }
-
-      const fundings = await fundingModel.find(query).lean();
-      return fundings;
-    } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
-      console.error(`Error fetching filtered fundings: ${errorMessage}`);
-      throw new CustomError(
-        `Error fetching filtered fundings: ${errorMessage}`,
-        500
-      );
-    }
+  async getFundings() {
+    const fundings = await fundingModel.find().lean();
+    return fundings;
   },
-  async getFundingById(id: any) {
-    try {
-      if (!id) {
-        throw new CustomError("잘못된 id 입니다.", 400);
-      }
 
-      const funding = await fundingModel.findById(id).lean();
+  async getFundingById(id: string) {
+    const funding = await fundingModel.findById(id).lean(); // id => 이거를 찾을 수가 없어. funding => null
 
-      if (!funding) {
-        throw new CustomError("해당 funding이 존재하지 않습니다.", 404);
-      }
-
-      return funding;
-    } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
-      console.error(`Error fetching funding by ID: ${errorMessage}`);
-      throw new CustomError(
-        `Error fetching funding by ID: ${errorMessage}`,
-        500
-      );
+    if (funding === null) {
+      throw new CustomError("해당 funding이 존재하지 않습니다.", 404);
     }
+
+    return funding;
   },
 };
 
