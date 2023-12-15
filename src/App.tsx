@@ -4,6 +4,7 @@ import MainPage from './pages/main/MainPage';
 import Header from './components/Header';
 import ErrorPage from './pages/Error/ErrorPage';
 import Main from './pages/hooks/custompopup/main';
+import SignInPage from "./pages/sign-in/SignInPage";
 
 
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/404" element={<ErrorPage />} />
           <Route path="/processing" element={<Main />} />
+          <Route path="/sign-in" element={<SignInPage />} />
           
         </Routes>
       </div>

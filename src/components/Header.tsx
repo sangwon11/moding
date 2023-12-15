@@ -109,7 +109,8 @@ function Header(props: HeaderProps){
       <div className="flex w-2/12 min-w-fit text-lg font-bold text-center space-x-2 justify-between">
         {userState === "Logout" ? (
           <>
-            <button className="bg-[#D9D9D9]/[.1] w-32 h-12 rounded-3xl">
+            <button className="bg-[#D9D9D9]/[.1] w-32 h-12 rounded-3xl"
+            onClick={() => navigate("/sign-in")}>
               로그인
             </button>
             <button
