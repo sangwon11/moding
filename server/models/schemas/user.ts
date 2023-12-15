@@ -21,7 +21,7 @@ const userSchema = new Schema(
     postCode: {
       type: Number,
       required: true,
-    },    
+    },
     address: {
       type: String,
       required: true,
@@ -33,6 +33,10 @@ const userSchema = new Schema(
       type: String,
       enum: ["admin", "seller", "customer"],
       required: true,
+    },
+    deletedAt: {
+      type: Date,
+      default: null,
     },
   },
   {

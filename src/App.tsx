@@ -1,13 +1,20 @@
-import React from 'react';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import SignUpPage from "./pages/SignUpPage";
+import SignUpPage from "./pages/sign-up/SignUpPage";
+import MainPage from "./pages/main/MainPage";
+import Header from "./components/header/Header";
+import ErrorPage from "./pages/Error/ErrorPage";
+import Main from "./pages/hooks/custompopup/main";
 
 function App() {
   return (
     <BrowserRouter>
-      <div>
+      <div className="scrollbar bg-[#03000C] min-w-[1440px] w-auto min-h-screen h-auto">
+        <Header />
         <Routes>
-          <Route path="/" element={<SignUpPage />} />
+          <Route path="/" element={<MainPage />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
+          <Route path="/404" element={<ErrorPage />} />
+          <Route path="/processing" element={<Main />} />
         </Routes>
       </div>
     </BrowserRouter>
