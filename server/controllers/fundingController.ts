@@ -9,7 +9,7 @@ const fundingController = {
 
     try {
       const filter: FundingFilter = {
-        categoryId: categoryId as string, // Type casting as necessary
+        categoryId: categoryId as string,
         startDate: startDate as string,
         endDate: endDate as string,
       };
@@ -22,7 +22,6 @@ const fundingController = {
       });
     } catch (error) {
       if (error instanceof CustomError) {
-        // Handle your custom error
         res.status(error.status).json({
           success: false,
           message: error.message,
