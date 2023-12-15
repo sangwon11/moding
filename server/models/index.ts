@@ -6,4 +6,4 @@ const userModel = mongoose.model("user", userSchema);
 
 const fundingModel = mongoose.model("funding", fundingSchema);
 
-export default { userModel, fundingModel };
+export { userModel, fundingModel };

@@ -15,53 +15,21 @@ interface SignUpParams {
 const authController = {
   // 회원가입
   async authSignUp(req: Request, res: Response) {
-    try {
-      const user = await authService.signUp(req.body as SignUpParams);
+    const user = await authService.signUp(req.body as SignUpParams);
 
-      res.status(201).json({
-        error: null,
-        data: user,
-      });
-    } catch (error) {
-      if (error instanceof CustomError) {
-        res.status(error.status).json({
-          error: {
-            message: error.message,
-            status: error.status,
-          },
-          data: null,
-        });
-      } else {
-        // 다른 예외 처리
-        res.status(500).json({
-          error: {
-            message: "Internal Server Error",
-            status: 500,
-          },
-          data: null,
-        });
-      }
-    }
+    res.status(201).json({
+      error: null,
+      data: user,
+    });
   },
+
   async authSignIn(req: Request, res: Response) {
-    try {
-      const { email, password } = req.body;
-      if (!email || !password) {
-        return res
-          .status(400)
-          .json({ error: "Email and password are required." });
-      }
+    const token = await authService.signIn(req.body);
 
-      const result = await authService.SignIn({ email, password });
-
-      res.status(200).json(result);
-    } catch (error) {
-      if (error instanceof CustomError) {
-        res.status(error.status).json({ error: error.message });
-      } else {
-        res.status(500).json({ error: "An unknown error occurred" });
-      }
-    }
+    res.status(201).json({
+      error: null,
+      data: token,
+    });
   },
 };
 

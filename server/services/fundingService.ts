@@ -1,7 +1,7 @@
-import models from "../models";
+import { fundingModel } from "../models";
 import CustomError from "../utils/customError";
 
-const { fundingModel } = models;
+
 
 // 필터링 조건을 정의하는 타입 또는 인터페이스를 생성합니다.
 export interface FundingFilter {

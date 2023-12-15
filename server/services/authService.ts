@@ -1,9 +1,7 @@
-import models from "../models";
-
-const { userModel } = models;
 import bcrypt from "bcrypt";
 import CustomError from "../utils/customError";
 import jwt from "jsonwebtoken";
+import { userModel } from "../models";
 
 interface SignUpParams {
   email: string;
@@ -53,28 +51,21 @@ const authService = {
     return newUser.toObject();
   },
 
-  async SignIn({ email, password }: LoginParams) {
-    // Find user by email
+  async signIn({ email, password }: LoginParams) {
     const user = await userModel.findOne({ email }).lean();
     if (!user) {
-      throw new CustomError("Invalid email or password", 401);
+      throw new CustomError("이메일과 비밀번호가 일치하지 않습니다", 401);
     }
 
-    // Validate password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      throw new CustomError("Invalid email or password", 401);
+      throw new CustomError("이메일과 비밀번호가 일치하지 않습니다", 401);
     }
 
-    // Generate token
     const JWT_SECRET = process.env.JWT_SECRET || "";
-    const token = jwt.sign({ em: user.email }, JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign({ em: user.email, ro: user.role }, JWT_SECRET, { expiresIn: "1h" });
 
-    // Remove password from user info
-    const { password: _, ...userInfo } = user;
-
-    // Return user info and token
-    return { user: userInfo, token };
+    return token;
   },
 };
 
