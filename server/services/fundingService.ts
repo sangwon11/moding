@@ -18,6 +18,18 @@ const fundingService = {
 
     return funding;
   },
+
+  async getFundingByCategoryId(categoryId: string) {
+    const fundings = await fundingModel.find({ categoryId }).lean();
+    if (fundings.length === 0) {
+      throw new CustomError(
+        "해당 카테고리의 funding이 존재하지 않습니다.",
+        404
+      );
+    }
+
+    return fundings;
+  },
 };
 
 export default fundingService;
