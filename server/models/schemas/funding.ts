@@ -12,7 +12,7 @@ const fundingSchema = new Schema(
       required: true,
       ref: "Category",
     },
-    imageUrl: {
+    mainImageUrl: {
       type: String,
       required: true,
     },
@@ -36,7 +36,11 @@ const fundingSchema = new Schema(
       type: Boolean,
       default: true,
     },
-    preorderBenefit: [
+    preorderDate: {
+      type: Boolean,
+      default: true,
+    },
+    preorderBenefits: [
       {
         discount: {
           type: Number,
@@ -52,10 +56,38 @@ const fundingSchema = new Schema(
         },
       },
     ],
-    productId: {
-      type: Schema.Types.ObjectId,
-      ref: "Product",
-    },
+    options: [
+      {
+        title: {
+          type: String,
+          required: true,
+        },
+        price: {
+          type: String,
+          required: true,
+        },
+        totalAmount: {
+          type: Number,
+          required: true,
+        },
+        currentAmount: {
+          type: Number,
+          default: 0,
+        },
+        info: {
+          type: String,
+          required: true,
+        },
+        deliveryPrice: {
+          type: Number,
+          default: 0,
+        },
+        deliveryDate: {
+          type: Date,
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
