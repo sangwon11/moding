@@ -34,6 +34,18 @@ const fundingController = {
       }
     }
   },
+  async getFundingById(req: Request, res: Response) {
+    try {
+      const funding = await fundingService.getFundingById(req.params.id);
+      res.status(200).json(funding);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        res.status(error.status).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "서버 오류입니다." });
+      }
+    }
+  },
 };
 
 export default fundingController;

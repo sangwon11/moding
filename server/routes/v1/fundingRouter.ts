@@ -6,4 +6,6 @@ const fundingRouter = Router();
 
 fundingRouter.get("/", asyncHandler(fundingController.getAllFunding));
 
+fundingRouter.get("/:id", asyncHandler(fundingController.getFundingById));
+
 export default fundingRouter;
