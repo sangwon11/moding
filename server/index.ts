@@ -2,17 +2,17 @@
 
 import mongoose from "mongoose";
 import Express, { Request, Response, NextFunction } from "express";
-import router from './routes';
+import router from "./routes";
 import bodyParser from "body-parser";
 import CustomError from "./utils/customError";
-require('dotenv').config({ path: '../.env' });
+require("dotenv").config({ path: "../.env" });
 
 const app = Express();
 const port = 8080;
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-const mongoURI: string = process.env.MONGODB || '';
+const mongoURI: string = process.env.MONGODB || "";
 
 // 몽고DB 서버 연결
 mongoose
@@ -23,18 +23,19 @@ mongoose
 //api 호출
 app.use("/api", router);
 
-
 app.listen(port, () => {
-    console.log(`localhost:${port} connected`)
-})
-
-app.use((error:CustomError, req:Request, res:Response, next:NextFunction) => {
-  console.log(error)
-  if (error.status !== undefined && Math.floor(error.status / 100) === 5) {
-     console.error(error);
-  }
-  res.status(error.status ?? 500).json({
-    error: error.message,
-    data: null,
-  });
+  console.log(`localhost:${port} connected`);
 });
+
+app.use(
+  (error: CustomError, req: Request, res: Response, next: NextFunction) => {
+    console.log(error);
+    if (error.status !== undefined && Math.floor(error.status / 100) === 5) {
+      console.error(error);
+    }
+    res.status(error.status ?? 500).json({
+      error: error.message,
+      data: null,
+    });
+  }
+);
