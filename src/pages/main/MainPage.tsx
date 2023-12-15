@@ -1,12 +1,12 @@
 import React from "react";
-import SignInPage from "../sign-in/SignInPage";
+// import Category from "../category/Category";
 
 interface MainPageProps {}
 
 const MainPage: React.FC<MainPageProps> = () => {
     return(
         <>
-        <SignInPage/>
+        {/* <Category/> */}
         </>
     )
 };
