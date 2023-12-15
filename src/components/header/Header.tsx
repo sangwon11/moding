@@ -20,7 +20,9 @@ function Header(props: HeaderProps) {
     }
   };
 
-  
+  useEffect(() => {
+    checkSignInState();
+  }, []);
 
   const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value);
