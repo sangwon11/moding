@@ -1,9 +1,10 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter, Link } from "react-router-dom";
 import SignUpPage from "./pages/sign-up/SignUpPage";
 import MainPage from "./pages/main/MainPage";
 import Header from "./components/header/Header";
-import ErrorPage from "./pages/Error/ErrorPage";
+import ErrorPage from "./pages/error/ErrorPage";
 import Main from "./pages/hooks/custompopup/main";
+import SignInPage from "./pages/sign-in/SignInPage";
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/404" element={<ErrorPage />} />
           <Route path="/processing" element={<Main />} />
+          <Route path="/sign-in" element={<SignInPage />} />
+          
         </Routes>
       </div>
     </BrowserRouter>
