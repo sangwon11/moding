@@ -20,6 +20,22 @@ const userController = {
       }
     }
   },
+  async deleteUser(req: any, res: any) {
+    try {
+      const userIdToDelete = req.user.userId;
+      console.log(userIdToDelete);
+
+      const result = await userService.deleteUser(userIdToDelete);
+
+      res.status(200).json(result);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        res.status(error.status).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "서버 오류입니다." });
+      }
+    }
+  },
 };
 
 export default userController;

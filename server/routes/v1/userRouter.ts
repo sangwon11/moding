@@ -11,4 +11,10 @@ userRouter.get(
   asyncHandler(userController.getUserProfile)
 );
 
+userRouter.delete(
+  "/withdraw",
+  isAuthenticated,
+  asyncHandler(userController.deleteUser)
+);
+
 export default userRouter;
