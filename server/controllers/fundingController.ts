@@ -14,6 +14,12 @@ const fundingController = {
     const fundings = await fundingService.getFundingById(req.params.id);
     res.status(200).json(fundings);
   },
+  async getFundingByCategoryId(req: Request, res: Response) {
+    const fundings = await fundingService.getFundingByCategoryId(
+      req.params.categoryId
+    );
+    res.status(200).json(fundings);
+  },
 };
 
 export default fundingController;

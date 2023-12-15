@@ -8,4 +8,9 @@ fundingRouter.get("/", asyncHandler(fundingController.getFundings));
 
 fundingRouter.get("/:id", asyncHandler(fundingController.getFundingById));
 
+fundingRouter.get(
+  "/category/:categoryId",
+  asyncHandler(fundingController.getFundingByCategoryId)
+);
+
 export default fundingRouter;
