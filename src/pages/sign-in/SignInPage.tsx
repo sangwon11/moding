@@ -31,6 +31,7 @@ function SignInPage() {
       setPassword(e.target.value);
   };
 
+  //  추후 코드 수정고려
   const handleLoginClick = async () => {
       try {
           const response = await axios.post('/api/v1/auth/sign-in', {
