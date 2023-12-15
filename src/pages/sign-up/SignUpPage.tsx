@@ -1,161 +1,258 @@
-import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Postcode from "../hooks/DaumPostPopUp";
+import {
+  checkValidEmail,
+  checkValidPassword,
+  checkValidPhoneNumber,
+  checkValidUserName,
+} from "../../utils/regExp.utils";
+import * as styeld from "./SingUpPage.styles";
 
 function SignUpPage() {
   const navigate = useNavigate();
 
-  const [emailReg, setEmailReg] = useState<string>("");
-  const [passwordReg, setPasswordReg] = useState<string>("");
-  const [userNameReg, setUserNameReg] = useState<string>("");
-  const [phoneNumberReg, setPhoneNumberReg] = useState<string>("");
-  const [postcodeReg, setPostcodeReg] = useState<string>("");
-  const [addressReg, setAddressReg] = useState<string>("");
-  const [addressDetailReg, setAddressDetailReg] = useState<string>("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    username: "",
+    phoneNumber: "",
+    postCode: "",
+    address: "",
+    addressDetail: "",
+  });
 
-  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmailReg(e.target.value);
+  const [formValid, setFormValid] = useState({
+    isEmail: false,
+    isPassword: false,
+    isUserName: false,
+    isPhoneNumber: false,
+  });
+
+  const [addressValid, setAddressValid] = useState(false);
+
+  const handleInput = (
+    e: React.FormEvent<HTMLInputElement>,
+    validationFunction: (value: string) => boolean,
+    validationKey: string
+  ) => {
+    const { value } = (e as React.ChangeEvent<HTMLInputElement>).target;
+    setFormValid({
+      ...formValid,
+      [validationKey]: value === "" ? false : !validationFunction(value),
+    });
   };
-  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordReg(e.target.value);
+
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const sanitizedValue =
+      name === "phoneNumber" ? value.replace(/[^0-9]/g, "").replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3') : value;
+    setFormData({ ...formData, [name]: sanitizedValue });
   };
-  const onChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserNameReg(e.target.value);
+
+  const handleAddressSearch = () => {
+    if (
+      formData.email &&
+      formData.password &&
+      formData.username &&
+      formData.phoneNumber !== "" &&
+      formData.address === ""
+    ) {
+      setAddressValid(true);
+    } else {
+      setAddressValid(false);
+    }
   };
-  const onChangePhoneNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhoneNumberReg(e.target.value.replace(/[^0-9]/g, ""));
-  };
-  const onChangePostcode = (postcode: string) => {
-    setPostcodeReg(postcode);
-  };
-  const onChangeAddress = (address: string) => {
-    setAddressReg(address);
-  };
-  const onChangeAddressDetail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAddressDetailReg(e.target.value);
+
+  useEffect(() => {
+    handleAddressSearch();
+  }, [formData]);
+
+  const SetOnBlur = (
+    e: React.FocusEvent<HTMLInputElement>,
+    placeholder: string
+  ) => (e.target.placeholder = placeholder);
+
+  const SetOnFocus = (e: React.FocusEvent<HTMLInputElement>) =>
+    (e.target.placeholder = "");
+
+  const showError = (message: string) => alert(message);
+  const handleSignUpClick = () => {
+    if (formData.email === "" || formValid.isEmail) {
+      showError("올바른 이메일을 입력해주세요.");
+    } else if (formData.password === "" || formValid.isPassword) {
+      showError("올바른 비밀번호를 입력해주세요.");
+    } else if (formData.username === "" || formValid.isUserName) {
+      showError("올바른 이름을 입력해주세요.");
+    } else if (formData.phoneNumber === "" || formValid.isPhoneNumber) {
+      showError("올바른 전화번호를 입력해주세요.");
+    } else if (formData.address === "" || addressValid) {
+      showError("올바른 주소를 입력해주세요.");
+    } else if (window.confirm("회원가입 하시겠습니까?")) {
+      insertData();
+    }
   };
 
   const insertData = async () => {
     try {
-      const response = await axios.post("/api/v1/auth/sign-up", {
-        email: emailReg,
-        password: passwordReg,
-        username: userNameReg,
-        phoneNumber: phoneNumberReg,
-        postCode: postcodeReg,
-        address: addressReg,
-        addressDetail: addressDetailReg,
-      });
+      const response = await axios.post("/api/v1/auth/sign-up", formData);
       if (response.status === 201) {
         window.alert("성공적으로 가입되었습니다.");
-      } else if (response.status === 409) {
-        window.alert("이미 존재하는 이메일입니다.");
+        navigate("/");
       } else {
-        navigate("/404");
       }
     } catch (error) {
       console.log(error);
-      navigate("/404");
-    }
-  };
-
-  const ConfirmAlert = () => {
-    if (window.confirm("추가하시겠습니까?")) {
-      insertData();
-      navigate("/");
-    } else {
-      return;
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 409) {
+          window.alert("이미 존재하는 이메일입니다.");
+        } else {
+          navigate("404");
+        }
+      }
     }
   };
 
   return (
-    <div className="py-28 flex flex-col items-center">
-      {/*nav*/}
-      <div className="flex justify-between w-[600px] text-lg font-bold text-white text-center">
-        {/*nav left*/}
-        <button className="bg-[#D9D9D9]/[.1] w-[150px] h-[52px] rounded-[24px]">로그인</button>
-        {/*nav right*/}
-        <div className="w-[240px] h-[60px] rounded-tr-[24px] border-b-[60px] border-b-[#D9D9D9]/[.1] border-r-[60px] border-r-[#D9D9D9]/[.1] border-l-[60px] border-l-transparent">
-          <button className="w-[150px] h-[52px]" >회원가입</button>
-        </div>
-      </div>
-      {/*회원가입*/}
-      <div className="bg-[#D9D9D9]/[.1] w-[600px] h-[800px] text-white text-lg font-bold rounded-[24px] rounded-tr-[0px] flex flex-col space-y-8 justify-center items-center">
-        <input
-          className="bg-[#D9D9D9]/[.1] w-[400px] h-14 ps-8 pe-8 outline-none rounded-[24px] placeholder:text-white/[0.5]"
-          placeholder="이메일 입력"
-          onFocus={(e) => (e.target.placeholder = "")}
-          onBlur={(e) => (e.target.placeholder = "이메일 입력")}
-          onChange={onChangeEmail}
-          value={emailReg}
-        />
+    <styeld.Container>
+      <styeld.NavWrap>
+        <styeld.NavLeftBtn>로그인</styeld.NavLeftBtn>
+        <styeld.NavRightWrap>
+          <styeld.NavRightBtn>회원가입</styeld.NavRightBtn>
+        </styeld.NavRightWrap>
+      </styeld.NavWrap>
 
-        <input
-          className="bg-[#D9D9D9]/[.1] w-[400px] h-14 ps-8 pe-8 outline-none rounded-[24px] placeholder:text-white/[0.5]"
+      {/*회원가입*/}
+      <styeld.SignUpWrap>
+        <styeld.Input
+          placeholder="이메일 입력"
+          onFocus={SetOnFocus}
+          onBlur={(e) => SetOnBlur(e, "이메일 입력")}
+          onChange={onChangeInput}
+          onInput={(e) => handleInput(e, checkValidEmail, "isEmail")}
+          value={formData.email}
+          name="email"
+          maxLength={30}
+        />
+        <styeld.UnderTag draggable="true" $validator={formValid.isEmail}>
+          {formData.email === ""
+            ? ""
+            : formValid.isEmail === true
+            ? "올바른 이메일을 입력해주세요."
+            : "올바른 이메일입니다."}
+        </styeld.UnderTag>
+
+        <styeld.Input
           placeholder="비밀번호 입력"
           type="password"
-          onFocus={(e) => (e.target.placeholder = "")}
-          onBlur={(e) => (e.target.placeholder = "비밀번호 입력")}
-          onChange={onChangePassword}
-          value={passwordReg}
+          onFocus={SetOnFocus}
+          onBlur={(e) => SetOnBlur(e, "비밀번호 입력")}
+          onChange={onChangeInput}
+          onInput={(e) => handleInput(e, checkValidPassword, "isPassword")}
+          value={formData.password}
+          name="password"
+          maxLength={14}
         />
+        <styeld.UnderTag draggable="true" $validator={formValid.isPassword}>
+          {formData.password === ""
+            ? ""
+            : formValid.isPassword === true
+            ? "올바른 비밀번호를 입력해주세요."
+            : "올바른 비밀번호입니다."}
+        </styeld.UnderTag>
 
-        <input
-          className="bg-[#D9D9D9]/[.1] w-[400px] h-14 ps-8 pe-8 outline-none rounded-[24px] placeholder:text-white/[0.5]"
+        <styeld.Input
           placeholder="이름 입력"
-          onFocus={(e) => (e.target.placeholder = "")}
-          onBlur={(e) => (e.target.placeholder = "이름 입력")}
-          onChange={onChangeUserName}
-          value={userNameReg}
+          onFocus={SetOnFocus}
+          onBlur={(e) => SetOnBlur(e, "이름 입력")}
+          onChange={onChangeInput}
+          onInput={(e) => handleInput(e, checkValidUserName, "isUserName")}
+          value={formData.username}
+          name="username"
+          maxLength={8}
         />
+        <styeld.UnderTag draggable="true" $validator={formValid.isUserName}>
+          {formData.username === ""
+            ? ""
+            : formValid.isUserName === true
+            ? "올바른 이름을 입력해주세요."
+            : "올바른 이름입니다."}
+        </styeld.UnderTag>
 
-        <input
-          className="bg-[#D9D9D9]/[.1] w-[400px] h-14 ps-8 pe-8 outline-none rounded-[24px] placeholder:text-white/[0.5]"
+        <styeld.Input
           placeholder="전화번호 입력"
-          onFocus={(e) => (e.target.placeholder = "")}
-          onBlur={(e) => (e.target.placeholder = "전화번호 입력")}
-          onChange={onChangePhoneNumber}
-          value={phoneNumberReg}
-          maxLength={15}
+          onFocus={SetOnFocus}
+          onBlur={(e) => SetOnBlur(e, "전화번호 입력")}
+          onChange={onChangeInput}
+          onKeyUp={(e) =>
+            handleInput(e, checkValidPhoneNumber, "isPhoneNumber")
+          }
+          value={formData.phoneNumber}
+          name="phoneNumber"
+          maxLength={11}
         />
+        <styeld.UnderTag draggable="true" $validator={formValid.isPhoneNumber}>
+          {formData.phoneNumber === ""
+            ? ""
+            : formValid.isPhoneNumber === true
+            ? "올바른 전화번호를 입력해주세요."
+            : "올바른 전화번호입니다."}
+        </styeld.UnderTag>
 
-        <div className="space-x-10">
+        <styeld.AddressWrap>
           <Postcode
-            onChangeAddress={onChangeAddress}
-            onChangePostcode={onChangePostcode}
+            onChangeAddress={(newAddress) => {
+              setFormData((prevData) => ({ ...prevData, address: newAddress }));
+            }}
+            onChangePostcode={(newPostcode) => {
+              setFormData((prevData) => ({...prevData, postCode: newPostcode,
+              }));
+            }}
           />
-          <input
-            className="bg-[#D9D9D9]/[.1] w-[180px] h-14 ps-8 pe-8 outline-none rounded-[24px] placeholder:text-white/[0.5]"
+          <styeld.HalfInput
             placeholder="우편번호"
-            value={postcodeReg}
-            disabled/>
-        </div>
+            value={formData.postCode}
+            name="postCode"
+            disabled
+          />
+        </styeld.AddressWrap>
+        <styeld.UnderTag draggable="true" $validator={addressValid}>
+          {addressValid === false && formData.address === ""
+            ? ""
+            : addressValid === true
+            ? "주소를 입력해주세요."
+            : "올바른 주소입니다."}
+        </styeld.UnderTag>
 
-        <input
-          className="bg-[#D9D9D9]/[.1] w-[400px] h-14 ps-8 pe-8 outline-none rounded-[24px] placeholder:text-white/[0.5]"
+        <styeld.Input
           placeholder="주소"
-          value={addressReg}
-          disabled/>
-
-        <input
-          className="bg-[#D9D9D9]/[.1] w-[400px] h-14 ps-8 pe-8 outline-none rounded-[24px] placeholder:text-white/[0.5]"
-          placeholder="상세주소 입력"
-          onFocus={(e) => (e.target.placeholder = "")}
-          onBlur={(e) => (e.target.placeholder = "상세주소 입력")}
-          onChange={onChangeAddressDetail}
-          value={addressDetailReg}
+          value={formData.address}
+          name="address"
+          disabled
         />
+        <styeld.UnderTag draggable="true" $validator={addressValid}>
+          {addressValid === false && formData.address === ""
+            ? ""
+            : addressValid === true
+            ? "주소를 입력해주세요."
+            : "올바른 주소입니다."}
+        </styeld.UnderTag>
 
-        <button
-          className="bg-[#D9D9D9]/[.5] w-[400px] h-14 ps-8 pe-8 outline-none rounded-[24px]"
-          onClick={ConfirmAlert}
-        >
-          회원가입하기
-        </button>
-      </div>
-    </div>
+        <styeld.Input
+          placeholder="상세주소 입력"
+          onFocus={SetOnFocus}
+          onBlur={(e) => SetOnBlur(e, "상세주소 입력")}
+          onChange={onChangeInput}
+          value={formData.addressDetail}
+          name="addressDetail"
+        />
+        <styeld.UnderTag draggable="true" $validator={false}></styeld.UnderTag>
+
+        <styeld.RegBtn onClick={handleSignUpClick}>회원가입하기</styeld.RegBtn>
+      </styeld.SignUpWrap>
+    </styeld.Container>
   );
-};
+}
 
 export default SignUpPage;

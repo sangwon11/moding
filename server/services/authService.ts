@@ -25,6 +25,7 @@ const authService = {
   }:SignUpParams) {
     
     const user = await userModel.findOne({ email }).lean();
+    
     if (user !== null) {
       const error = new CustomError("이미 가입된 email 입니다.", 409);
       throw error;

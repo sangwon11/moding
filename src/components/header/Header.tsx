@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import * as styled from './Header.styles';
 
 interface HeaderProps {}
 
 function Header(props: HeaderProps){
   const navigate = useNavigate();
 
-  const [userState, setUserState] = useState<string>("Logout");
-  const [navState, setNavState] = useState<string>("Nav");
-  const [searchInput, setSearchInput] = useState<string>("");
+  const [userState, setUserState] = useState("Logout");
+  const [navState, setNavState] = useState("Nav");
+  const [searchInput, setSearchInput] = useState("");
 
   const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value);
@@ -36,35 +37,16 @@ function Header(props: HeaderProps){
   };
 
   return (
-    <header className="text-white w-[1440px] mx-auto px-12 py-5 flex items-center justify-between">
-      {/*로고*/}
-      <div className="text-3xl font-bold w-1/12">Logo</div>
+    <styled.Container>
+      <styled.Logo>Logo</styled.Logo>
 
-      {/*Nav and Search*/}
-      <div className="flex w-9/12 mx-12 justify-between items-center ">
-
-        {/*Nav*/}
-        <nav
-          className={`bg-[#D9D9D9]/[.1] h-12 mx-4 flex relative rounded-3xl text-centerjustify-between transition-all ease-in ${
-            navState === "Nav"
-              ? "w-[640px] px-12 duration-1000"
-              : "w-14 duration-500"
-          }`}
-        >
-          <button
-            className={`px-3 py-2 absolute transition-all ease-in duration-500 delay-500 ${
-              navState === "Nav"
-                ? "invisible opacity-0 w-[0px]"
-                : "visible opacity-1"
-            }`}
-            onClick={navFunction}
-          >
-            <img
-              className="w-8"
+      <styled.NavWrap>
+        <styled.Nav $state={navState}>
+          <styled.NavDrawerBtn $state={navState} onClick={navFunction}>
+            <styled.NavDrawerSvg
               alt=""
-              src={require("../assets/svg/menu_icon.svg").default}
-            ></img>
-          </button>
+              src={require("../../assets/svg/menu_icon.svg").default}></styled.NavDrawerSvg>
+          </styled.NavDrawerBtn>
           {navItems.map((item, index) => (
             <button
               className={`min-w-[0px] w-[160px] text-lg text-white font-bold transition-all ease-in duration-100 ${
@@ -78,7 +60,7 @@ function Header(props: HeaderProps){
               {item.label}
             </button>
           ))}
-        </nav>
+        </styled.Nav>
 
         {/*Search*/}
         <div
@@ -87,10 +69,10 @@ function Header(props: HeaderProps){
           }`}
         >
           <input
-            className={`bg-transparent text-xl transition-all outline-none ease-in duration-1000 ${
+            className={`bg-transparent text-xl transition-all outline-none ease-in ${
               navState === "Nav"
-                ? "invisible w-0 duration-0"
-                : "visible w-[520px] mx-8"
+                ? "invisible w-[0px] duration-100"
+                : "visible w-[520px] mx-8 duration-1000"
             }`}
             value={searchInput}
             onChange={onChangeSearchInput}
@@ -99,11 +81,11 @@ function Header(props: HeaderProps){
             <img
               className="w-10"
               alt=""
-              src={require("../assets/svg/search_icon.svg").default}
+              src={require("../../assets/svg/search_icon.svg").default}
             ></img>
           </button>
         </div>
-      </div>
+      </styled.NavWrap>
 
       {/*Gnb*/}
       <div className="flex w-2/12 min-w-fit text-lg font-bold text-center space-x-2 justify-between">
@@ -122,20 +104,26 @@ function Header(props: HeaderProps){
           </>
         ) : (
           <>
-						<button className="bg-[#D9D9D9]/[.1] w-14 h-12 rounded-3xl ml-2 " onClick={searchFunction}>
-            <img
-              className="w-8 m-auto"
-              alt=""
-              src={require("../assets/svg/heart_icon.svg").default}
-            ></img>
-          </button>
-					<button className="bg-[#D9D9D9]/[.1] w-14 h-12 rounded-3xl" onClick={searchFunction}>
-            <img
-              className="w-8 m-auto"
-              alt=""
-              src={require("../assets/svg/user_icon.svg").default}
-            ></img>
-          </button>
+            <button
+              className="bg-[#D9D9D9]/[.1] w-14 h-12 rounded-3xl ml-2 "
+              onClick={searchFunction}
+            >
+              <img
+                className="w-8 m-auto"
+                alt=""
+                src={require("../../assets/svg/heart_icon.svg").default}
+              ></img>
+            </button>
+            <button
+              className="bg-[#D9D9D9]/[.1] w-14 h-12 rounded-3xl"
+              onClick={searchFunction}
+            >
+              <img
+                className="w-8 m-auto"
+                alt=""
+                src={require("../../assets/svg/user_icon.svg").default}
+              ></img>
+            </button>
             <button
               className="bg-[#D9D9D9]/[.1] w-32 h-12 rounded-3xl font-bold"
               onClick={() => navigate("/")}
@@ -145,7 +133,7 @@ function Header(props: HeaderProps){
           </>
         )}
       </div>
-    </header>
+    </styled.Container>
   );
 };
 
