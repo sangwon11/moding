@@ -1,4 +1,4 @@
-import multer, { StorageEngine } from "multer"; // DiskStorage 대신 StorageEngine을 가져옵니다
+import multer, { StorageEngine } from "multer";
 import path from "path";
 import { Request, Response } from "express";
 import { Router } from "express";
@@ -19,10 +19,9 @@ const storage: StorageEngine = multer.diskStorage({
     file: Express.Multer.File,
     cb: (error: Error | null, filename: string) => void
   ) {
-    // 업로드된 이미지 파일의 이름을 현재 시간 기반으로 생성
+    // 업로드된 이미지 파일의 원래 파일명 그대로 저장
     const fileExt = path.extname(file.originalname);
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, uniqueSuffix + fileExt);
+    cb(null, file.originalname);
   },
 });
 
