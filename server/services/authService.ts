@@ -19,7 +19,6 @@ interface LoginParams {
 }
 
 const authService = {
-  // 회원가입
   async signUp({
     email,
     password,

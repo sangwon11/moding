@@ -24,7 +24,6 @@ const userController = {
   async deleteUser(req: RequestIncludeJWT, res: any) {
     try {
       const userIdToDelete = req.user.userId;
-      console.log(userIdToDelete);
 
       const result = await userService.deleteUser(userIdToDelete);
 

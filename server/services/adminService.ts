@@ -18,7 +18,6 @@ const adminService = {
     email,
   }: SellerParams) {
     try {
-      // 필수 필드 확인
       if (
         !userId ||
         !companyName ||
@@ -29,13 +28,11 @@ const adminService = {
         throw new CustomError("모든 필수 필드를 입력해야 합니다.", 400);
       }
 
-      // 이미 셀러로 등록된 경우
       const existingSeller = await sellerModel.findOne({ userId });
       if (existingSeller) {
         throw new CustomError("이미 셀러로 등록되어 있습니다.", 400);
       }
 
-      // 셀러 등록
       const seller = new sellerModel({
         userId,
         companyName,
