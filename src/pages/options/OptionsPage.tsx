@@ -64,24 +64,24 @@ function OptionsPage() {
       .toString()
       .slice(5, -13)}월 ${date.toString().slice(8, -10)}일`;
   };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "/api/v1/fundings/657d2c31e09645b53dd9c7c4"
+      );
+      setFunding(response.data);
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "/api/v1/fundings/657d2c31e09645b53dd9c7c4"
-        );
-        setFunding(response.data);
-      } catch (error) {
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchData();
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="text-white">Loading...</div>;
   }
 
   return (
