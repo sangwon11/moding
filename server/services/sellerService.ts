@@ -3,7 +3,7 @@ import { sellerModel } from "../models";
 import CustomError from "../utils/customError";
 import { fundingModel } from "../models";
 
-interface CreateFundingParams {
+interface fundingParams {
   title: string;
   category: string;
   goalAmount: number;
@@ -32,7 +32,7 @@ const getUserIdFromRequest = (req: Request): string | null => {
 };
 
 const sellerService = {
-  async createFunding(req: Request, params: CreateFundingParams) {
+  async createFunding(req: Request, params: fundingParams) {
     const {
       title,
       category,
@@ -105,6 +105,36 @@ const sellerService = {
     await funding.save();
 
     return { success: true, message: "펀딩이 성공적으로 등록되었습니다." };
+  },
+  async updateFunding(fundingId: string, params: fundingParams) {
+    try {
+      const existingFunding = await fundingModel.findById(fundingId);
+
+      console.log("params:", params);
+
+      if (!existingFunding) {
+        return { success: false, message: "펀딩을 찾을 수 없습니다." };
+      }
+
+      // 여기에서 params에 따라 existingFunding 업데이트를 수행하세요.
+
+      // 예시: title 업데이트
+      existingFunding.title = params.title;
+
+      // 다른 필드들에 대한 업데이트도 수행하세요.
+
+      await existingFunding.save();
+
+      return {
+        success: true,
+        message: "펀딩 정보가 성공적으로 수정되었습니다.",
+        data: {
+          funding: existingFunding, // 업데이트된 펀딩 정보 반환
+        },
+      };
+    } catch (error) {
+      throw new CustomError("펀딩 정보를 수정할 수 없습니다.", 403);
+    }
   },
 };
 

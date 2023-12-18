@@ -12,6 +12,10 @@ const fundingSchema = new Schema(
       required: true,
       ref: "Category",
     },
+    title: {
+      type: String,
+      required: true,
+    },
     mainImageUrl: {
       type: String,
       required: true,

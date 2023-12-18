@@ -16,9 +16,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-const router = express.Router();
+const sellerRouter = express.Router();
 
-router.post(
+sellerRouter.post(
   "/",
   isAuthenticated,
   upload.fields([
@@ -28,4 +28,6 @@ router.post(
   asyncHandler(sellerController.createFunding)
 );
 
-export default router;
+sellerRouter.put("/:fundingId", asyncHandler(sellerController.updateFunding));
+
+export default sellerRouter;
