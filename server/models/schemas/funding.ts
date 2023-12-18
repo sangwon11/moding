@@ -31,11 +31,11 @@ const fundingSchema = new Schema(
       default: 0,
     },
     startDate: {
-      type: Date,
+      type: String,
       required: true,
     },
     endDate: {
-      type: Date,
+      type: String,
       required: true,
     },
     preorder: {
@@ -43,7 +43,7 @@ const fundingSchema = new Schema(
       default: true,
     },
     preorderDate: {
-      type: Date,
+      type: String,
       default: true,
     },
     deliveryPrice: {
@@ -51,7 +51,7 @@ const fundingSchema = new Schema(
       default: 0,
     },
     deliveryDate: {
-      type: Date,
+      type: String,
       required: true,
     },
     preorderBenefits: [
