@@ -6,6 +6,8 @@ import axios from "axios";
 interface FundingProps {
   title: string;
   options: OptionsProps[];
+  deliveryPrice: number;
+  deliveryDate: Date;
 }
 interface OptionsProps {
   _id: string;
@@ -14,8 +16,6 @@ interface OptionsProps {
   totalAmount: number;
   currentAmount: number;
   info: string;
-  deliveryPrice: number;
-  deliveryDate: Date;
 }
 
 function OptionsPage() {
@@ -25,6 +25,8 @@ function OptionsPage() {
   const [loading, setLoading] = useState(true);
   const [funding, setFunding] = useState<FundingProps>({
     title: "",
+    deliveryPrice: 0,
+    deliveryDate: new Date(),
     options: [
       {
         _id: "",
@@ -33,8 +35,6 @@ function OptionsPage() {
         totalAmount: 0,
         currentAmount: 0,
         info: "",
-        deliveryPrice: 0,
-        deliveryDate: new Date(),
       },
     ],
   });
@@ -110,10 +110,10 @@ function OptionsPage() {
             <styled.OptInfo>{item.info}</styled.OptInfo>
             <styled.OptBot>
               <styled.DeliveryPrice>
-                배송비 {formatPrice(item.deliveryPrice)} 원
+                배송비 {formatPrice(funding.deliveryPrice)} 원
               </styled.DeliveryPrice>
               <styled.DeliveryDate>
-                {formatDate(item.deliveryDate)}부터 순차적으로 배송예정
+                {formatDate(funding.deliveryDate)}부터 순차적으로 배송예정
               </styled.DeliveryDate>
             </styled.OptBot>
           </styled.OptWrap>

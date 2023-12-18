@@ -1,20 +1,21 @@
 import { useLocation } from "react-router-dom";
 import * as styled from "./PaymentPage.styles";
+import Payment from "../../components/Pay"
 
 interface FundingProps {
-    title: string;
-    options: OptionsProps[];
-  }
+  title: string;
+  options: OptionsProps[];
+  deliveryPrice: number;
+  deliveryDate: Date;
+}
 interface OptionsProps {
-    _id: string;
-    title: string;
-    price: number;
-    totalAmount: number;
-    currentAmount: number;
-    info: string;
-    deliveryPrice: number;
-    deliveryDate: Date;
-  }
+  _id: string;
+  title: string;
+  price: number;
+  totalAmount: number;
+  currentAmount: number;
+  info: string;
+}
 
 function PaymentPage() {
   const state = useLocation().state;
@@ -46,10 +47,11 @@ function PaymentPage() {
             <styled.SupPrice>{formatPrice(supPrice)}원</styled.SupPrice>
           </styled.SupPriceWrap>
           <styled.DeliveryPriceWrap>
-            <styled.DeliveryPrice>{formatPrice(funding.options[0].deliveryPrice)}원</styled.DeliveryPrice>
+            <styled.DeliveryPrice>{formatPrice(funding.deliveryPrice)}원</styled.DeliveryPrice>
           </styled.DeliveryPriceWrap>
         </styled.TotalPriceWrap>
       </styled.ContentsWrap>
+      <Payment></Payment>
     </styled.Container>
   );
 }
