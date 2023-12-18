@@ -21,6 +21,8 @@ const createParams = (
     deliveryDate,
     options,
     seller,
+    deliveryNumber,
+    deliveryType,
   } = req.body;
 
   return {
@@ -38,6 +40,8 @@ const createParams = (
     deliveryDate,
     options,
     seller,
+    deliveryNumber,
+    deliveryType,
   };
 };
 
@@ -93,7 +97,7 @@ const sellerController = {
       if (result.success) {
         res.status(200).json(result);
       } else {
-        res.status(404).json(result); // 펀딩을 찾을 수 없는 경우 404 상태 코드 반환
+        res.status(404).json(result);
       }
     } catch (error) {
       if (error instanceof CustomError) {
