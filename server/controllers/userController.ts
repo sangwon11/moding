@@ -1,9 +1,10 @@
+import { RequestIncludeJWT } from "./../routes/v1/userRouter";
 import { Request, Response } from "express";
 import userService from "../services/userService";
 import CustomError from "../utils/customError";
 
 const userController = {
-  async getUserProfile(req: any, res: any) {
+  async getUserProfile(req: RequestIncludeJWT, res: Response) {
     try {
       const user = await userService.getUserProfile(req.user.userId);
 
@@ -20,7 +21,7 @@ const userController = {
       }
     }
   },
-  async deleteUser(req: any, res: any) {
+  async deleteUser(req: RequestIncludeJWT, res: any) {
     try {
       const userIdToDelete = req.user.userId;
       console.log(userIdToDelete);

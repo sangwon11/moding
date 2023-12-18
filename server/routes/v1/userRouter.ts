@@ -1,20 +1,33 @@
-import userController from "../../controllers/userController";
+import { Request, Response } from "express";
 import isAuthenticated from "../../middleware/isAuthenticated";
 import asyncHandler from "../../utils/asyncHandler";
 import { Router } from "express";
+import userController from "../../controllers/userController";
+
+export interface RequestIncludeJWT extends Request {
+  user: {
+    em: string;
+    userId: string;
+    role: string;
+  };
+}
 
 const userRouter = Router();
 
 userRouter.get(
   "/me",
   isAuthenticated,
-  asyncHandler(userController.getUserProfile)
+  asyncHandler((req: Request, res: Response) =>
+    userController.getUserProfile(req as RequestIncludeJWT, res)
+  )
 );
 
 userRouter.delete(
   "/withdraw",
   isAuthenticated,
-  asyncHandler(userController.deleteUser)
+  asyncHandler((req: Request, res: Response) =>
+    userController.deleteUser(req as RequestIncludeJWT, res)
+  )
 );
 
 export default userRouter;
