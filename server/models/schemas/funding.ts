@@ -12,6 +12,10 @@ const fundingSchema = new Schema(
       required: true,
       ref: "Category",
     },
+    title: {
+      type: String,
+      required: true,
+    },
     mainImageUrl: {
       type: String,
       required: true,
@@ -31,11 +35,11 @@ const fundingSchema = new Schema(
       default: 0,
     },
     startDate: {
-      type: Date,
+      type: String,
       required: true,
     },
     endDate: {
-      type: Date,
+      type: String,
       required: true,
     },
     preorder: {
@@ -43,8 +47,16 @@ const fundingSchema = new Schema(
       default: true,
     },
     preorderDate: {
-      type: Boolean,
+      type: String,
       default: true,
+    },
+    deliveryPrice: {
+      type: Number,
+      default: 0,
+    },
+    deliveryDate: {
+      type: String,
+      required: true,
     },
     preorderBenefits: [
       {
@@ -84,16 +96,16 @@ const fundingSchema = new Schema(
           type: String,
           required: true,
         },
-        deliveryPrice: {
-          type: Number,
-          default: 0,
-        },
-        deliveryDate: {
-          type: Date,
-          required: true,
-        },
       },
     ],
+    deliveryNumber: {
+      type: String,
+      required: true,
+    },
+    deliveryType: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

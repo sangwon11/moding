@@ -45,5 +45,4 @@ const userSchema = new Schema(
     versionKey: false,
   }
 );
-
 export default userSchema;
