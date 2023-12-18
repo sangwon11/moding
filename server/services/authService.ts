@@ -54,7 +54,6 @@ const authService = {
 
   async signIn({ email, password }: LoginParams) {
     const user = await userModel.findOne({ email }).lean();
-    console.log(user);
     if (!user) {
       throw new CustomError("이메일과 비밀번호가 일치하지 않습니다", 401);
     }

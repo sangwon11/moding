@@ -1,28 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as styled from "./Header.styles";
+import Cookies from "js-cookie";
+import { useRecoilState } from 'recoil';
+import { HeaderRenderAtom } from '../../recoil/HeaderRenderAtom';
 
-interface HeaderProps {}
-
-function Header(props: HeaderProps) {
+function Header() {
   const navigate = useNavigate();
+  const [headerRender, setHeaderRender] = useRecoilState(HeaderRenderAtom);
 
   const [isSignIn, setIsSignIn] = useState(false);
   const [navState, setNavState] = useState(true);
   const [searchInput, setSearchInput] = useState("");
 
   const checkSignInState = () => {
-    const token = localStorage.getItem("Token");
-    if (!token) {
-      setIsSignIn(false);
-    } else {
+    const jwtToken = Cookies.get('jwt');
+    if (jwtToken) {
       setIsSignIn(true);
+    } else {
+      setIsSignIn(false);
     }
   };
 
+  const logoutClick = () => {
+    if(window.confirm("로그아웃 하시겠습니까?")){
+      Cookies.remove('jwt');
+      setHeaderRender((prevCount) => prevCount + 1);
+      navigate("/");
+    }else{}
+  }
+
   useEffect(() => {
     checkSignInState();
-  }, []);
+  }, [headerRender]);
 
   const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value);
@@ -91,27 +101,27 @@ function Header(props: HeaderProps) {
       <styled.GnbWrap>
         {isSignIn === false ? (
           <>
-            <styled.SignInBtn>로그인</styled.SignInBtn>
+            <styled.SignInBtn onClick={() => navigate("/sign-in")}>로그인</styled.SignInBtn>
             <styled.SignUpBtn onClick={() => navigate("/sign-up")}>
               회원가입
             </styled.SignUpBtn>
           </>
         ) : (
           <>
-            <styled.MyLikeBtn onClick={searchFunction}>
+            <styled.MyLikeBtn>
               <styled.GnbSvg
                 alt=""
                 src={require("../../assets/svg/heart_icon.svg").default}
               ></styled.GnbSvg>
             </styled.MyLikeBtn>
-            <styled.MyPageBtn onClick={searchFunction}>
+            <styled.MyPageBtn>
               <styled.GnbSvg
                 alt=""
                 src={require("../../assets/svg/user_icon.svg").default}
               ></styled.GnbSvg>
             </styled.MyPageBtn>
-            <styled.ProjectBtn onClick={() => navigate("/")}>
-              프로젝트
+            <styled.ProjectBtn onClick={logoutClick}>
+              로그아웃
             </styled.ProjectBtn>
           </>
         )}
