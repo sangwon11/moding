@@ -43,10 +43,13 @@ const userService = {
       const user = await userModel.findById(userId);
 
       if (!user) {
-        throw new Error("사용자를 찾을 수 없습니다.");
+        throw { status: 404, message: "사용자를 찾을 수 없습니다." };
       }
 
       if (updateData.password) {
+        if (updateData.password === user.password) {
+          throw { status: 400, message: "동일한 비밀번호 입니다." };
+        }
         user.password = updateData.password;
       }
 
@@ -68,9 +71,17 @@ const userService = {
 
       await user.save();
 
-      return { success: true, message: "사용자 정보가 업데이트되었습니다." };
+      return {
+        success: true,
+        message: "사용자 정보가 업데이트되었습니다.",
+        status: 200,
+      };
     } catch (error) {
-      throw error;
+      return {
+        success: false,
+        message: "서버 오류입니다.",
+        status: 500,
+      };
     }
   },
 };

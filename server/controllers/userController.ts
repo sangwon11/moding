@@ -37,6 +37,31 @@ const userController = {
       }
     }
   },
+  async updateUserProfile(req: RequestIncludeJWT, res: Response) {
+    try {
+      const userIdToUpdate = req.user.userId;
+      const updateData = req.body;
+
+      const result = await userService.updateUserProfile(
+        userIdToUpdate,
+        updateData
+      );
+
+      if (result.success) {
+        res.status(200).json(result);
+      } else if (result.status === 400) {
+        res.status(result.status).json({ error: result.message });
+      } else if (result.status === 404) {
+        res.status(result.status).json({ error: result.message });
+      }
+    } catch (error) {
+      if (error instanceof CustomError) {
+        res.status(error.status).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "서버 오류입니다." });
+      }
+    }
+  },
 };
 
 export default userController;

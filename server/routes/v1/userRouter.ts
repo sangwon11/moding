@@ -30,4 +30,12 @@ userRouter.delete(
   )
 );
 
+userRouter.put(
+  "/me",
+  isAuthenticated,
+  asyncHandler((req: Request, res: Response) =>
+    userController.updateUserProfile(req as RequestIncludeJWT, res)
+  )
+);
+
 export default userRouter;
