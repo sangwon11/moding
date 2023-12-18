@@ -71,7 +71,6 @@ function OptionsPage() {
         const response = await axios.get(
           "/api/v1/fundings/657d2c31e09645b53dd9c7c4"
         );
-        console.log(new Date());
         setFunding(response.data);
       } catch (error) {
       } finally {
