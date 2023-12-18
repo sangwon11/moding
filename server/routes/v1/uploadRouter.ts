@@ -19,9 +19,13 @@ const storage: StorageEngine = multer.diskStorage({
     file: Express.Multer.File,
     cb: (error: Error | null, filename: string) => void
   ) {
-    // 업로드된 이미지 파일의 원래 파일명 그대로 저장
-    const fileExt = path.extname(file.originalname);
-    cb(null, file.originalname);
+    // 파일명을 고유하게 생성하기 위해 현재 시간을 기반으로 파일명을 생성
+    const uniqueFilename =
+      Date.now() +
+      "-" +
+      Math.round(Math.random() * 1e9) +
+      path.extname(file.originalname);
+    cb(null, uniqueFilename);
   },
 });
 
