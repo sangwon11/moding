@@ -98,6 +98,14 @@ const fundingSchema = new Schema(
         },
       },
     ],
+    deliveryNumber: {
+      type: String,
+      required: true,
+    },
+    deliveryType: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

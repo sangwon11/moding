@@ -136,6 +136,41 @@ const sellerService = {
       throw new CustomError("펀딩 정보를 수정할 수 없습니다.", 403);
     }
   },
+  async deliveryUpdate(
+    fundingId: string,
+    deliveryNumber: string,
+    deliveryType: string
+  ) {
+    console.log("fundingId:", fundingId);
+    console.log("deliveryNumber:", deliveryNumber);
+    console.log("deliveryType:", deliveryType);
+    try {
+      // 펀딩 정보 찾기
+      const funding = await fundingModel.findById(fundingId);
+
+      console.log(funding);
+
+      if (!funding) {
+        return { success: false, message: "펀딩을 찾을 수 없습니다." };
+      }
+
+      // 배송 정보 업데이트
+      funding.deliveryNumber = deliveryNumber;
+      funding.deliveryType = deliveryType;
+
+      console.log(funding);
+
+      await funding.save();
+
+      return {
+        success: true,
+        message: "배송 정보가 성공적으로 업데이트되었습니다.",
+      };
+    } catch (error) {
+      console.log(error);
+      throw new CustomError("배송 정보를 업데이트할 수 없습니다.", 500);
+    }
+  },
 };
 
 export default sellerService;
