@@ -134,11 +134,11 @@ function FundingPage() {
           <styled.FundingInfoWrap></styled.FundingInfoWrap>
         </styled.MainWrap>
         <styled.FloatingWrap>
-          <styled.NavWrap>
+          <styled.FloatingNavWrap>
             <styled.NavRightWrap>
               <styled.NavRightBtn>펀딩</styled.NavRightBtn>
             </styled.NavRightWrap>
-          </styled.NavWrap>
+          </styled.FloatingNavWrap>
           <styled.FloatingInfoWrap></styled.FloatingInfoWrap>
         </styled.FloatingWrap>
       </styled.ContentsWrap>
