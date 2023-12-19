@@ -62,10 +62,6 @@ function FundingPage() {
     }
   };
 
-  const percentAmount = Math.floor(
-    (funding.currentAmount / funding.goalAmount) * 100
-  );
-
   const formatPrice = (num: number) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
@@ -79,6 +75,10 @@ function FundingPage() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const percentAmount = Math.floor(
+    (funding.currentAmount / funding.goalAmount) * 100 - 40
+  );
 
   if (loading) {
     return <div className="text-white">Loading...</div>;
@@ -121,6 +121,7 @@ function FundingPage() {
           </styled.PercentBarWrap>
         </styled.ProcessWrap>
       </styled.AttainmentWrap>
+
       <styled.ContentsWrap>
         <styled.MainWrap>
           <styled.NavWrap>
@@ -132,8 +133,14 @@ function FundingPage() {
             <styled.NavBtn>판매자정보</styled.NavBtn>
             <styled.NavBtn>환불정책</styled.NavBtn>
           </styled.NavWrap>
-          <styled.FundingInfoWrap></styled.FundingInfoWrap>
+
+          <styled.FundingInfoWrap>
+            <styled.MainImgWrap>
+              <styled.MainImg src={funding.mainImageUrl}></styled.MainImg>
+            </styled.MainImgWrap>
+          </styled.FundingInfoWrap>
         </styled.MainWrap>
+
         <styled.FloatingWrap>
           <styled.FloatingNavWrap>
             <styled.NavRightWrap>

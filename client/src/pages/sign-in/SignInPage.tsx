@@ -18,6 +18,7 @@ import {
   StyledForm,
   StyledInput,
 } from "./SignInPage.styles";
+import { axiosInstance } from "../../utils/axios.utils";
 
 function SignInPage() {
     // 위동현 : Recoil 헤더 리렌더링 전역변수 선언
@@ -43,7 +44,7 @@ function SignInPage() {
   // 위동현 : 에러처리방식, 헤더리렌더 전역변수 추가
   const handleLoginClick = async () => {
     try {
-      const response = await axios.post("/api/v1/auth/sign-in", {
+      const response = await axiosInstance.post("/auth/sign-in", {
         email,
         password,
       });

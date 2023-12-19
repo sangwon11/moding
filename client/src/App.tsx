@@ -12,7 +12,7 @@ import FundingPage from "./pages/funding/FundingPage";
 function App() {
   return (
     <BrowserRouter>
-      <div className="scrollbar bg-[#03000C] min-w-[1440px] w-auto min-h-screen h-auto">
+      <div className="scrollbar bg-[#03000C] min-w-[1440px] w-auto min-h-screen bg-auto">
         <Header />
         <Routes>
           <Route path="/" element={<MainPage />} />

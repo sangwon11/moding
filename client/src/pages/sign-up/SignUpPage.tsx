@@ -9,6 +9,7 @@ import {
   checkValidUserName,
 } from "../../utils/regExp.utils";
 import * as styeld from "./SingUpPage.styles";
+import { axiosInstance } from "../../utils/axios.utils";
 
 function SignUpPage() {
   const navigate = useNavigate();
@@ -96,7 +97,7 @@ function SignUpPage() {
 
   const insertData = async () => {
     try {
-      const response = await axios.post("/api/v1/auth/sign-up", formData);
+      const response = await axiosInstance.post("/auth/sign-up", formData);
       if (response.status === 201) {
         window.alert("성공적으로 가입되었습니다.");
         navigate("/");
