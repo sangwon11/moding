@@ -85,6 +85,25 @@ const sellerController = {
         .json({ success: false, error: "서버 오류: 나중에 다시 시도하세요." });
     }
   },
+
+  async deleteMember(req: Request, res: Response) {
+    try {
+      const { memberId } = req.params;
+
+      const deletionResult = await userService.deleteMember(memberId);
+
+      if (deletionResult.success) {
+        res.status(200).json(deletionResult);
+      } else {
+        res.status(400).json(deletionResult);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      res
+        .status(500)
+        .json({ success: false, error: "서버 오류: 나중에 다시 시도하세요." });
+    }
+  },
 };
 
 export default sellerController;

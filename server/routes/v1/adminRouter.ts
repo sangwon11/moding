@@ -15,4 +15,9 @@ adminRouter.put(
   asyncHandler(adminController.updateUsername)
 );
 
+adminRouter.post(
+  "/member/delete/:memberId",
+  asyncHandler(adminController.deleteMember)
+);
+
 export default adminRouter;
