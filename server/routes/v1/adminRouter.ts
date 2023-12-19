@@ -10,4 +10,9 @@ adminRouter.get("/members", asyncHandler(adminController.getAllUsers));
 
 adminRouter.get("/member/:memberId", asyncHandler(adminController.getUserById));
 
+adminRouter.put(
+  "/member/:memberId",
+  asyncHandler(adminController.updateUsername)
+);
+
 export default adminRouter;

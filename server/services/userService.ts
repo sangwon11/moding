@@ -106,6 +106,30 @@ const userService = {
       throw error;
     }
   },
+  async updateUsername(userId: string, newUsername: string) {
+    try {
+      const user = await userModel.findById(userId);
+
+      if (!user) {
+        throw { status: 404, message: "사용자를 찾을 수 없습니다." };
+      }
+
+      user.username = newUsername;
+      await user.save();
+
+      return {
+        success: true,
+        message: "사용자명이 업데이트되었습니다.",
+        status: 200,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: "서버 오류입니다.",
+        status: 500,
+      };
+    }
+  },
 };
 
 export default userService;

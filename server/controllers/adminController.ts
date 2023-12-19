@@ -62,6 +62,29 @@ const sellerController = {
         .json({ success: false, error: "서버 오류: 나중에 다시 시도하세요." });
     }
   },
+
+  async updateUsername(req: Request, res: Response) {
+    try {
+      const { memberId } = req.params;
+      const { newUsername } = req.body;
+
+      const updatedUser = await userService.updateUsername(
+        memberId,
+        newUsername
+      );
+
+      if (updatedUser.success) {
+        res.status(200).json(updatedUser);
+      } else {
+        res.status(400).json(updatedUser);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      res
+        .status(500)
+        .json({ success: false, error: "서버 오류: 나중에 다시 시도하세요." });
+    }
+  },
 };
 
 export default sellerController;
