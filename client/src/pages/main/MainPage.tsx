@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css"; // 메인 슬라이드
 import "slick-carousel/slick/slick-theme.css";
 import "../main/Main.css";
 import Product from "../../components/Product";
+import {axiosInstance} from "../../utils/axios.utils";
 
 // 슬라이더 설정
 const sliderSettings = {
@@ -38,7 +39,7 @@ function MainPage() {
     setImages: React.Dispatch<React.SetStateAction<ImageData[]>>
   ) {
     try {
-      const response = await axios.get(`http://localhost:3000/${endpoint}`);
+      const response = await axiosInstance.get(`${endpoint}`);
       setImages(response.data);
     } catch (error) {
       console.error(`Fetching ${endpoint} images failed`, error);
@@ -51,7 +52,7 @@ function MainPage() {
 
   useEffect(() => {
     // 처음 컴포넌트 마운트 시 추천상품 이미지 데이터를 로드
-    fetchImages("recommend", setRecommendImages);
+    fetchImages("/recommend", setRecommendImages);
   }, []);
 
   // 탭이 바뀔 때마다 해당 이미지 데이터를 로드

@@ -1,13 +1,16 @@
 import mongoose from "mongoose";
 import Express, { Request, Response, NextFunction } from "express";
+import * as path from 'path';
+const cors = require('cors');
 import router from "./routes";
 import CustomError from "./utils/customError";
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config({ path: path.join(process.cwd(), '.env') });
 
 const app = Express();
 const port = 8080;
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: true }));
+app.use(cors());
 
 const mongoURI: string = process.env.MONGODB || "";
 

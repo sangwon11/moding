@@ -120,13 +120,13 @@ const sellerService = {
 
       return { success: true, message: "펀딩이 성공적으로 등록되었습니다." };
     } catch (error) {
-      console.error("Error occurred while creating funding:", error);
+      console.error("error occurred while creating funding:", error);
 
       if (error instanceof CustomError) {
         console.error("CustomError: ", error.message, "Status: ", error.status);
         throw error;
       } else {
-        console.error("Unknown Error: ", error);
+        console.error("Unknown error: ", error);
         throw new CustomError("서버 오류입니다.", 500);
       }
     }

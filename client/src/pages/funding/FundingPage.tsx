@@ -1,6 +1,7 @@
 import * as styled from "./FundingPage.styles";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import {axiosInstance} from "../../utils/axios.utils";
 
 interface FundingProps {
   title: string;
@@ -51,8 +52,8 @@ function FundingPage() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        "/api/v1/fundings/657d2c31e09645b53dd9c7c4"
+      const response = await axiosInstance.get(
+        "/fundings/657d2c31e09645b53dd9c7c4"
       );
       setFunding(response.data);
     } catch (error) {

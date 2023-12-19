@@ -3,6 +3,7 @@ import fundingService from "../services/fundingService";
 
 const fundingController = {
   async getFundings(req: Request, res: Response) {
+    console.log('zzz');
     const fundings = await fundingService.getFundings();
 
     res.status(200).json({
