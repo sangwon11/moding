@@ -2,10 +2,12 @@ import asyncHandler from "../../utils/asyncHandler";
 import adminController from "../../controllers/adminController";
 import { Router } from "express";
 
-const sellerRouter = Router();
+const adminRouter = Router();
 
-sellerRouter.post("/seller/apply", asyncHandler(adminController.applySeller));
+adminRouter.post("/seller/apply", asyncHandler(adminController.applySeller));
 
-sellerRouter.get("/members", asyncHandler(adminController.getAllUsers));
+adminRouter.get("/members", asyncHandler(adminController.getAllUsers));
 
-export default sellerRouter;
+adminRouter.get("/member/:memberId", asyncHandler(adminController.getUserById));
+
+export default adminRouter;

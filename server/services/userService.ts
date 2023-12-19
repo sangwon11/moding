@@ -93,6 +93,19 @@ const userService = {
       throw error;
     }
   },
+  async getUserById(userId: string) {
+    try {
+      const user = await userModel.findById(userId);
+
+      if (!user) {
+        throw new Error("사용자를 찾을 수 없습니다.");
+      }
+
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 export default userService;
