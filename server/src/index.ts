@@ -1,16 +1,13 @@
-// npx ts-node index.ts
-
 import mongoose from "mongoose";
 import Express, { Request, Response, NextFunction } from "express";
 import router from "./routes";
-import bodyParser from "body-parser";
 import CustomError from "./utils/customError";
 require("dotenv").config({ path: "../.env" });
 
 const app = Express();
 const port = 8080;
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(Express.json());
+app.use(Express.urlencoded({ extended: true }));
 
 const mongoURI: string = process.env.MONGODB || "";
 
