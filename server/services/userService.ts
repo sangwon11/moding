@@ -84,6 +84,85 @@ const userService = {
       };
     }
   },
+  async getAllUsers() {
+    try {
+      const users = await userModel.find({ deletedAt: null });
+
+      return users;
+    } catch (error) {
+      throw error;
+    }
+  },
+  async getUserById(userId: string) {
+    try {
+      const user = await userModel.findById(userId);
+
+      if (!user) {
+        throw new Error("사용자를 찾을 수 없습니다.");
+      }
+
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  },
+  async updateUsername(userId: string, newUsername: string) {
+    try {
+      const user = await userModel.findById(userId);
+
+      if (!user) {
+        throw { status: 404, message: "사용자를 찾을 수 없습니다." };
+      }
+
+      user.username = newUsername;
+      await user.save();
+
+      return {
+        success: true,
+        message: "사용자명이 업데이트되었습니다.",
+        status: 200,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: "서버 오류입니다.",
+        status: 500,
+      };
+    }
+  },
+  async deleteMember(userId: string) {
+    try {
+      const user = await userModel.findById(userId);
+
+      if (!user) {
+        throw { status: 404, message: "사용자를 찾을 수 없습니다." };
+      }
+
+      user.deletedAt = new Date();
+      await user.save();
+
+      return {
+        success: true,
+        message: "사용자가 삭제되었습니다.",
+        status: 200,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: "서버 오류입니다.",
+        status: 500,
+      };
+    }
+  },
+  async getSellers() {
+    try {
+      const sellers = await userModel.find({ role: "seller" });
+
+      return sellers;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 export default userService;

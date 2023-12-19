@@ -1,5 +1,6 @@
 import { sellerModel } from "../models";
 import CustomError from "../utils/customError";
+import { userModel } from "../models";
 
 interface SellerParams {
   userId: string;
@@ -40,7 +41,13 @@ const adminService = {
         phoneNumber,
         email,
       });
+
       await seller.save();
+
+      const updatedUser = await userModel.findOneAndUpdate(
+        { email },
+        { role: "seller" }
+      );
 
       return { success: true, message: "셀러 신청이 완료되었습니다." };
     } catch (error) {

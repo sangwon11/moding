@@ -22,7 +22,7 @@ userRouter.get(
   )
 );
 
-userRouter.delete(
+userRouter.post(
   "/withdraw",
   isAuthenticated,
   asyncHandler((req: Request, res: Response) =>
