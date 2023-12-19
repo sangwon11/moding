@@ -7,6 +7,7 @@ import Main from "./pages/hooks/custompopup/main";
 import SignInPage from "./pages/sign-in/SignInPage";
 import OptionsPage from "./pages/options/OptionsPage";
 import PaymentPage from "./pages/payment/PaymentPage";
+import FundingPage from "./pages/funding/FundingPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/sign-in" element={<SignInPage />} />
           <Route path="/options" element={<OptionsPage />} />
           <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/funding" element={<FundingPage />} />
         </Routes>
       </div>
     </BrowserRouter>
