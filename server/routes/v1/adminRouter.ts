@@ -6,4 +6,6 @@ const sellerRouter = Router();
 
 sellerRouter.post("/seller/apply", asyncHandler(adminController.applySeller));
 
+sellerRouter.get("/members", asyncHandler(adminController.getAllUsers));
+
 export default sellerRouter;

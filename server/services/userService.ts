@@ -84,6 +84,15 @@ const userService = {
       };
     }
   },
+  async getAllUsers() {
+    try {
+      const users = await userModel.find({ deletedAt: null });
+
+      return users;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 export default userService;
