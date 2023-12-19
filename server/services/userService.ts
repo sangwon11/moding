@@ -154,6 +154,15 @@ const userService = {
       };
     }
   },
+  async getSellers() {
+    try {
+      const sellers = await userModel.find({ role: "seller" });
+
+      return sellers;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 export default userService;

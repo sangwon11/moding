@@ -20,4 +20,6 @@ adminRouter.post(
   asyncHandler(adminController.deleteMember)
 );
 
+adminRouter.get("/sellers", asyncHandler(adminController.getSellers));
+
 export default adminRouter;
