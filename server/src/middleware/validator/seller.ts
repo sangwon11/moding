@@ -13,6 +13,7 @@ const createFundingValidator = [
     .isArray({ min: 2 })
     .withMessage("최소 2개 이상의 이미지를 업로드하세요."),
   body("deliveryPrice")
+    .optional()
     .isNumeric()
     .withMessage("유효한 배송 가격을 입력하세요."),
   body("deliveryDate").isDate().withMessage("유효한 배송 날짜를 입력하세요."),
