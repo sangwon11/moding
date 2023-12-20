@@ -1,12 +1,6 @@
 import { userModel } from "../models";
-
-interface UpdateUserData {
-  password?: string;
-  phoneNumber?: string;
-  postCode?: number;
-  address?: string;
-  addressDetail?: string;
-}
+import { UpdateUserData } from "../interface/interfaces";
+import CustomError from "../utils/customError";
 
 const userService = {
   async getUserProfile(userId: string) {
@@ -14,7 +8,7 @@ const userService = {
       const user = await userModel.findById(userId);
 
       if (!user) {
-        throw new Error("사용자를 찾을 수 없습니다.");
+        throw new CustomError("사용자를 찾을 수 없습니다.", 404);
       }
 
       return user;
@@ -27,7 +21,7 @@ const userService = {
       const user = await userModel.findById(userId);
 
       if (!user) {
-        throw new Error("사용자를 찾을 수 없습니다.");
+        throw new CustomError("사용자를 찾을 수 없습니다.", 404);
       }
 
       user.deletedAt = new Date();
@@ -43,31 +37,14 @@ const userService = {
       const user = await userModel.findById(userId);
 
       if (!user) {
-        throw { status: 404, message: "사용자를 찾을 수 없습니다." };
+        throw new CustomError("사용자를 찾을 수 없습니다.", 404);
       }
 
-      if (updateData.password) {
-        if (updateData.password === user.password) {
-          throw { status: 400, message: "동일한 비밀번호 입니다." };
-        }
-        user.password = updateData.password;
+      if (updateData.password && updateData.password === user.password) {
+        throw new CustomError("동일한 비밀번호입니다.", 409);
       }
 
-      if (updateData.phoneNumber) {
-        user.phoneNumber = updateData.phoneNumber;
-      }
-
-      if (updateData.postCode) {
-        user.postCode = updateData.postCode;
-      }
-
-      if (updateData.address) {
-        user.address = updateData.address;
-      }
-
-      if (updateData.addressDetail) {
-        user.addressDetail = updateData.addressDetail;
-      }
+      Object.assign(user, updateData);
 
       await user.save();
 
@@ -77,6 +54,7 @@ const userService = {
         status: 200,
       };
     } catch (error) {
+      console.error("오류 발생:", error);
       return {
         success: false,
         message: "서버 오류입니다.",
@@ -98,7 +76,7 @@ const userService = {
       const user = await userModel.findById(userId);
 
       if (!user) {
-        throw new Error("사용자를 찾을 수 없습니다.");
+        throw new CustomError("사용자를 찾을 수 없습니다.", 404);
       }
 
       return user;
@@ -111,7 +89,7 @@ const userService = {
       const user = await userModel.findById(userId);
 
       if (!user) {
-        throw { status: 404, message: "사용자를 찾을 수 없습니다." };
+        throw new CustomError("사용자를 찾을 수 없습니다.", 404);
       }
 
       user.username = newUsername;
@@ -135,7 +113,7 @@ const userService = {
       const user = await userModel.findById(userId);
 
       if (!user) {
-        throw { status: 404, message: "사용자를 찾을 수 없습니다." };
+        throw new CustomError("사용자를 찾을 수 없습니다.", 404);
       }
 
       user.deletedAt = new Date();
