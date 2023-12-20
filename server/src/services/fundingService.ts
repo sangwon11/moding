@@ -3,8 +3,15 @@ import CustomError from "../utils/customError";
 
 const fundingService = {
   async getFundings() {
-    const fundings = await fundingModel.find().lean();
-    return fundings;
+    try {
+      const fundings = await fundingModel.find().lean();
+      return fundings;
+    } catch (error) {
+      throw new CustomError(
+        "상품 정보를 가져오는 중에 오류가 발생했습니다.",
+        500
+      );
+    }
   },
 
   async getFundingById(id: string) {
