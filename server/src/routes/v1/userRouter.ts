@@ -33,8 +33,8 @@ userRouter.post(
 
 userRouter.put(
   "/me",
-  isAuthenticated,
   updateUserValidator,
+  isAuthenticated,
   validateError,
   asyncHandler((req: Request, res: Response) =>
     userController.updateUserProfile(req as RequestIncludeJWT, res)
