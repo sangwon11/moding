@@ -2,7 +2,11 @@ import { Schema } from 'mongoose';
 
 const categorySchema = new Schema(
   {
-    name: {
+    categoryId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+    },
+    categoryName: {
       type: String,
       required: true,
     },

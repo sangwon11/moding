@@ -53,8 +53,8 @@ interface selectedProductParams {
 const orderController = {
   // 주문목록 조회
   async getOrders(req: Request, res: Response) {
-    // const userId = res.locals.user.userId;
-    const orders = await orderService.getOrders(req.params.userId);
+    const userId = res.locals.user.userId;
+    const orders = await orderService.getOrders(userId);
 
     res.status(200).json({
       error: null,

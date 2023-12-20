@@ -2,7 +2,8 @@ import { categoryModel } from '../models';
 import CustomError from '../utils/customError';
 
 interface categoryParams {
-  name: String;
+  categoryId: object;
+  categoryName: string;
 }
 
 const categoryService = {
@@ -11,15 +12,22 @@ const categoryService = {
     return categories;
   },
 
-  async postCategories({ name }: categoryParams) {
-    const categoryName = await categoryModel.findOne({ name }).lean();
-    if (categoryName !== null) {
+  async getCategoryById(categoryId: object) {
+    const category = await categoryModel.findById({ categoryId }).lean();
+    return category;
+  },
+
+  async postCategories({ categoryName }: categoryParams) {
+    const makeCategoryName = await categoryModel
+      .findOne({ categoryName })
+      .lean();
+    if (makeCategoryName !== null) {
       const error = new CustomError('이미 존재하는 category 입니다.', 409);
       throw error;
     }
 
     const newCategory = await categoryModel.create({
-      name: name,
+      categoryName: categoryName,
     });
     return newCategory.toObject();
   },
