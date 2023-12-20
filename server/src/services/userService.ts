@@ -54,6 +54,7 @@ const userService = {
         status: 200,
       };
     } catch (error) {
+      console.error("오류 발생:", error);
       return {
         success: false,
         message: "서버 오류입니다.",

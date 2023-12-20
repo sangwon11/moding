@@ -12,7 +12,6 @@ interface Request extends ExpressRequest {
   user?: User;
 }
 const getUserIdFromRequest = (req: Request): string | null => {
-  console.log(req.user);
   return req.user ? req.user.userId : null;
 };
 
