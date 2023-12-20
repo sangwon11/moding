@@ -1,33 +1,14 @@
-import * as styled from "./FundingPage.styles";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import {axiosInstance} from "../../utils/axios.utils";
-
-interface FundingProps {
-  title: string;
-  category: string;
-  mainImageUrl: string;
-  goalAmount: number;
-  currentAmount: number;
-  startDate: Date;
-  endDate: Date;
-  preorder: boolean;
-  options: OptionsProps[];
-  deliveryPrice: number;
-  deliveryDate: Date;
-}
-interface OptionsProps {
-  _id: string;
-  title: string;
-  price: number;
-  totalAmount: number;
-  currentAmount: number;
-  info: string;
-}
+import { axiosInstance } from "../../utils/axios.utils";
+import { fundingProps, optionsProps } from "../../interface/schema.interface";
+import { formatPrice, formatDate, formatPercentage } from "../../utils/format.utils";
+import FundingInfo from "./components/FundingInfo";
+import * as styled from "./FundingPage.styles";
+import FloatingBar from "./components/Floating";
 
 function FundingPage() {
   const [loading, setLoading] = useState(true);
-  const [funding, setFunding] = useState<FundingProps>({
+  const [funding, setFunding] = useState<fundingProps>({
     title: "",
     category: "",
     mainImageUrl: "",
@@ -62,22 +43,12 @@ function FundingPage() {
     }
   };
 
-  const formatPrice = (num: number) => {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
-
-  const formatDate = (date: Date): string => {
-    return `${date.toString().slice(0, -16)}년 ${date
-      .toString()
-      .slice(5, -13)}월 ${date.toString().slice(8, -10)}일`;
-  };
-
   useEffect(() => {
     fetchData();
   }, []);
 
   const percentAmount = Math.floor(
-    (funding.currentAmount / funding.goalAmount) * 100 - 40
+    (funding.currentAmount / funding.goalAmount) * 100
   );
 
   if (loading) {
@@ -89,7 +60,7 @@ function FundingPage() {
       <styled.AttainmentWrap>
         <styled.InfoWrap>
           <styled.PercentWrap>
-            <styled.PercentLabel>{percentAmount}% 달성</styled.PercentLabel>
+            <styled.PercentLabel>{formatPercentage(funding.currentAmount,funding.goalAmount)}% 달성</styled.PercentLabel>
           </styled.PercentWrap>
           <styled.AmountWrap>
             <styled.CurrentAmountWrap>
@@ -108,12 +79,12 @@ function FundingPage() {
         </styled.InfoWrap>
         <styled.ProcessWrap>
           <styled.PercentBarWrap>
-            <styled.CurrentPercent $percent={`w-[${percentAmount}%]`}>
+            <styled.CurrentPercent $percent={`w-[${formatPercentage(funding.currentAmount,funding.goalAmount)}%]`}>
               <styled.CurrentPercentLabel>
                 {percentAmount}
               </styled.CurrentPercentLabel>
             </styled.CurrentPercent>
-            <styled.LeftPercent $percent={`w-[${100 - percentAmount}%]`}>
+            <styled.LeftPercent $percent={`w-[${100 - formatPercentage(funding.currentAmount,funding.goalAmount)}%]`}>
               <styled.CurrentPercentLabel>
                 {100 - percentAmount}
               </styled.CurrentPercentLabel>
@@ -134,21 +105,9 @@ function FundingPage() {
             <styled.NavBtn>환불정책</styled.NavBtn>
           </styled.NavWrap>
 
-          <styled.FundingInfoWrap>
-            <styled.MainImgWrap>
-              <styled.MainImg src={funding.mainImageUrl}></styled.MainImg>
-            </styled.MainImgWrap>
-          </styled.FundingInfoWrap>
+          <FundingInfo funding={funding} />
         </styled.MainWrap>
-
-        <styled.FloatingWrap>
-          <styled.FloatingNavWrap>
-            <styled.NavRightWrap>
-              <styled.NavRightBtn>펀딩</styled.NavRightBtn>
-            </styled.NavRightWrap>
-          </styled.FloatingNavWrap>
-          <styled.FloatingInfoWrap></styled.FloatingInfoWrap>
-        </styled.FloatingWrap>
+        <FloatingBar funding={funding} />
       </styled.ContentsWrap>
     </styled.Container>
   );

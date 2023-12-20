@@ -1,89 +1,29 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import * as styled from "./OptionsPage.styles";
-import axios from "axios";
-import { axiosInstance } from "../../utils/axios.utils";
-
-interface FundingProps {
-  title: string;
-  options: OptionsProps[];
-  deliveryPrice: number;
-  deliveryDate: Date;
-}
-interface OptionsProps {
-  _id: string;
-  title: string;
-  price: number;
-  totalAmount: number;
-  currentAmount: number;
-  info: string;
-}
+import { formatPrice, formatDate } from "../../utils/format.utils";
+import { fundingProps, optionsProps } from "../../interface/schema.interface";
 
 function OptionsPage() {
   const navigate = useNavigate();
+  const state = useLocation().state;
+  const funding: fundingProps = state.funding;
   const [supPrice, setSupPrice] = useState("0");
   const [optionSelect, setOptionSelect] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [funding, setFunding] = useState<FundingProps>({
-    title: "",
-    deliveryPrice: 0,
-    deliveryDate: new Date(),
-    options: [
-      {
-        _id: "",
-        title: "",
-        price: 0,
-        totalAmount: 0,
-        currentAmount: 0,
-        info: "",
-      },
-    ],
-  });
 
   const onChangePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSupPrice(e.target.value.replace(/[^0-9]/g, ""));
   };
 
-  const checkBoxClick = (check: boolean, item: OptionsProps) => {
+  const checkBoxClick = (check: boolean, item: optionsProps) => {
     setOptionSelect((prevOptionSelect) => {
       if (check) {
-        console.log(optionSelect);
         return [...prevOptionSelect, item._id];
       } else {
-        console.log(optionSelect);
         return prevOptionSelect.filter((id) => id !== item._id);
       }
     });
   };
-
-  const formatPrice = (num: number) => {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
-
-  const formatDate = (date: Date): string => {
-    return `${date.toString().slice(0, -16)}년 ${date
-      .toString()
-      .slice(5, -13)}월 ${date.toString().slice(8, -10)}일`;
-  };
-  const fetchData = async () => {
-    try {
-      const response = await axiosInstance.get(
-        "/fundings/657d2c31e09645b53dd9c7c4"
-      );
-      setFunding(response.data);
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return <div className="text-white">Loading...</div>;
-  }
 
   return (
     <styled.Container>

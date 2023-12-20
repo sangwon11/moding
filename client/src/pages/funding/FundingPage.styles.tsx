@@ -3,7 +3,7 @@ interface PercentProps{
     $percent: string;
 }
 
-export const Container = tw.div`text-white`;
+export const Container = tw.div`text-white h-[2000px]`;
 export const AttainmentWrap = tw.div`w-auto h-[300px] bg-[#D9D9D9]/[.1] overflow-hidden font-bold text-1xl`;
 export const InfoWrap = tw.div`flex max-w-[1440px] h-[200px] items-center justify-center m-auto`
 export const PercentWrap = tw.div`mx-20`;
@@ -22,19 +22,18 @@ export const CurrentPercentLabel =tw.p``
 export const LeftPercent = tw.div<PercentProps>`${(p) => (p.$percent)} bg-[#D9D9D9]/[0.1] h-[50px] flex px-10 rounded-[24px]`;
 export const LeftPercentLabel =tw.p``
 
-export const ContentsWrap = tw.div`m-20 w-[1440px] flex`;
+export const ContentsWrap = tw.div`my-20 mx-auto w-[1440px] flex`;
 export const MainWrap = tw.div`w-[60%] pr-2`
 export const NavWrap = tw.div`flex justify-between text-lg font-bold text-white`;
 export const NavBtn = tw.button`bg-[#D9D9D9]/[.1] w-[150px] h-[52px] rounded-[24px]`;
 export const NavOnWrap = tw.div`w-[240px] h-[60px] rounded-tl-[24px] border-b-[60px] border-b-[#D9D9D9]/[.1] border-r-[60px] border-l-[#D9D9D9]/[.1] border-r-[60px] border-r-transparent`;
 export const NavOnBtn = tw.button`w-[150px] h-[52px]`;
+export const FundingInfoWrap = tw.div`px-10 bg-[#D9D9D9]/[.1] h-auto py-12 text-white text-lg rounded-[24px] rounded-tl-[0px] flex flex-col justify-center items-center`;
+export const MainImgWrap = tw.div`w-full h-96`
+export const MainImg = tw.img` h-auto w-full object-cover`
 
-export const FundingInfoWrap = tw.div`bg-[#D9D9D9]/[.1] h-auto py-12 text-white text-lg rounded-[24px] rounded-tl-[0px] flex flex-col justify-center items-center`;
 export const FloatingWrap = tw.div`w-[40%]`
 export const FloatingNavWrap = tw.div`flex justify-end text-lg font-bold text-white`
 export const NavRightWrap = tw.div`w-[240px] h-[60px] rounded-tr-[24px] border-b-[60px] border-b-[#D9D9D9]/[.1] border-r-[60px] border-r-[#D9D9D9]/[.1] border-l-[60px] border-l-transparent`;
 export const NavRightBtn = tw.button`w-[150px] h-[52px]`;
 export const FloatingInfoWrap = tw.div`bg-[#D9D9D9]/[.1] h-auto py-12 text-white text-lg rounded-[24px] rounded-tr-[0px] flex flex-col justify-center items-center`;
-
-export const MainImgWrap = tw.div``
-export const MainImg = tw.img``

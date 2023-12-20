@@ -2,21 +2,8 @@ import { useLocation } from "react-router-dom";
 import * as styled from "./PaymentPage.styles";
 import Payment from "../../components/portone/Pay";
 import { useState, useEffect } from "react";
+import { optionsProps } from "../../interface/schema.interface";
 
-interface FundingProps {
-  title: string;
-  options: OptionsProps[];
-  deliveryPrice: number;
-  deliveryDate: Date;
-}
-interface OptionsProps {
-  _id: string;
-  title: string;
-  price: number;
-  totalAmount: number;
-  currentAmount: number;
-  info: string;
-}
 interface OrderMethodProps {
   label: string;
   pg: string;
@@ -27,7 +14,7 @@ function PaymentPage() {
   const funding = state.funding;
   const optionSelect = state.optionSelect;
   const supPrice = state.supPrice;
-  const selectedOptions = funding.options.filter((item: OptionsProps) =>
+  const selectedOptions = funding.options.filter((item: optionsProps) =>
     optionSelect.includes(item._id)
   );
 
@@ -40,7 +27,7 @@ function PaymentPage() {
   useEffect(() => {
     const sumTotalPrice =
       selectedOptions.reduce(
-        (acc: number, item: OptionsProps) => acc + item.price,
+        (acc: number, item: optionsProps) => acc + item.price,
         0
       ) +
       Number(supPrice) +
@@ -79,7 +66,7 @@ function PaymentPage() {
     <styled.Container>
       <styled.ContentsWrap>
         <styled.PriceWrap>
-          {selectedOptions.map((item: OptionsProps, index: number) => (
+          {selectedOptions.map((item: optionsProps, index: number) => (
             <styled.OptionWrap key={index}>
               <styled.OptionTitle>{item.title}</styled.OptionTitle>
               <styled.OptionInfo>{item.info}</styled.OptionInfo>
