@@ -70,6 +70,16 @@ const orderSchema = new Schema(
       enum: ['펀딩진행중', '배송준비중', '주문완료', '배송중', '배송완료'],
       required: true,
     },
+
+    selectedProduct: {
+      productId: { type: String, required: true },
+      quantity: { type: Number, required: true },
+    },
+
+    paymentMethod: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

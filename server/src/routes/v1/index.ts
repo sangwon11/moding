@@ -21,6 +21,6 @@ v1Router.use('/seller', sellerRouter);
 
 v1Router.use('/category', categoryRouter);
 
-v1Router.use('/order', orderRouter);
+v1Router.use('/orders', orderRouter);
 
 export default v1Router;

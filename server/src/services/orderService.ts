@@ -1,16 +1,6 @@
 import { orderModel } from '../models';
 import CustomError from '../utils/customError';
 
-// interface orderData {
-//   orderedBy: string;
-//   postCode: string;
-//   address: string;
-//   addressDetail: string;
-//   phoneNumber: string;
-//   products: (string | number)[];
-//   orderedEmail?: string;
-// }
-
 //회원주문조회
 interface orderParams {
   userId: string;
@@ -41,6 +31,15 @@ interface updateOrderParams {
   address: string;
   addressDetail: string;
   phoneNumber: string;
+}
+
+interface makePaymentParams {
+  userId: string;
+  selectedProduct: object;
+  productId: string;
+  quantity: number;
+  donation: number;
+  paymentMethod: string;
 }
 
 const orderService = {
@@ -184,6 +183,44 @@ const orderService = {
     const deletedOrder = await orderModel.findOneAndDelete({ _id: id });
 
     return deletedOrder;
+  },
+
+  // 결제
+  async makePayment({
+    userId,
+    selectedProduct,
+    donation,
+    paymentMethod,
+  }: makePaymentParams) {
+    // console.log('userId:', userId);
+    // console.log('selectedProduct:', selectedProduct);
+    // console.log('donation:', donation);
+    // console.log('paymentMethod:', paymentMethod);
+    try {
+      // 데이터베이스에 결제 정보 추가
+      const newOrder = new orderModel({
+        userId,
+        selectedProduct,
+        donation,
+        paymentMethod,
+      });
+
+      const savedOrder = await newOrder.save();
+
+      console.log('savedOrder:', savedOrder);
+      // 결제 요청이 성공했다고 가정하고 응답을 반환
+
+      const paymentId = savedOrder._id; // 이 부분은 데이터베이스에서 생성된 주문 ID를 사용하도록 수정해야 합니다.
+
+      return {
+        status: 'success',
+        message: '결제 요청 완료',
+        paymentId,
+      };
+    } catch (error) {
+      console.error(error);
+      throw new CustomError('결제 처리 중 오류 발생', 500);
+    }
   },
 };
 

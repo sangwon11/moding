@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import orderService from '../services/orderService';
+import CustomError from '../utils/customError';
 
 interface orderParams {
   userId: object;
@@ -23,12 +24,17 @@ interface orderListParams {
 }
 
 interface makePaymentParams {
-  userId: object;
+  userId: string;
   selectedProduct: object;
   productId: string;
   quantity: number;
   donation: number;
   paymentMethod: string;
+}
+
+interface selectedProductParams {
+  productId: string;
+  quantity: number;
 }
 
 const orderController = {
@@ -106,7 +112,30 @@ const orderController = {
 
   //결제
   async makePayment(req: Request, res: Response) {
-    // const;
+    try {
+      const { userId, selectedProduct, donation, paymentMethod } = req.body;
+
+      if (!userId || !selectedProduct || !donation || !paymentMethod) {
+        throw new CustomError(
+          '입력값이 잘못되었습니다. 필수요소들이 필요합니다.',
+          400
+        );
+      }
+
+      const result = await orderService.makePayment(
+        req.body as makePaymentParams
+      );
+
+      res.status(200).json(result);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        // 커스텀 에러인 경우 에러 상태와 메시지를 반환
+        res.status(error.status).json({ error: error.message });
+      } else {
+        // 다른 예외인 경우 내부 서버 오류 반환
+        res.status(500).json({ error: 'Internal server error' });
+      }
+    }
   },
 };
 

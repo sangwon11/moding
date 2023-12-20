@@ -21,6 +21,6 @@ orderRouter.get(
 );
 
 // 결제
-// orderRouter.post('/', asyncHandler(orderController.nonMemberGetOrder));
+orderRouter.post('/payment', asyncHandler(orderController.makePayment));
 
 export default orderRouter;
