@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { useLocation } from "react-router-dom"
 import { axiosInstance } from "../../utils/axios.utils"
 import { fundingProps, optionsProps } from "../../interface/schema.interface"
 import { formatPrice, formatDate, formatPercentage } from "../../utils/format.utils"
@@ -7,6 +8,9 @@ import FloatingBar from "./components/FloatingBar"
 import * as styled from "./FundingPage.styles"
 
 function FundingPage() {
+    const state = useLocation().state
+    // const fundingId = state.id;
+    const fundingId = "657d2c31e09645b53dd9c7c4"
     const [category, setCategory] = useState("")
     const [loading, setLoading] = useState(true)
     const [funding, setFunding] = useState<fundingProps>({
@@ -34,7 +38,7 @@ function FundingPage() {
 
     const fetchData = async () => {
         try {
-            const response = await axiosInstance.get("/fundings/657d2c31e09645b53dd9c7c4")
+            const response = await axiosInstance.get("/fundings/" + fundingId)
             setFunding(response.data)
         } catch (error) {
         } finally {
@@ -74,14 +78,10 @@ function FundingPage() {
                 </styled.InfoWrap>
                 <styled.ProcessWrap>
                     <styled.PercentBarWrap>
-                        <styled.CurrentPercent
-                            $percent={`w-[${formatPercentage(funding.currentAmount, funding.goalAmount)}%]`}
-                        >
+                        <styled.CurrentPercent>
                             <styled.CurrentPercentLabel>{percentAmount}</styled.CurrentPercentLabel>
                         </styled.CurrentPercent>
-                        <styled.LeftPercent
-                            $percent={`w-[${100 - formatPercentage(funding.currentAmount, funding.goalAmount)}%]`}
-                        >
+                        <styled.LeftPercent>
                             <styled.CurrentPercentLabel>{100 - percentAmount}</styled.CurrentPercentLabel>
                         </styled.LeftPercent>
                     </styled.PercentBarWrap>
