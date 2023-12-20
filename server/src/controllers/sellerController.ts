@@ -64,9 +64,7 @@ const sellerController = {
   async updateFunding(req: Request, res: Response) {
     try {
       const fundingId = req.params.fundingId;
-      console.log("fundingId:", req.params.fundingId);
       const params = createParams(req);
-      console.log("params:", params);
       const result = await sellerService.updateFunding(fundingId, params);
 
       if (result.success) {
