@@ -3,8 +3,8 @@ import { axiosInstance } from "../../utils/axios.utils"
 import { fundingProps, optionsProps } from "../../interface/schema.interface"
 import { formatPrice, formatDate, formatPercentage } from "../../utils/format.utils"
 import FundingInfo from "./components/FundingInfo"
-import * as styled from "./FundingPage.styles"
 import FloatingBar from "./components/FloatingBar"
+import * as styled from "./FundingPage.styles"
 
 function FundingPage() {
     const [category, setCategory] = useState("")

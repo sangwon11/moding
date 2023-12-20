@@ -47,6 +47,7 @@ function PaymentPage() {
   const orderMethod = [
     { label: "토스페이", pg: "tosspay" },
     { label: "카카오페이", pg: "kakaopay" },
+    { label: "토스페이먼츠", pg: "tosspayments" },
     { label: "카드결제", pg: "html5_inicis" },
   ];
 
