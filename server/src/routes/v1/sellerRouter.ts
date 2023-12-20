@@ -3,6 +3,10 @@ import sellerController from "../../controllers/sellerController";
 import asyncHandler from "../../utils/asyncHandler";
 import isAuthenticated from "../../middleware/isAuthenticated";
 import multer from "multer";
+import {
+  createFundingValidator,
+  validateError,
+} from "../../middleware/validator";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -21,6 +25,8 @@ const sellerRouter = express.Router();
 sellerRouter.post(
   "/",
   isAuthenticated,
+  createFundingValidator,
+  asyncHandler(validateError),
   upload.fields([
     { name: "mainImageUrl", maxCount: 1 },
     { name: "imageUrls", maxCount: 5 },
