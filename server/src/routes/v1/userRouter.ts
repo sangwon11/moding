@@ -3,6 +3,7 @@ import isAuthenticated from "../../middleware/isAuthenticated";
 import asyncHandler from "../../utils/asyncHandler";
 import { Router } from "express";
 import userController from "../../controllers/userController";
+import { updateUserValidator, validateError } from "../../middleware/validator";
 
 export interface RequestIncludeJWT extends Request {
   user: {
@@ -33,6 +34,8 @@ userRouter.post(
 userRouter.put(
   "/me",
   isAuthenticated,
+  updateUserValidator,
+  validateError,
   asyncHandler((req: Request, res: Response) =>
     userController.updateUserProfile(req as RequestIncludeJWT, res)
   )

@@ -2,12 +2,18 @@ import asyncHandler from "../../utils/asyncHandler";
 import adminController from "../../controllers/adminController";
 import { Router } from "express";
 import isAdmin from "../../middleware/isAdmin";
+import {
+  applySellerValidator,
+  validateError,
+} from "../../middleware/validator";
 
 const adminRouter = Router();
 
 adminRouter.post(
   "/seller/apply",
   isAdmin,
+  applySellerValidator,
+  validateError,
   asyncHandler(adminController.applySeller)
 );
 
