@@ -4,25 +4,31 @@ import CustomError from '../utils/customError';
 //회원주문조회
 interface orderParams {
   userId: string;
-  fundingId: string;
-  orderId: number;
+  orderId: string;
   orderNumber: string;
   orderedBy: string;
   postCode: string;
   address: string;
   addressDetail: string;
   phoneNumber: string;
+  fundingId: string;
   orderList: optionParams[];
   donation: number;
-  status: string;
   nameOpen: boolean;
   priceOpen: boolean;
   orderStatus: string;
+  selectedProduct: productParams[];
+  paymentMethod: string;
 }
 
 interface optionParams {
   optionsId: string;
   amount: number;
+}
+
+interface productParams {
+  productId: string;
+  quantity: number;
 }
 
 interface updateOrderParams {
