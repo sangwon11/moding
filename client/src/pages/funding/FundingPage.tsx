@@ -9,8 +9,7 @@ import * as styled from "./FundingPage.styles"
 
 function FundingPage() {
     const state = useLocation().state
-    // const fundingId = state.id;
-    const fundingId = "657d2c31e09645b53dd9c7c4"
+    const fundingId = state
     const [category, setCategory] = useState("")
     const [loading, setLoading] = useState(true)
     const [funding, setFunding] = useState<fundingProps>({
@@ -78,11 +77,11 @@ function FundingPage() {
                 </styled.InfoWrap>
                 <styled.ProcessWrap>
                     <styled.PercentBarWrap>
-                        <styled.CurrentPercent>
-                            <styled.CurrentPercentLabel>{percentAmount}</styled.CurrentPercentLabel>
+                        <styled.CurrentPercent style={{ width: `${percentAmount}%` }}>
+                            <styled.CurrentPercentLabel>{percentAmount}%</styled.CurrentPercentLabel>
                         </styled.CurrentPercent>
-                        <styled.LeftPercent>
-                            <styled.CurrentPercentLabel>{100 - percentAmount}</styled.CurrentPercentLabel>
+                        <styled.LeftPercent style={{ width: `${100 - percentAmount}%` }}>
+                            <styled.LeftPercentLabel>{100 - percentAmount}%</styled.LeftPercentLabel>
                         </styled.LeftPercent>
                     </styled.PercentBarWrap>
                 </styled.ProcessWrap>

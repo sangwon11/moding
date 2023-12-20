@@ -12,6 +12,7 @@ interface ProductProps {
 
 // Product 컴포넌트
 function Product({ id, url, alt, description, manufacturer, isSlider }: ProductProps) {
+  console.log(id)
     //console.log("Image URL:", url);
     //console.log("Image URL:", "바보");
     const containerClassName = isSlider ? "w-full" : "w-1/3"
