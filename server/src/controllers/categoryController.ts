@@ -9,7 +9,7 @@ const categoryController = {
   async getCategories(req: Request, res: Response) {
     const categories = await categoryService.getCategories();
 
-    res.json({
+    res.status(200).json({
       error: null,
       data: categories,
     });
@@ -20,7 +20,7 @@ const categoryController = {
       req.body as CategoryParams
     );
 
-    res.json({
+    res.status(201).json({
       error: null,
       data: category,
     });
