@@ -1,13 +1,12 @@
 import { RequestIncludeJWT } from "./../routes/v1/userRouter";
 import { Request, Response } from "express";
 import userService from "../services/userService";
-import CustomError from "../utils/customError";
 
 const userController = {
   async getUserProfile(req: RequestIncludeJWT, res: Response) {
     const user = await userService.getUserProfile(req.user.userId);
 
-    res.status(201).json({
+    res.status(200).json({
       error: null,
       data: user,
     });
@@ -15,7 +14,7 @@ const userController = {
   async deleteUser(req: RequestIncludeJWT, res: any) {
     const result = await userService.deleteUser(req.user.userId);
 
-    res.status(200).json({
+    res.status(201).json({
       error: null,
       data: result,
     });
@@ -27,7 +26,7 @@ const userController = {
       updateData
     );
 
-    res.status(200).json({
+    res.status(201).json({
       error: null,
       data: result,
     });
