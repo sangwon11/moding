@@ -4,9 +4,10 @@ import { fundingProps, optionsProps } from "../../interface/schema.interface";
 import { formatPrice, formatDate, formatPercentage } from "../../utils/format.utils";
 import FundingInfo from "./components/FundingInfo";
 import * as styled from "./FundingPage.styles";
-import FloatingBar from "./components/Floating";
+import FloatingBar from "./components/FloatingBar";
 
 function FundingPage() {
+  const [category, setCategory] = useState("")
   const [loading, setLoading] = useState(true);
   const [funding, setFunding] = useState<fundingProps>({
     title: "",
@@ -60,7 +61,10 @@ function FundingPage() {
       <styled.AttainmentWrap>
         <styled.InfoWrap>
           <styled.PercentWrap>
-            <styled.PercentLabel>{formatPercentage(funding.currentAmount,funding.goalAmount)}% 달성</styled.PercentLabel>
+            <styled.PercentLabel>
+              {formatPercentage(funding.currentAmount, funding.goalAmount)}%
+              달성
+            </styled.PercentLabel>
           </styled.PercentWrap>
           <styled.AmountWrap>
             <styled.CurrentAmountWrap>
@@ -79,12 +83,22 @@ function FundingPage() {
         </styled.InfoWrap>
         <styled.ProcessWrap>
           <styled.PercentBarWrap>
-            <styled.CurrentPercent $percent={`w-[${formatPercentage(funding.currentAmount,funding.goalAmount)}%]`}>
+            <styled.CurrentPercent
+              $percent={`w-[${formatPercentage(
+                funding.currentAmount,
+                funding.goalAmount
+              )}%]`}
+            >
               <styled.CurrentPercentLabel>
                 {percentAmount}
               </styled.CurrentPercentLabel>
             </styled.CurrentPercent>
-            <styled.LeftPercent $percent={`w-[${100 - formatPercentage(funding.currentAmount,funding.goalAmount)}%]`}>
+            <styled.LeftPercent
+              $percent={`w-[${
+                100 -
+                formatPercentage(funding.currentAmount, funding.goalAmount)
+              }%]`}
+            >
               <styled.CurrentPercentLabel>
                 {100 - percentAmount}
               </styled.CurrentPercentLabel>
@@ -94,19 +108,7 @@ function FundingPage() {
       </styled.AttainmentWrap>
 
       <styled.ContentsWrap>
-        <styled.MainWrap>
-          <styled.NavWrap>
-            <styled.NavOnWrap>
-              <styled.NavOnBtn>펀딩정보</styled.NavOnBtn>
-            </styled.NavOnWrap>
-            <styled.NavBtn>새소식</styled.NavBtn>
-            <styled.NavBtn>서포터</styled.NavBtn>
-            <styled.NavBtn>판매자정보</styled.NavBtn>
-            <styled.NavBtn>환불정책</styled.NavBtn>
-          </styled.NavWrap>
-
-          <FundingInfo funding={funding} />
-        </styled.MainWrap>
+        <FundingInfo funding={funding} />
         <FloatingBar funding={funding} />
       </styled.ContentsWrap>
     </styled.Container>
