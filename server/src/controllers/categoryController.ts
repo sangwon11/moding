@@ -1,9 +1,6 @@
 import { Request, Response } from 'express';
 import categoryService from '../services/categoryService';
-
-interface CategoryParams {
-  categoryName: string;
-}
+import { CategoryParams } from '../interface/interfaces';
 
 const categoryController = {
   //카테고리 전체 조회
@@ -28,8 +25,9 @@ const categoryController = {
 
   // 카테고리 추가
   async postCategories(req: Request, res: Response) {
-    // const { categoryName } = req.params;
-    const category = await categoryService.postCategories(req.body.categoryId);
+    const category = await categoryService.postCategories(
+      req.body as CategoryParams
+    );
 
     res.status(201).json({
       error: null,
