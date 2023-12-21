@@ -16,8 +16,53 @@ interface CategoryProps {
     categoryName: string
 }
 
+interface OptionData {
+    title: string
+    price: number
+    totalAmount: number
+    currentAmount: number
+    info: string
+}
+
+const InitialOptionData: OptionData = {
+    title: "",
+    price: 0,
+    totalAmount: 0,
+    currentAmount: 0,
+    info: "",
+}
+
 function FundingRegPage() {
     const navigate = useNavigate()
+
+    const [options, setOptions] = useState<OptionData[]>([InitialOptionData])
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
+        const { name, value } = e.target;
+    
+        const updatedOptions = options.map((option, idx) => {
+            if (idx === index) {
+                return {
+                    ...option,
+                    [name]: value,
+                };
+            }
+            return option;
+        });
+    
+        setOptions(updatedOptions);
+    };
+
+    const handleAddClick = () => {
+        setOptions([...options, InitialOptionData])
+    }
+
+    const handleRemoveClick = (index: number) => {
+        const list = [...options]
+        list.splice(index, 1)
+        setOptions(list)
+    }
+
     const [categories, setCategories] = useState<CategoryProps[]>([])
 
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
@@ -47,12 +92,12 @@ function FundingRegPage() {
     const addFunding = async () => {
         try {
             const config = await frontEndAuthMiddleware({
-                method: 'post',
+                method: "post",
                 url: "/seller",
-                data: formData
-            });
-    
-            const response = await axiosInstance.request(config);
+                data: formData,
+            })
+
+            const response = await axiosInstance.request(config)
             if (response.status === 201) {
                 window.alert("펀딩이 등록되었습니다.")
                 navigate("/")
@@ -91,7 +136,6 @@ function FundingRegPage() {
     return (
         <styled.Container>
             <styled.RegWrap>
-
                 <styled.RegTage>타이틀</styled.RegTage>
                 <styled.RegInput></styled.RegInput>
 
@@ -122,9 +166,45 @@ function FundingRegPage() {
                 <styled.RegTage>발송시작</styled.RegTage>
                 <styled.DateInput type="date" />
                 <styled.DateLabel style={{ pointerEvents: "none" }} />
-                
-                <styled.AddBtn onClick={addFunding}>등록하기</styled.AddBtn>
 
+                <div>
+                    {options.map((option, index) => (
+                        <div key={index}>
+                            <input
+                                type="text"
+                                name="title"
+                                value={option.title}
+                                onChange={(e) => handleInputChange(e, index)}
+                                placeholder="Title"
+                            />
+                            <input
+                                type="number"
+                                name="price"
+                                value={option.price}
+                                onChange={(e) => handleInputChange(e, index)}
+                                placeholder="Price"
+                            />
+                            {/* Add other input fields similarly */}
+                            <textarea
+                                name="info"
+                                value={option.info}
+                                onChange={(e) => handleInputChange(e, index)}
+                                placeholder="Info"
+                            />
+                            {index > 0 && (
+                                <button type="button" onClick={() => handleRemoveClick(index)}>
+                                    Remove
+                                </button>
+                            )}
+                        </div>
+                    ))}
+                    <button type="button" onClick={handleAddClick}>
+                        Add
+                    </button>
+                    <pre>{JSON.stringify(options, null, 2)}</pre>
+                </div>
+
+                <styled.AddBtn onClick={addFunding}>등록하기</styled.AddBtn>
             </styled.RegWrap>
             <styled.CKEitorWrap>
                 <CKEditor
