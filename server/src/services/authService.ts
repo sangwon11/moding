@@ -2,21 +2,7 @@ import bcrypt from "bcrypt";
 import CustomError from "../utils/customError";
 import jwt from "jsonwebtoken";
 import { userModel } from "../models";
-
-interface SignUpParams {
-  email: string;
-  password: string;
-  username: string;
-  phoneNumber: string;
-  postCode: number;
-  address: string;
-  addressDetail?: string;
-}
-
-interface LoginParams {
-  email: string;
-  password: string;
-}
+import { SignUpParams, LoginParams } from "../interface/interfaces";
 
 const authService = {
   async signUp({
