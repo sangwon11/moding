@@ -7,6 +7,7 @@
     "@ckeditor/ckeditor5-react": "^6.2.0",
     "axios": "^1.6.2",
     "ckeditor5-custom-build": "file:./ckeditor5",
+    "dayjs": "^1.11.10",
     "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-daum-postcode": "^3.1.3",

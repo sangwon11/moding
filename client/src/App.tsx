@@ -8,7 +8,7 @@ import SignInPage from "./pages/sign-in/SignInPage";
 import OptionsPage from "./pages/options/OptionsPage";
 import PaymentPage from "./pages/payment/PaymentPage";
 import FundingPage from "./pages/funding/FundingPage";
-import FundingRegPage from "./pages/seller/FundingRegPage";
+import SellerPage from "./pages/seller/SellerPage";
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
           <Route path="/options" element={<OptionsPage />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/funding" element={<FundingPage />} />
-          <Route path="/seller" element={<FundingRegPage />} />
+          <Route path="/seller/*" element={<SellerPage />} />
         </Routes>
       </div>
     </BrowserRouter>
