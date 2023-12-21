@@ -9,6 +9,10 @@ const orderSchema = new Schema(
       ref: 'userModel',
       required: true,
     },
+    orderId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+    },
     orderNumber: {
       type: Number,
       required: true,
