@@ -1,9 +1,9 @@
 import { categoryModel } from '../models';
 import CustomError from '../utils/customError';
-interface categoryParams {
-  categoryId: object;
-  categoryName: string;
-}
+// interface categoryParams {
+//   categoryId: object;
+//   categoryName: string;
+// }
 
 const categoryService = {
   async getCategories() {
@@ -11,12 +11,15 @@ const categoryService = {
     return categories;
   },
 
-  async getCategoryById(categoryId: object) {
-    const category = await categoryModel.findById(categoryId).lean();
+  async getCategoryById(id: string) {
+    const category = await categoryModel.findById(id).lean();
+    if (category === null) {
+      throw new CustomError('해당 category는 존재하지 않습니다', 404);
+    }
     return category;
   },
 
-  async postCategories({ categoryName }: categoryParams) {
+  async postCategories(categoryName: string) {
     const makeCategoryName = await categoryModel
       .findOne({ categoryName })
       .lean();
