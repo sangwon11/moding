@@ -1,15 +1,16 @@
 import { Request, Response } from 'express';
 import categoryService from '../services/categoryService';
+import { ObjectId } from 'mongoose';
 
 interface CategoryParams {
-  categoryId: object;
+  categoryId: ObjectId;
   categoryName: string;
 }
 
 const categoryController = {
-  //카테고리 조회
+  //카테고리 전체 조회
   async getCategories(req: Request, res: Response) {
-    const { categoryId } = req.params;
+    // const { categoryId } = req.params;
     const categories = await categoryService.getCategories();
 
     res.status(200).json({
@@ -18,6 +19,7 @@ const categoryController = {
     });
   },
 
+  //카테고리 id로 조회
   async getCategoryById(req: Request, res: Response) {
     const { categoryId } = req.params;
     const getCategoryId = await categoryService.getCategoryById({ categoryId });
@@ -28,8 +30,9 @@ const categoryController = {
     });
   },
 
+  // 카테고리 추가
   async postCategories(req: Request, res: Response) {
-    const { categoryName } = req.params;
+    // const { categoryName } = req.params;
     const category = await categoryService.postCategories(req.body);
 
     res.status(201).json({

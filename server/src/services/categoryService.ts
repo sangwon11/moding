@@ -1,6 +1,5 @@
 import { categoryModel } from '../models';
 import CustomError from '../utils/customError';
-
 interface categoryParams {
   categoryId: object;
   categoryName: string;
@@ -13,7 +12,7 @@ const categoryService = {
   },
 
   async getCategoryById(categoryId: object) {
-    const category = await categoryModel.findById({ categoryId }).lean();
+    const category = await categoryModel.findById(categoryId).lean();
     return category;
   },
 
