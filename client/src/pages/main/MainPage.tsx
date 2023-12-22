@@ -17,9 +17,9 @@ const sliderSettings = {
 }
 // 얼리버드 슬라이더 설정
 const EarlyBirdSliderSettings = {
-    dots: true,
+    dots: false,
     infinite: true,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 3,
     autoplay: false,
     variableWidth: false, // 이 부분을 false로 설정
@@ -31,87 +31,34 @@ interface ImageData {
     title: string
     description: string // 상품 설명
     category: string // 제조사
+    currentAmount: number
+    goalAmount: number
 }
 
 function MainPage() {
-    // const [activeTab, setActiveTab] = useState("recommend");
-    // const [recommendImages, setRecommendImages] = useState<ImageData[]>([]);
-    // const [popularImages, setPopularImages] = useState<ImageData[]>([]);
-    // const [fundingImages, setFundingImages] = useState<ImageData[]>([]);
     const [fundingsImages, setFundingsImages] = useState<ImageData[]>([])
-    const [loading, setLoading] = useState(true) // 로딩 상태 관리를 위한 상태
+    const [loading, setLoading] = useState<boolean>(true) // 로딩 상태 관리를 위한 상태
 
-    // sudo npm install -g json-server
-    // json-server --watch public/data/data.json
-
-    // 이미지 데이터를 가져오는 함수
-    // async function fetchImages(
-    //   endpoint: string,
-    //   setImages: React.Dispatch<React.SetStateAction<ImageData[]>>
-    // ) {
-    //   try {
-    //     const response = await axiosInstance.get(`${endpoint}`);
-    //     setImages(response.data);
-    //   } catch (error) {
-    //     console.error(`Fetching ${endpoint} images failed`, error);
-    //   }
-    // }
     // 펀딩 이미지 데이터를 가져오는 함수
-    useEffect(() => {
-        const fetchFundingsImages = async () => {
-            try {
-                const response = await axiosInstance.get(`/fundings`)
-                console.log("response.data : ", response.data)
-                setFundingsImages(response.data.data)
-            } catch (error) {
-                console.error("Fetching fundings images failed:", error)
-            } finally {
-                setLoading(false) // 데이터 로딩 완료 후 로딩 상태 업데이트
-            }
+    const fetchFundingsImages = async () => {
+        try {
+            const response = await axiosInstance.get(`/fundings`)
+            console.log("response.data : ", response.data)
+            setFundingsImages(response.data.data)
+        } catch (error) {
+            console.error("Fetching fundings images failed:", error)
+        } finally {
+            setLoading(false)
         }
+    }
+    useEffect(() => {
         fetchFundingsImages()
     }, [])
-    // useEffect(() => {
-    //   setActiveTab(activeTab); // 현재 활성화된 탭 설정
-    // }, [activeTab]);
 
-    // useEffect(() => {
-    //   // 처음 컴포넌트 마운트 시 추천상품 이미지 데이터를 로드
-    //   fetchImages("/recommend", setRecommendImages);
-    // }, []);
-
-    // 탭이 바뀔 때마다 해당 이미지 데이터를 로드
-    // useEffect(() => {
-    //   const loadData = async () => {
-    //     if (activeTab === "recommend") {
-    //       await fetchImages("recommend", setRecommendImages);
-    //     } else if (activeTab === "popular") {
-    //       await fetchImages("popular", setPopularImages);
-    //     } else if (activeTab === "funding") {
-    //       await fetchImages("funding", setFundingImages);
-    //     }
-    //   };
-    //   loadData();
-    // }, [activeTab]);
-
-    // 탭 컨텐츠 렌더링 함수
-    // function renderTabContent(images: ImageData[]) {
-    //   return (
-    //     <div className="flex flex-wrap -mx-2">
-    //       {images.map((image) => (
-    //         <Product
-    //           key={image.id}
-    //           id={image.id}
-    //           url={image.url}
-    //           alt={image.alt}
-    //           description={image.description} // 설명 추가
-    //           manufacturer={image.manufacturer} // 제조사 추가
-    //         />
-    //       ))}
-    //     </div>
-    //   );
-    // }
     function renderFundingsSliderSection(images: ImageData[]) {
+        if (!Array.isArray(images)) {
+            return null // images가 배열이 아니면 아무것도 렌더링하지 않음
+        }
         return (
             <Slider {...EarlyBirdSliderSettings}>
                 {images.map((image) => (
@@ -121,12 +68,43 @@ function MainPage() {
                         url={image.mainImageUrl}
                         alt={image.title}
                         description={image.title}
-                        manufacturer={image.mainImageUrl}
                         isSlider={true}
+                        currentAmount={image.currentAmount}
+                        goalAmount={image.goalAmount}
                     />
                 ))}
             </Slider>
         )
+    }
+    function renderFundingsMainSection(images: ImageData[]) {
+        if (loading) {
+            return <div className="text-white">Loading...</div>
+        }
+        if (!Array.isArray(images)) {
+            console.error("Expected an array but received:", images)
+            return <div className="text-white">데이터가 없습니다.</div>
+        }
+        return (
+            <div className="flex flex-wrap -mx-2 justify-start">
+                {images.map((image) => (
+                    <div key={image._id} className="w-1/4 px-2 mb-4">
+                        <Product
+                            id={image._id}
+                            url={image.mainImageUrl}
+                            alt={image.title}
+                            description={image.title}
+                            isSlider={true}
+                            currentAmount={image.currentAmount}
+                            goalAmount={image.goalAmount}
+                        />
+                    </div>
+                ))}
+            </div>
+        )
+    }
+
+    if (loading) {
+        return <div className="text-white">Loading...</div>
     }
     return (
         <styeld.MainPageContainer>
@@ -147,41 +125,19 @@ function MainPage() {
                 </div>
                 {/* 추가 슬라이드 이미지들... */}
             </Slider>
-            {/* 다른 섹션들... */}
-
-            {/* 컨텐츠 영역 */}
-            {/* 좌측 섹션 */}
             <styeld.ContentArea>
                 {/* 탭 메뉴 */}
                 <styeld.Section>
-                    {/* <styeld.TabButtonsContainer>
-            <styeld.TabButton
-              className={activeTab === "recommend" ? "bg-[#333333]" : ""}
-              onClick={() => setActiveTab("recommend")}
-            >
-              추천상품
-            </styeld.TabButton>
-
-            <styeld.TabButton
-              className={activeTab === "popular" ? "bg-[#333333]" : ""}
-              onClick={() => setActiveTab("popular")}
-            >
-              인기상승
-            </styeld.TabButton>
-
-            <styeld.TabButton
-              className={activeTab === "funding" ? "bg-[#333333]" : ""}
-              onClick={() => setActiveTab("funding")}
-            >
-              펀딩랭킹
-            </styeld.TabButton>
-          </styeld.TabButtonsContainer> */}
+                    <styeld.TabButtonsContainer></styeld.TabButtonsContainer>
                     {/* 탭 컨텐츠 */}
+                    <styeld.EarlyBirdTitle>전체 상품</styeld.EarlyBirdTitle>
                     <styeld.TabContentContainer>
                         {/* 추천상품, 인기상승, 펀딩랭킹 탭 컨텐츠 */}
                         {/* {activeTab === "recommend" && renderTabContent(recommendImages)}
-            {activeTab === "popular" && renderTabContent(popularImages)}
-            {activeTab === "funding" && renderTabContent(fundingImages)} */}
+                        {activeTab === "popular" && renderTabContent(popularImages)}
+                        {activeTab === "funding" && renderTabContent(fundingImages)} */}
+
+                        {renderFundingsMainSection(fundingsImages)}
                     </styeld.TabContentContainer>
                 </styeld.Section>
 

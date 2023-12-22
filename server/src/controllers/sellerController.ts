@@ -28,22 +28,6 @@ const sellerController = {
       data: result,
     });
   },
-
-  async deliveryUpdate(req: Request, res: Response) {
-    const fundingId = req.params.fundingId;
-    const { deliveryNumber, deliveryType } = req.body as DeliveryUpdateParams;
-
-    const result = await sellerService.deliveryUpdate(
-      fundingId,
-      deliveryNumber,
-      deliveryType
-    );
-
-    res.status(201).json({
-      error: null,
-      data: result,
-    });
-  },
 };
 
 export default sellerController;
