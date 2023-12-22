@@ -36,9 +36,4 @@ sellerRouter.post(
 
 sellerRouter.put("/:fundingId", asyncHandler(sellerController.updateFunding));
 
-sellerRouter.post(
-  "/delivery/:fundingId",
-  asyncHandler(sellerController.deliveryUpdate)
-);
-
 export default sellerRouter;
