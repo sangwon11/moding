@@ -4,9 +4,9 @@ import { CKEditor } from "@ckeditor/ckeditor5-react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
-import "./ckediter/CKEditer.styles.css"
-import { editorConfig } from "./ckediter/CKEditer.config"
-import uploadPlugin from "./ckediter/CKEditer.function"
+import "./components/ckediter/CKEditer.styles.css"
+import { editorConfig } from "./components/ckediter/CKEditer.config"
+import uploadPlugin from "./components/ckediter/CKEditer.function"
 import { axiosInstance } from "../../../utils/axios.utils"
 import * as styled from "./FundingRegPage.styles"
 import { frontEndAuthMiddleware } from "../../../utils/jwtUtils"
@@ -185,7 +185,7 @@ function FundingRegPage() {
                                 placeholder="Price"
                             />
                             {/* Add other input fields similarly */}
-                            <textarea
+                            <input
                                 name="info"
                                 value={option.info}
                                 onChange={(e) => handleInputChange(e, index)}
@@ -206,16 +206,16 @@ function FundingRegPage() {
 
                 <styled.AddBtn onClick={addFunding}>등록하기</styled.AddBtn>
             </styled.RegWrap>
-            {/* <styled.CKEitorWrap>
-                <CKEditor
+            <styled.CKEitorWrap>
+                {/* <CKEditor
                     editor={Editor}
                     data=""
                     config={editorConfig}
                     onReady={(editor: any) => {
                         uploadPlugin(editor)
                     }}
-                />
-            </styled.CKEitorWrap> */}
+                /> */}
+            </styled.CKEitorWrap>
         </styled.Container>
     )
 }
