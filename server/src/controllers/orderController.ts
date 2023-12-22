@@ -17,7 +17,17 @@ interface orderParams {
   nameOpen: boolean;
   priceOpen: boolean;
   orderStatus: string;
-  selectedProduct: productParams[];
+  paymentMethod: string;
+}
+
+interface newOrderParams {
+  orderNumber: string;
+  orderedBy: string;
+  postCode: string;
+  address: string;
+  addressDetail: string;
+  phoneNumber: string;
+  donation: number;
   paymentMethod: string;
 }
 
@@ -26,34 +36,36 @@ interface optionParams {
   amount: number;
 }
 
-interface productParams {
-  productId: string;
-  quantity: number;
-}
+// interface makePaymentParams {
+//   userId: string;
+//   selectedProduct: object;
+//   productId: string;
+//   quantity: number;
+//   donation: number;
+//   paymentMethod: string;
+// }
 
-interface orderListParams {
-  optionsId: object;
-  amount: number;
-}
-
-interface makePaymentParams {
-  userId: string;
-  selectedProduct: object;
-  productId: string;
-  quantity: number;
-  donation: number;
-  paymentMethod: string;
-}
-
-interface selectedProductParams {
-  productId: string;
-  quantity: number;
-}
+// interface selectedProductParams {
+//   productId: string;
+//   quantity: number;
+// }
 
 const orderController = {
-  // 주문목록 조회
+  // 주문하기
+  async createOrder(req: Request, res: Response) {
+    // const orderData = req.body;
+    // const em = res.locals.user.em;
+    const newOrder = await orderService.createOrder(req.body as orderParams);
+
+    res.status(201).json({
+      error: null,
+      data: newOrder,
+    });
+  },
+
+  // 주문조회(userId)
   async getOrders(req: Request, res: Response) {
-    const userId = res.locals.user.userId;
+    const userId = req.params.userId;
     const orders = await orderService.getOrders(userId);
 
     res.status(200).json({
@@ -62,10 +74,10 @@ const orderController = {
     });
   },
 
-  // 주문조회(id)
+  // 주문조회(orderId)
   async getOneOrder(req: Request, res: Response) {
-    const { userId } = req.params;
-    const order = await orderService.getOneOrder(userId);
+    const orderId = req.params.orderId;
+    const order = await orderService.getOneOrder(orderId);
 
     res.status(200).json({
       error: null,
@@ -122,42 +134,41 @@ const orderController = {
     });
   },
 
-  //결제
-  async makePayment(req: Request, res: Response) {
-    const payment = await orderService.makePayment(
-      req.body as makePaymentParams
-    );
+  // 결제
+  // async makePayment(req: Request, res: Response) {
+  //   const payment = await orderService.makePayment(
+  //     req.body as makePaymentParams
+  //   );
 
-    res.status(201).json({
-      error: null,
-      data: payment,
-    });
+  //   res.status(201).json({
+  //     error: null,
+  //     data: payment,
+  //   });
 
-    // try {
-    //   const { userId, selectedProduct, donation, paymentMethod } = req.body;
+  // try {
+  //   const { userId, selectedProduct, donation, paymentMethod } = req.body;
 
-    //   if (!userId || !selectedProduct || !donation || !paymentMethod) {
-    //     throw new CustomError(
-    //       '입력값이 잘못되었습니다. 필수요소들이 필요합니다.',
-    //       400
-    //     );
-    //   }
+  //   if (!userId || !selectedProduct || !donation || !paymentMethod) {
+  //     throw new CustomError(
+  //       '입력값이 잘못되었습니다. 필수요소들이 필요합니다.',
+  //       400
+  //     );
+  //   }
 
-    //   const result = await orderService.makePayment(
-    //     req.body as makePaymentParams
-    //   );
+  //   const result = await orderService.makePayment(
+  //     req.body as makePaymentParams
+  //   );
 
-    //   res.status(200).json(result);
-    // } catch (error) {
-    //   if (error instanceof CustomError) {
-    //     // 커스텀 에러인 경우 에러 상태와 메시지를 반환
-    //     res.status(error.status).json({ error: error.message });
-    //   } else {
-    //     // 다른 예외인 경우 내부 서버 오류 반환
-    //     res.status(500).json({ error: 'Internal server error' });
-    //   }
-    // }
-  },
+  //   res.status(200).json(result);
+  // } catch (error) {
+  //   if (error instanceof CustomError) {
+  //     // 커스텀 에러인 경우 에러 상태와 메시지를 반환
+  //     res.status(error.status).json({ error: error.message });
+  //   } else {
+  //     // 다른 예외인 경우 내부 서버 오류 반환
+  //     res.status(500).json({ error: 'Internal server error' });
+  //   }
+  // }
 };
 
 export default orderController;
