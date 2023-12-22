@@ -1,4 +1,4 @@
-class CustomUploadAdapter {
+export class CustomUploadAdapter {
     loader: any
     imageInfo: any = null
 
@@ -9,13 +9,17 @@ class CustomUploadAdapter {
     upload() {
         return new Promise((resolve, reject) => {
             this.loader.file.then((file: any) => {
+
+                const fileExtension = file.name.split(".").pop() 
+                const uniqueFileName = `${Date.now()}.${fileExtension}`
+
                 const data = new FormData()
-                data.append("name", file.name)
+                data.append("name", uniqueFileName)
                 data.append("file", file)
 
                 this.imageInfo = {
-                    name: file.name,
-                    url: window.URL.createObjectURL(file)
+                    name: uniqueFileName,
+                    url: window.URL.createObjectURL(file),
                 }
 
                 resolve({ default: window.URL.createObjectURL(file) })
@@ -34,4 +38,4 @@ function uploadPlugin(editor: any) {
     }
 }
 
-export default uploadPlugin;
+export default uploadPlugin
