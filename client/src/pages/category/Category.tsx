@@ -23,7 +23,7 @@ const sliderSettings = {
   autoplay: true,
 };
 interface ImageData {
-  id: number;
+  id: string;
   url: string;
   alt: string;
   description: string; // 상품 설명
@@ -163,4 +163,3 @@ const Category: React.FC = () => {
 
 
 export default Category;
-
