@@ -32,7 +32,7 @@ const sellerService = {
 
       const funding = new fundingModel({
         title: params.title,
-        category: params.category,
+        categoryId: params.categoryId,
         goalAmount: params.goalAmount,
         startDate: params.startDate,
         endDate: params.endDate,
@@ -46,6 +46,8 @@ const sellerService = {
         seller: existingSeller._id,
         deliveryNumber: params.deliveryNumber,
         deliveryType: params.deliveryType,
+        info: params.info,
+        infoDetail: params.infoDetail,
       });
 
       await funding.save();
