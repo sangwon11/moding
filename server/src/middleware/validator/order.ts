@@ -1,5 +1,3 @@
-// const { body } = require('express-validator');
-
 import { body } from 'express-validator';
 // 주문정보 validation
 const userOrderValidator = [

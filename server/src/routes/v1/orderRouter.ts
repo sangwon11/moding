@@ -33,6 +33,15 @@ orderRouter.get(
   asyncHandler(orderController.getOneOrder)
 );
 
+//주문수정
+orderRouter.put(
+  '/me/:id',
+  objectIdValidator,
+  userOrderValidator,
+  validateError,
+  asyncHandler(orderController.updateOrder)
+);
+
 // 결제
 // orderRouter.post(
 //   '/payment',

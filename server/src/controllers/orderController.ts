@@ -20,14 +20,27 @@ interface orderParams {
   paymentMethod: string;
 }
 
+interface updateOrderParams {
+  orderedBy: string;
+  postCode: string;
+  address: string;
+  addressDetail: string;
+  phoneNumber: string;
+}
 interface newOrderParams {
+  userId: string;
   orderNumber: string;
   orderedBy: string;
   postCode: string;
   address: string;
   addressDetail: string;
   phoneNumber: string;
+  fundingId: string;
+  orderList: optionParams[];
   donation: number;
+  nameOpen: boolean;
+  priceOpen: boolean;
+  orderStatus: string;
   paymentMethod: string;
 }
 
@@ -55,7 +68,7 @@ const orderController = {
   async createOrder(req: Request, res: Response) {
     // const orderData = req.body;
     // const em = res.locals.user.em;
-    const newOrder = await orderService.createOrder(req.body as orderParams);
+    const newOrder = await orderService.createOrder(req.body as newOrderParams);
 
     res.status(201).json({
       error: null,
@@ -98,9 +111,11 @@ const orderController = {
 
   // 주문수정
   async updateOrder(req: Request, res: Response) {
-    const { id } = req.params;
-    const orderData = req.body;
-    const updatedOrder = await orderService.updateOrder(id, orderData);
+    const orderId = req.params.orderId;
+    const updatedOrder = await orderService.updateOrder(
+      orderId,
+      req.body as updateOrderParams
+    );
 
     res.status(201).json({
       error: null,

@@ -21,13 +21,19 @@ interface orderParams {
 }
 
 interface newOrderParams {
+  userId: string;
   orderNumber: string;
   orderedBy: string;
   postCode: string;
   address: string;
   addressDetail: string;
   phoneNumber: string;
+  fundingId: string;
+  orderList: optionParams[];
   donation: number;
+  nameOpen: boolean;
+  priceOpen: boolean;
+  orderStatus: string;
   paymentMethod: string;
 }
 
@@ -62,7 +68,7 @@ const orderService = {
   // 주문하기
   async createOrder({
     userId,
-    orderId,
+
     orderedBy,
     postCode,
     address,
@@ -75,7 +81,7 @@ const orderService = {
     priceOpen,
     orderStatus,
     paymentMethod,
-  }: orderParams) {
+  }: newOrderParams) {
     // 서버연결없이도 겹치지않는 난수만들기
     const orderNumber =
       Date.now().toString().slice(5) +
@@ -83,7 +89,7 @@ const orderService = {
 
     const newOrder = await orderModel.create({
       userId: userId,
-      orderId: orderId,
+
       orderedBy: orderedBy,
       postCode: postCode,
       address: address,
@@ -134,7 +140,7 @@ const orderService = {
 
   // 주문수정
   async updateOrder(
-    id: string,
+    orderId: string,
     {
       orderedBy,
       postCode,
@@ -143,7 +149,7 @@ const orderService = {
       phoneNumber,
     }: updateOrderParams
   ) {
-    const order = await orderModel.findById(id).lean();
+    const order = await orderModel.findById(orderId).lean();
 
     if (order === null) {
       const error = new CustomError('주문이 존재하지 않습니다.', 404);
@@ -156,7 +162,7 @@ const orderService = {
     }
 
     const updatedOrder = await orderModel.findByIdAndUpdate(
-      id,
+      orderId,
       {
         orderedBy,
         postCode,
@@ -171,8 +177,8 @@ const orderService = {
   },
 
   // 주문수정(주문취소후 배송상태 변경 때문)
-  async updateOrderStatus(id: string, orderStatus: string) {
-    const order = await orderModel.findById(id).lean();
+  async updateOrderStatus(orderId: string, orderStatus: string) {
+    const order = await orderModel.findById(orderId).lean();
 
     if (!order) {
       const error = new CustomError('주문이 존재하지 않습니다.', 401);
@@ -180,7 +186,7 @@ const orderService = {
     }
 
     const updatedOrderStatus = await orderModel.updateOne(
-      { _id: id },
+      { _id: orderId },
       {
         orderStatus,
       }
@@ -190,15 +196,15 @@ const orderService = {
   },
 
   // 주문취소
-  async deleteOrder(id: string) {
-    const order = await orderModel.findById(id).lean();
+  async deleteOrder(orderId: string) {
+    const order = await orderModel.findById(orderId).lean();
 
     if (!order) {
       const error = new CustomError('주문이 존재하지 않습니다.', 401);
       throw error;
     }
 
-    const deletedOrder = await orderModel.findOneAndDelete({ _id: id });
+    const deletedOrder = await orderModel.findOneAndDelete({ _id: orderId });
 
     return deletedOrder;
   },
