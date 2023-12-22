@@ -54,6 +54,14 @@ const fundingSchema = new Schema(
       type: String,
       required: true,
     },
+    info: {
+      type: String,
+      required: true,
+    },
+    infoDetail: {
+      type: String,
+      required: true,
+    },
     options: [
       {
         optionId: {
