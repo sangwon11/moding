@@ -4,9 +4,9 @@ import Editor from "ckeditor5-custom-build/build/ckeditor"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
-import "./ckediter/CKEditer.styles.css"
-import { editorConfig } from "./ckediter/CKEditer.config"
-import uploadPlugin from "./ckediter/CKEditer.function"
+import "./components/ckediter/CKEditer.styles.css"
+import { editorConfig } from "./components/ckediter/CKEditer.config"
+import uploadPlugin from "./components/ckediter/CKEditer.function"
 import { axiosInstance } from "../../../utils/axios.utils"
 import * as styled from "./FundingRegPage.styles"
 import { frontEndAuthMiddleware } from "../../../utils/jwtUtils"
@@ -38,20 +38,20 @@ function FundingRegPage() {
     const [options, setOptions] = useState<OptionData[]>([InitialOptionData])
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
-        const { name, value } = e.target;
-    
+        const { name, value } = e.target
+
         const updatedOptions = options.map((option, idx) => {
             if (idx === index) {
                 return {
                     ...option,
                     [name]: value,
-                };
+                }
             }
-            return option;
-        });
-    
-        setOptions(updatedOptions);
-    };
+            return option
+        })
+
+        setOptions(updatedOptions)
+    }
 
     const handleAddClick = () => {
         setOptions([...options, InitialOptionData])
@@ -185,7 +185,7 @@ function FundingRegPage() {
                                 placeholder="Price"
                             />
                             {/* Add other input fields similarly */}
-                            <textarea
+                            <input
                                 name="info"
                                 value={option.info}
                                 onChange={(e) => handleInputChange(e, index)}
