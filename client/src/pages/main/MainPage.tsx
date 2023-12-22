@@ -39,8 +39,6 @@ function MainPage() {
     const [fundingsImages, setFundingsImages] = useState<ImageData[]>([])
     const [loading, setLoading] = useState<boolean>(true) // 로딩 상태 관리를 위한 상태
 
-    const [activeCategory, setActiveCategory] = useState<string | null>(null)
-
     // 펀딩 이미지 데이터를 가져오는 함수
     const fetchFundingsImages = async () => {
         try {
@@ -50,30 +48,17 @@ function MainPage() {
         } catch (error) {
             console.error("Fetching fundings images failed:", error)
         } finally {
-            setLoading(false) // 데이터 로딩 완료 후 로딩 상태 업데이트
+            setLoading(false)
         }
     }
     useEffect(() => {
         fetchFundingsImages()
     }, [])
 
-    const fetchCategoryImages = async (categoryId: string) => {
-        try {
-            const response = await axiosInstance.get(`/category/${categoryId}`)
-            setFundingsImages(response.data.data)
-        } catch (error) {
-            console.error("Fetching category images failed:", error)
-        }
-    }
-    function handleCategoryClick(category: string | null) {
-        setActiveCategory(category)
-        if (category) {
-            fetchCategoryImages(category)
-        } else {
-            fetchFundingsImages()
-        }
-    }
     function renderFundingsSliderSection(images: ImageData[]) {
+        if (!Array.isArray(images)) {
+            return null // images가 배열이 아니면 아무것도 렌더링하지 않음
+        }
         return (
             <Slider {...EarlyBirdSliderSettings}>
                 {images.map((image) => (
@@ -95,8 +80,12 @@ function MainPage() {
         if (loading) {
             return <div className="text-white">Loading...</div>
         }
+        if (!Array.isArray(images)) {
+            console.error("Expected an array but received:", images)
+            return <div className="text-white">데이터가 없습니다.</div>
+        }
         return (
-            <div className="flex flex-wrap -mx-2 justify-end">
+            <div className="flex flex-wrap -mx-2 justify-start">
                 {images.map((image) => (
                     <div key={image._id} className="w-1/4 px-2 mb-4">
                         <Product
@@ -139,40 +128,15 @@ function MainPage() {
             <styeld.ContentArea>
                 {/* 탭 메뉴 */}
                 <styeld.Section>
-                    <styeld.TabButtonsContainer>
-                        <styeld.TabButton
-                            className={!activeCategory ? "bg-[#333333]" : ""}
-                            onClick={() => handleCategoryClick(null)}
-                        >
-                            전체상품
-                        </styeld.TabButton>
-
-                        <styeld.TabButton
-                            className={activeCategory === "가구" ? "bg-[#333333]" : ""}
-                            onClick={() => handleCategoryClick("가구")}
-                        >
-                            가구
-                        </styeld.TabButton>
-
-                        <styeld.TabButton
-                            className={activeCategory === "화장품" ? "bg-[#333333]" : ""}
-                            onClick={() => handleCategoryClick("화장품")}
-                        >
-                            화장품
-                        </styeld.TabButton>
-                        <styeld.TabButton
-                            className={activeCategory === "패션/잡화" ? "bg-[#333333]" : ""}
-                            onClick={() => handleCategoryClick("패션/잡화")}
-                        >
-                            패션/잡화
-                        </styeld.TabButton>
-                    </styeld.TabButtonsContainer>
+                    <styeld.TabButtonsContainer></styeld.TabButtonsContainer>
                     {/* 탭 컨텐츠 */}
+                    <styeld.EarlyBirdTitle>전체 상품</styeld.EarlyBirdTitle>
                     <styeld.TabContentContainer>
                         {/* 추천상품, 인기상승, 펀딩랭킹 탭 컨텐츠 */}
                         {/* {activeTab === "recommend" && renderTabContent(recommendImages)}
                         {activeTab === "popular" && renderTabContent(popularImages)}
                         {activeTab === "funding" && renderTabContent(fundingImages)} */}
+
                         {renderFundingsMainSection(fundingsImages)}
                     </styeld.TabContentContainer>
                 </styeld.Section>

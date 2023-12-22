@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 import { axiosInstance } from "../../utils/axios.utils"
 import { fundingProps, optionsProps } from "../../interface/schema.interface"
 import { formatPrice, formatDate, formatPercentage } from "../../utils/format.utils"
@@ -7,6 +8,9 @@ import FloatingBar from "./components/FloatingBar"
 import * as styled from "./FundingPage.styles"
 
 function FundingPage() {
+    const state = useLocation().state
+    const fundingId = state
+    const navigate = useNavigate();
     const [category, setCategory] = useState("")
     const [loading, setLoading] = useState(true)
     const [funding, setFunding] = useState<fundingProps>({
@@ -33,8 +37,12 @@ function FundingPage() {
     })
 
     const fetchData = async () => {
+        if(fundingId === null){
+            alert("올바른 접근이 아닙니다.")
+            navigate("/")
+        }
         try {
-            const response = await axiosInstance.get("/fundings/657d2c31e09645b53dd9c7c4")
+            const response = await axiosInstance.get("/fundings/" + fundingId)
             setFunding(response.data)
         } catch (error) {
         } finally {
@@ -74,15 +82,11 @@ function FundingPage() {
                 </styled.InfoWrap>
                 <styled.ProcessWrap>
                     <styled.PercentBarWrap>
-                        <styled.CurrentPercent
-                            $percent={`w-[${formatPercentage(funding.currentAmount, funding.goalAmount)}%]`}
-                        >
-                            <styled.CurrentPercentLabel>{percentAmount}</styled.CurrentPercentLabel>
+                        <styled.CurrentPercent style={{ width: `${percentAmount}%` }}>
+                            <styled.CurrentPercentLabel>{percentAmount}%</styled.CurrentPercentLabel>
                         </styled.CurrentPercent>
-                        <styled.LeftPercent
-                            $percent={`w-[${100 - formatPercentage(funding.currentAmount, funding.goalAmount)}%]`}
-                        >
-                            <styled.CurrentPercentLabel>{100 - percentAmount}</styled.CurrentPercentLabel>
+                        <styled.LeftPercent style={{ width: `${100 - percentAmount}%` }}>
+                            <styled.LeftPercentLabel>{100 - percentAmount}%</styled.LeftPercentLabel>
                         </styled.LeftPercent>
                     </styled.PercentBarWrap>
                 </styled.ProcessWrap>

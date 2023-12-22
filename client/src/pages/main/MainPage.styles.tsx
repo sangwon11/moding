@@ -35,7 +35,7 @@ export const TabContentContainer = tw.div`
 `
 // 스티키(우측) 섹션
 export const StickySection = tw.div`
-   sticky top-10 w-1/4 mr-4 p-4 space-y-3 rounded bg-[#D9D9D9]/[.1] mt-[72.5px] mb-4 max-w-[1440px] mx-auto
+   sticky top-10 w-1/4 mr-4 p-4 space-y-3 rounded bg-[#D9D9D9]/[.1] mt-[88.2px] mb-4 max-w-[1440px] mx-auto
 `
 // 실시간 랭킹 타이틀
 export const RealTimeRankingTitle = tw.h2`

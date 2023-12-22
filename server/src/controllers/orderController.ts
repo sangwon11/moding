@@ -3,19 +3,32 @@ import orderService from '../services/orderService';
 import CustomError from '../utils/customError';
 
 interface orderParams {
-  userId: object;
-  fundingId: object;
-  orderList: [];
-  donation: number;
-  status: string;
+  userId: string;
+  orderId: string;
+  orderNumber: string;
   orderedBy: string;
-  postCode: number;
+  postCode: string;
   address: string;
   addressDetail: string;
   phoneNumber: string;
-  nameOpen: string;
-  priceOpen: string;
+  fundingId: string;
+  orderList: optionParams[];
+  donation: number;
+  nameOpen: boolean;
+  priceOpen: boolean;
   orderStatus: string;
+  selectedProduct: productParams[];
+  paymentMethod: string;
+}
+
+interface optionParams {
+  optionsId: string;
+  amount: number;
+}
+
+interface productParams {
+  productId: string;
+  quantity: number;
 }
 
 interface orderListParams {
@@ -40,10 +53,10 @@ interface selectedProductParams {
 const orderController = {
   // 주문목록 조회
   async getOrders(req: Request, res: Response) {
-    // const userId = res.locals.user.userId;
-    const orders = await orderService.getOrders(req.params.userId);
+    const userId = res.locals.user.userId;
+    const orders = await orderService.getOrders(userId);
 
-    res.json({
+    res.status(200).json({
       error: null,
       data: orders,
     });
@@ -51,10 +64,10 @@ const orderController = {
 
   // 주문조회(id)
   async getOneOrder(req: Request, res: Response) {
-    // const { userId } = req.params;
-    const order = await orderService.getOneOrder(req.params.userId);
+    const { userId } = req.params;
+    const order = await orderService.getOneOrder(userId);
 
-    res.json({
+    res.status(200).json({
       error: null,
       data: order,
     });
@@ -65,7 +78,7 @@ const orderController = {
     const { orderNumber } = req.params;
     const order = await orderService.getOrderByOrderNumber(orderNumber);
 
-    res.json({
+    res.status(200).json({
       error: null,
       data: order,
     });
@@ -107,35 +120,43 @@ const orderController = {
       error: null,
       data: deletedOrder,
     });
-    // 주문이 취소되었습니다. ?
   },
 
   //결제
   async makePayment(req: Request, res: Response) {
-    try {
-      const { userId, selectedProduct, donation, paymentMethod } = req.body;
+    const payment = await orderService.makePayment(
+      req.body as makePaymentParams
+    );
 
-      if (!userId || !selectedProduct || !donation || !paymentMethod) {
-        throw new CustomError(
-          '입력값이 잘못되었습니다. 필수요소들이 필요합니다.',
-          400
-        );
-      }
+    res.status(201).json({
+      error: null,
+      data: payment,
+    });
 
-      const result = await orderService.makePayment(
-        req.body as makePaymentParams
-      );
+    // try {
+    //   const { userId, selectedProduct, donation, paymentMethod } = req.body;
 
-      res.status(200).json(result);
-    } catch (error) {
-      if (error instanceof CustomError) {
-        // 커스텀 에러인 경우 에러 상태와 메시지를 반환
-        res.status(error.status).json({ error: error.message });
-      } else {
-        // 다른 예외인 경우 내부 서버 오류 반환
-        res.status(500).json({ error: 'Internal server error' });
-      }
-    }
+    //   if (!userId || !selectedProduct || !donation || !paymentMethod) {
+    //     throw new CustomError(
+    //       '입력값이 잘못되었습니다. 필수요소들이 필요합니다.',
+    //       400
+    //     );
+    //   }
+
+    //   const result = await orderService.makePayment(
+    //     req.body as makePaymentParams
+    //   );
+
+    //   res.status(200).json(result);
+    // } catch (error) {
+    //   if (error instanceof CustomError) {
+    //     // 커스텀 에러인 경우 에러 상태와 메시지를 반환
+    //     res.status(error.status).json({ error: error.message });
+    //   } else {
+    //     // 다른 예외인 경우 내부 서버 오류 반환
+    //     res.status(500).json({ error: 'Internal server error' });
+    //   }
+    // }
   },
 };
 

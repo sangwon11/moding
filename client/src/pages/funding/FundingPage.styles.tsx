@@ -1,11 +1,8 @@
 import tw from "tailwind-styled-components";
-interface PercentProps{
-    $percent: string;
-}
 
 export const Container = tw.div`text-white h-[2000px]`;
 export const AttainmentWrap = tw.div`w-auto h-[300px] bg-[#D9D9D9]/[.1] overflow-hidden font-bold text-1xl`;
-export const InfoWrap = tw.div`flex max-w-[1440px] h-[200px] items-center justify-center m-auto`
+export const InfoWrap = tw.div`flex max-w-[1440px] h-[160px] items-center justify-center m-auto`
 export const PercentWrap = tw.div`mx-20`;
 export const PercentLabel = tw.p`text-7xl font-bold`;
 export const AmountWrap = tw.div`flex`;
@@ -15,12 +12,12 @@ export const CurrentAmount = tw.p`text-2xl`;
 export const GoalAmountWrap = tw.div`px-2`;
 export const GoalAmountLabel = tw.p`text-[#D9D9D9]/[.6] px-2`;
 export const GoalAmount = tw.p`text-2xl`;
-export const ProcessWrap = tw.div`flex max-w-[1080px] h-[100px] items-center m-auto`;
+export const ProcessWrap = tw.div`flex max-w-[1080px] h-[140px] items-center m-auto`;
 export const PercentBarWrap = tw.div`w-[100%] h-[50px] bg-[#D9D9D9]/[.1] rounded-[24px] flex`
-export const CurrentPercent =tw.div<PercentProps>`${(p) => (p.$percent)} bg-[#D9D9D9]/[.6] h-[50px] flex px-10 rounded-[24px]`
-export const CurrentPercentLabel =tw.p`` 
-export const LeftPercent = tw.div<PercentProps>`${(p) => (p.$percent)} bg-[#D9D9D9]/[0.1] h-[50px] flex px-10 rounded-[24px]`;
-export const LeftPercentLabel =tw.p``
+export const CurrentPercent =tw.div`bg-[#D9D9D9] h-[50px] px-10 flex rounded-[24px] items-center min-w-[10%] justyfy-left`
+export const CurrentPercentLabel =tw.p`text-black text-2xl` 
+export const LeftPercent = tw.div`bg-[#D9D9D9]/[0.1] h-[50px] px-10 flex rounded-[24px] items-center min-w-[10%]`;
+export const LeftPercentLabel =tw.p`text-2xl `
 
 export const ContentsWrap = tw.div`my-20 mx-auto w-[1440px] flex`;
 

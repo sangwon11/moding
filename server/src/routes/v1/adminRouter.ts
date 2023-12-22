@@ -1,25 +1,42 @@
 import asyncHandler from "../../utils/asyncHandler";
 import adminController from "../../controllers/adminController";
 import { Router } from "express";
+import isAdmin from "../../middleware/isAdmin";
+import {
+  applySellerValidator,
+  validateError,
+} from "../../middleware/validator";
 
 const adminRouter = Router();
 
-adminRouter.post("/seller/apply", asyncHandler(adminController.applySeller));
+adminRouter.post(
+  "/seller/apply",
+  isAdmin,
+  applySellerValidator,
+  validateError,
+  asyncHandler(adminController.applySeller)
+);
 
-adminRouter.get("/members", asyncHandler(adminController.getAllUsers));
+adminRouter.get("/members", isAdmin, asyncHandler(adminController.getAllUsers));
 
-adminRouter.get("/member/:memberId", asyncHandler(adminController.getUserById));
+adminRouter.get(
+  "/member/:memberId",
+  isAdmin,
+  asyncHandler(adminController.getUserById)
+);
 
 adminRouter.put(
   "/member/:memberId",
+  isAdmin,
   asyncHandler(adminController.updateUsername)
 );
 
 adminRouter.post(
   "/member/delete/:memberId",
+  isAdmin,
   asyncHandler(adminController.deleteMember)
 );
 
-adminRouter.get("/sellers", asyncHandler(adminController.getSellers));
+adminRouter.get("/sellers", isAdmin, asyncHandler(adminController.getSellers));
 
 export default adminRouter;
