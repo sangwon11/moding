@@ -7,7 +7,7 @@ const fundingSchema = new Schema(
       required: true,
       ref: "User",
     },
-    category: {
+    categoryId: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "Category",
@@ -56,6 +56,10 @@ const fundingSchema = new Schema(
     },
     options: [
       {
+        optionId: {
+          type: Schema.Types.ObjectId,
+          ref: "Order",
+        },
         title: {
           type: String,
           required: true,
