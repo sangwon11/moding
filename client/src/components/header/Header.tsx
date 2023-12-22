@@ -41,7 +41,7 @@ function Header() {
   const navItems = [
     { label: "펀딩", path: "/" },
     { label: "오픈예정", path: "/" },
-    { label: "카테고리", path: "/" },
+    { label: "카테고리", path: "/category" },
     { label: "더보기", path: "/" },
   ];
 

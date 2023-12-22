@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { CKEditor } from "@ckeditor/ckeditor5-react"
-import Editor from "ckeditor5-custom-build/build/ckeditor"
+// import Editor from "ckeditor5-custom-build/build/ckeditor"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
@@ -207,14 +207,14 @@ function FundingRegPage() {
                 <styled.AddBtn onClick={addFunding}>등록하기</styled.AddBtn>
             </styled.RegWrap>
             <styled.CKEitorWrap>
-                <CKEditor
+                {/* <CKEditor
                     editor={Editor}
                     data=""
                     config={editorConfig}
                     onReady={(editor: any) => {
                         uploadPlugin(editor)
                     }}
-                />
+                /> */}
             </styled.CKEitorWrap>
         </styled.Container>
     )

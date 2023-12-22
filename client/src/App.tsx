@@ -8,7 +8,8 @@ import SignInPage from "./pages/sign-in/SignInPage";
 import OptionsPage from "./pages/options/OptionsPage";
 import PaymentPage from "./pages/payment/PaymentPage";
 import FundingPage from "./pages/funding/FundingPage";
-import SellerPage from "./pages/seller/SellerPage";
+import Category from "./pages/category/Category";
+import Footer from "./components/footer/Footer";
 
 function App() {
   return (
@@ -24,9 +25,11 @@ function App() {
           <Route path="/options" element={<OptionsPage />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/funding" element={<FundingPage />} />
-          <Route path="/seller/*" element={<SellerPage />} />
+          <Route path="/category" element={<Category />} />
         </Routes>
+        <Footer />
       </div>
+      
     </BrowserRouter>
   );
 }

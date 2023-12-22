@@ -4,6 +4,13 @@ import {Link} from "react-router-dom";
 interface NavLinkProps {
     to: string;
 }
+interface UnderTagProps {
+  $validator: boolean;
+}
+
+export const UnderTag = tw.p<UnderTagProps>`
+  text-xs font-normal w-[380px]
+  ${(p) => (p.$validator ? "text-blue-500" : "text-red-500" )}`
 
 export const Container = tw.div`
   py-28 flex flex-col items-center 
@@ -29,12 +36,12 @@ export const NavRightButton = tw(Link)<NavLinkProps>`
   w-[150px] h-[52px] flex items-center justify-center
 `;
 
-export const StyledForm = tw.div`
+export const StyledForm = tw.form`
   bg-[#D9D9D9]/[.1] w-[600px] h-[600px] text-white text-lg font-bold rounded-[24px] rounded-tl-[0px] flex flex-col space-y-8 justify-center items-center
 `;
 
 export const StyledInput = tw.input`
-  bg-[#D9D9D9]/[.1] w-[400px] h-14 ps-8 pe-8 outline-none rounded-[24px] placeholder:text-white/[0.5]
+  bg-[#D9D9D9]/[.1] w-[400px] h-14 my-9 ps-8 pe-8 outline-none rounded-[24px] placeholder:text-white/[0.5] my-0.5
 `;
 
 export const StyledButton = tw.button`
