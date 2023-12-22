@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { axiosInstance } from "../../utils/axios.utils"
 import { fundingProps, optionsProps } from "../../interface/schema.interface"
 import { formatPrice, formatDate, formatPercentage } from "../../utils/format.utils"
@@ -10,6 +10,7 @@ import * as styled from "./FundingPage.styles"
 function FundingPage() {
     const state = useLocation().state
     const fundingId = state
+    const navigate = useNavigate();
     const [category, setCategory] = useState("")
     const [loading, setLoading] = useState(true)
     const [funding, setFunding] = useState<fundingProps>({
@@ -36,6 +37,10 @@ function FundingPage() {
     })
 
     const fetchData = async () => {
+        if(fundingId === null){
+            alert("올바른 접근이 아닙니다.")
+            navigate("/")
+        }
         try {
             const response = await axiosInstance.get("/fundings/" + fundingId)
             setFunding(response.data)

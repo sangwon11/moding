@@ -18,7 +18,7 @@ export interface SignUpParams {
 
 export interface FundingParams {
   title: string;
-  category: string;
+  categoryId: string;
   goalAmount: number;
   startDate: string;
   endDate: string;
@@ -33,6 +33,8 @@ export interface FundingParams {
   seller: string;
   deliveryNumber: string;
   deliveryType: string;
+  info: string;
+  infoDetail: string;
 }
 
 export interface DeliveryUpdateParams {

@@ -27,18 +27,13 @@ sellerRouter.post(
   isAuthenticated,
   createFundingValidator,
   asyncHandler(validateError),
-  upload.fields([
-    { name: "mainImageUrl", maxCount: 1 },
-    { name: "imageUrls", maxCount: 5 },
-  ]),
+  // upload.fields([
+  //     { name: "mainImageUrl", maxCount: 1 },
+  //     { name: "imageUrls", maxCount: 5 },
+  // ]),
   asyncHandler(sellerController.createFunding)
 );
 
 sellerRouter.put("/:fundingId", asyncHandler(sellerController.updateFunding));
-
-sellerRouter.post(
-  "/delivery/:fundingId",
-  asyncHandler(sellerController.deliveryUpdate)
-);
 
 export default sellerRouter;
