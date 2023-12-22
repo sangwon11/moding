@@ -62,3 +62,7 @@ export interface UpdateUserData {
   address?: string;
   addressDetail?: string;
 }
+
+export interface CategoryParams {
+  categoryName: string;
+}

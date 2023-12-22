@@ -8,11 +8,12 @@ import SignInPage from "./pages/sign-in/SignInPage";
 import OptionsPage from "./pages/options/OptionsPage";
 import PaymentPage from "./pages/payment/PaymentPage";
 import FundingPage from "./pages/funding/FundingPage";
+import SellerPage from "./pages/seller/SellerPage";
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="scrollbar bg-[#03000C] min-w-[1440px] w-auto min-h-screen bg-auto">
+      <div className="scrollbar bg-[#03000C] min-w-[1440px] w-auto min-h-screen h-auto">
         <Header />
         <Routes>
           <Route path="/" element={<MainPage />} />
@@ -23,6 +24,7 @@ function App() {
           <Route path="/options" element={<OptionsPage />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/funding" element={<FundingPage />} />
+          <Route path="/seller/*" element={<SellerPage />} />
         </Routes>
       </div>
     </BrowserRouter>

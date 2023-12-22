@@ -27,10 +27,10 @@ sellerRouter.post(
   isAuthenticated,
   createFundingValidator,
   asyncHandler(validateError),
-  upload.fields([
-    { name: "mainImageUrl", maxCount: 1 },
-    { name: "imageUrls", maxCount: 5 },
-  ]),
+  // upload.fields([
+  //     { name: "mainImageUrl", maxCount: 1 },
+  //     { name: "imageUrls", maxCount: 5 },
+  // ]),
   asyncHandler(sellerController.createFunding)
 );
 
