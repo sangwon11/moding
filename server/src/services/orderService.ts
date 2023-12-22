@@ -1,5 +1,10 @@
 import { orderModel } from '../models';
 import CustomError from '../utils/customError';
+import {
+  // orderParams,
+  newOrderParams,
+  optionParams,
+} from '../interface/interfaces';
 
 //회원주문조회
 interface orderParams {
@@ -20,33 +25,6 @@ interface orderParams {
   paymentMethod: string;
 }
 
-interface newOrderParams {
-  userId: string;
-  orderNumber: string;
-  orderedBy: string;
-  postCode: string;
-  address: string;
-  addressDetail: string;
-  phoneNumber: string;
-  fundingId: string;
-  orderList: optionParams[];
-  donation: number;
-  nameOpen: boolean;
-  priceOpen: boolean;
-  orderStatus: string;
-  paymentMethod: string;
-}
-
-interface optionParams {
-  optionsId: string;
-  amount: number;
-}
-
-interface productParams {
-  productId: string;
-  quantity: number;
-}
-
 interface updateOrderParams {
   orderedBy: string;
   postCode: string;
@@ -54,15 +32,6 @@ interface updateOrderParams {
   addressDetail: string;
   phoneNumber: string;
 }
-
-// interface makePaymentParams {
-//   userId: string;
-//   selectedProduct: object;
-//   productId: string;
-//   quantity: number;
-//   donation: number;
-//   paymentMethod: string;
-// }
 
 const orderService = {
   // 주문하기
@@ -149,7 +118,7 @@ const orderService = {
       phoneNumber,
     }: updateOrderParams
   ) {
-    const order = await orderModel.findById(orderId).lean();
+    const order = await orderModel.findById({ orderId }).lean();
 
     if (order === null) {
       const error = new CustomError('주문이 존재하지 않습니다.', 404);
@@ -164,11 +133,11 @@ const orderService = {
     const updatedOrder = await orderModel.findByIdAndUpdate(
       orderId,
       {
-        orderedBy,
-        postCode,
-        address,
-        addressDetail,
-        phoneNumber,
+        orderedBy: orderedBy,
+        postCode: postCode,
+        address: address,
+        addressDetail: addressDetail,
+        phoneNumber: phoneNumber,
       },
       { new: true }
     );
@@ -186,7 +155,7 @@ const orderService = {
     }
 
     const updatedOrderStatus = await orderModel.updateOne(
-      { _id: orderId },
+      { orderId },
       {
         orderStatus,
       }
@@ -204,48 +173,10 @@ const orderService = {
       throw error;
     }
 
-    const deletedOrder = await orderModel.findOneAndDelete({ _id: orderId });
+    const deletedOrder = await orderModel.findOneAndDelete({ orderId });
 
     return deletedOrder;
   },
-
-  //  결제
-  // async makePayment({
-  //   userId,
-  //   selectedProduct,
-  //   donation,
-  //   paymentMethod,
-  // }: makePaymentParams) {
-  //   console.log('userId:', userId);
-  //   console.log('selectedProduct:', selectedProduct);
-  //   console.log('donation:', donation);
-  //   console.log('paymentMethod:', paymentMethod);
-  //   try {
-  //     데이터베이스에 결제 정보 추가
-  //     const newOrder = new orderModel({
-  //       userId,
-  //       selectedProduct,
-  //       donation,
-  //       paymentMethod,
-  //     });
-
-  //     const savedOrder = await newOrder.save();
-
-  //     console.log('savedOrder:', savedOrder);
-  //     결제 요청이 성공했다고 가정하고 응답을 반환
-
-  //     const paymentId = savedOrder._id; // 이 부분은 데이터베이스에서 생성된 주문 ID를 사용하도록 수정해야 합니다.
-
-  //     return {
-  //       status: 'success',
-  //       message: '결제 요청 완료',
-  //       paymentId,
-  //     };
-  //   } catch (error) {
-  //     console.error(error);
-  //     throw new CustomError('결제 처리 중 오류 발생', 500);
-  //   }
-  // },
 };
 
 export default orderService;

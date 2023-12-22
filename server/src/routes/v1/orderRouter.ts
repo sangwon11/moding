@@ -35,18 +35,11 @@ orderRouter.get(
 
 //주문수정
 orderRouter.put(
-  '/me/:id',
+  '/me/:orderId',
   objectIdValidator,
   userOrderValidator,
   validateError,
   asyncHandler(orderController.updateOrder)
 );
-
-// 결제
-// orderRouter.post(
-//   '/payment',
-//   isAuthenticated,
-//   asyncHandler(orderController.makePayment)
-// );
 
 export default orderRouter;
