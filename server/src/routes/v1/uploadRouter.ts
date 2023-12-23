@@ -6,7 +6,7 @@ const uploadRouter = express.Router();
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "client/public/images");
+      cb(null, "../client/public/uploads/");
     },
     filename: (req, file, cb) => {
       // 업로드된 이미지 파일의 이름을 현재 시간 기반으로 생성
@@ -19,8 +19,13 @@ const storage = multer.diskStorage({
   const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
   
   uploadRouter.post("/", upload.single("image"), (req:Request, res:Response) => {
+    if (!req.file) {
+        return res.status(400).json({ error: "File upload failed." });
+      }
+
     const fileName = req.file?.filename;
-    const imgUrl = "/images/"+ fileName;
+    const imgUrl = "/uploads/"+ fileName;
+
     res.json({
       error: null,
       data: imgUrl,
