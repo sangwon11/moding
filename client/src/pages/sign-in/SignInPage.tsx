@@ -42,6 +42,11 @@ function SignInPage() {
   const setHeaderRender = useSetRecoilState(HeaderRenderAtom);
   const navigate = useNavigate();
 
+  const headerRender = () => {
+    setHeaderRender((prevCount) => prevCount + 1);
+  };
+
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -111,7 +116,11 @@ function SignInPage() {
         password,
       });
       if (response.status === 201) {
-        // 성공 로직
+        window.alert("성공적으로 로그인되었습니다.");
+        Cookies.set("jwt", response.data.data.toString(), { expires: 1 });
+        headerRender();
+        navigate("/");
+
       }
     } catch (error) {
       console.error(error);
