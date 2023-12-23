@@ -9,7 +9,6 @@ import { axiosInstance } from "../../../../utils/axios.utils"
 
 function RegEditor() {
     const [editorData, setEditorData] = useState("")
-    const [editorData, setEditorData] = useState("")
 
     const handleEditorChange = (event: any, editor: any) => {
         const data = editor.getData()
