@@ -31,7 +31,7 @@ interface ImageData {
     mainImageUrl: string
     title: string
     description: string // 상품 설명
-    category: string // 제조사
+    categoryId: string // 제조사
     currentAmount: number
     goalAmount: number
 }
@@ -47,7 +47,7 @@ function Category() {
     const [categories, setCategories] = useState<CategoryData[]>([])
     const [activeCategory, setActiveCategory] = useState<string>("")
 
-    // 전체 카테고리 이미지 데이터를 가져오는 함수
+    // 전체 카테고리 목록 데이터를 가져오는 함수
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -89,6 +89,8 @@ function Category() {
         }
     }
     const handleCategoryClick = (categoryId: string) => {
+        console.log(`클라이언트에서 전송하는 categoryId: ${categoryId}`)
+
         setActiveCategory(categoryId)
         if (categoryId) {
             fetchCategoryImages(categoryId)
