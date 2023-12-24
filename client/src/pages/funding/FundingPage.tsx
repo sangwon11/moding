@@ -44,6 +44,9 @@ function FundingPage() {
         try {
             const response = await axiosInstance.get("/fundings/" + fundingId)
             setFunding(response.data)
+            console.log(response.data)
+            console.log(funding.currentAmount)
+            console.log(funding.goalAmount)
         } catch (error) {
         } finally {
             setLoading(false)
