@@ -11,6 +11,7 @@ function RegNav() {
         seller: funding.seller.trim().length !== 0,
         title: funding.title.length >= 6 && funding.info.length >= 10,
         category: funding.categoryId.trim().length > 0,
+        images: funding.mainImageUrl.length !== 0,
         options: funding.options.every(
             (option) => option.title.length >= 5 && option.price.length >= 4 && option.totalAmount.length >= 2 && option.info.length >= 5
         ),
@@ -26,6 +27,7 @@ function RegNav() {
         { label: "시작하기", path: "./", validation: validations.seller },
         { label: "펀딩정보", path: "./title", validation: validations.title },
         { label: "카테고리", path: "./category", validation: validations.category },
+        { label: "사진", path: "./images", validation: validations.images },
         { label: "옵션", path: "./options", validation: validations.options },
         { label: "펀딩기간", path: "./date", validation: validations.date },
         { label: "배송", path: "./delivery", validation: validations.delivery },

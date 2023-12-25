@@ -34,3 +34,5 @@ export const OptionTextArea = tw.textarea`py-2 px-6 h-[88px] w-[400px] rounded-m
 
 export const DateInput = tw.input`block w-full px-3 py-[0.5rem] text-base placeholder-gray-400 border rounded-md transition-all duration-200 ease-in-out focus:ring focus:border-primary-400 focus:placeholder-opacity-0 text-black w-[400px]`
 export const DateLabel = tw.label`absolute left-12 top-5 pt-[0.5rem] text-base text-gray-400 transition-all duration-200 ease-in-out`
+
+export const RegImageInput = tw.input` w-[400px] text-m text-gray-900 rounded-md cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400`

@@ -32,3 +32,8 @@ export const fundingRegAtom = atom({
         infoDetail: "",
     },
 })
+
+export const optionsAtom = atom({
+    key: 'optionsAtom',
+    default: [{ title: "", price: "", totalAmount: "", info: "" }]
+  });

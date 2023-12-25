@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useRecoilState } from "recoil"
-import { fundingRegAtom } from "../../../../../recoil/FundingReg.Atom"
+import { fundingRegAtom, optionsAtom } from "../../../../../recoil/FundingReg.Atom"
 import * as styled from "../../FundingRegPage.styles"
 
 interface OptionData {
@@ -21,7 +21,7 @@ const InitialOptionData: OptionData = {
 function RegOptions() {
     const navigate = useNavigate()
     const [funding, setFunding] = useRecoilState(fundingRegAtom)
-    const [options, setOptions] = useState<OptionData[]>([InitialOptionData])
+    const [options, setOptions] = useRecoilState(optionsAtom);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
         const { name, value } = e.target

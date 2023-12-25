@@ -19,26 +19,26 @@ function RegEditor() {
         setFunding((prev) => ({ ...prev, infoDetail: data }))
     }
 
-    const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([])
+    const [uploadedImageName, setUploadedImageName] = useState<string[]>([])
 
-    const handlePageLeave = async () => {
-        for (const imageUrl of uploadedImageUrls) {
+    const handlePageLeave = async (e: BeforeUnloadEvent) => {
+        for (const imageName of uploadedImageName) {
             try {
-                await axiosInstance.delete(`/upload/${imageUrl}`)
-                console.log(`이미지 삭제 완료: ${imageUrl}`)
+                await axiosInstance.delete(`/upload/${imageName}`)
+                console.log(`이미지 삭제 완료: ${imageName}`)
             } catch (error) {
-                console.error(`이미지 삭제 에러: ${imageUrl}`, error)
+                console.error(`이미지 삭제 에러: ${imageName}`, error)
             }
         }
+        setUploadedImageName([])
     }
 
     useEffect(() => {
         window.addEventListener("beforeunload", handlePageLeave)
-
         return () => {
             window.removeEventListener("beforeunload", handlePageLeave)
         }
-    }, [uploadedImageUrls])
+    }, [uploadedImageName])
 
     return (
         <styled.RegContainer>
@@ -47,7 +47,7 @@ function RegEditor() {
                 <styled.CKEitorWrap>
                     <CKEditor
                         editor={Editor}
-                        data=""
+                        data={funding.infoDetail}
                         config={editorConfig}
                         onReady={(editor: any) => {
                             editor.plugins.get("FileRepository").createUploadAdapter = (loader: any) => {
@@ -62,7 +62,11 @@ function RegEditor() {
                                                     "Content-Type": "multipart/form-data",
                                                 },
                                             })
-                                            setUploadedImageUrls((prevUrls) => [...prevUrls, response.data.data])
+                                            console.log(response.data.data.slice(9))
+                                            setUploadedImageName((prevName) => [
+                                                ...prevName,
+                                                response.data.data.slice(9),
+                                            ])
                                             return {
                                                 default: response.data.data,
                                             }

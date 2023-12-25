@@ -43,14 +43,14 @@ function RegCategory() {
             alert("카테고리를 선택해주세요.")
             return
         }
-        navigate("../options")
+        navigate("../images")
     }
 
     return (
         <styled.RegContainer>
             <styled.RegLabel>카테고리</styled.RegLabel>
             <styled.RegWrap>
-                <styled.CategorySelect onChange={handleSelectChange}>
+                <styled.CategorySelect onChange={handleSelectChange} value={funding.categoryId}>
                     <styled.CategoryOption value="">카테고리 선택</styled.CategoryOption>
                     {categories.map((category) => (
                         <styled.CategoryOption key={category._id} value={category._id}>

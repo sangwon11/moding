@@ -13,6 +13,7 @@ import RegDelivery from "./components/Register/RegDeilvery"
 import RegEditor from "./components/Register/RegEditor"
 import RegNav from "./components/RegNav/RegNav"
 import RegComplete from "./components/Register/RegComplete"
+import RegImages from "./components/Register/RegImages"
 
 import * as styled from "../FundingRegPage/FundingRegPage.styles"
 
@@ -26,6 +27,7 @@ function RegRouter() {
                     <Route path="/" element={<RegStart />} />
                     <Route path="/title" element={<RegTitle />} />
                     <Route path="/category" element={<RegCategory />} />
+                    <Route path="/images" element={<RegImages />} />
                     <Route path="/date" element={<RegDate />} />
                     <Route path="/goal" element={<RegGoal />} />
                     <Route path="/options" element={<RegOptions />} />
