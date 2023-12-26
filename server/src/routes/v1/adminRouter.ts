@@ -32,7 +32,7 @@ adminRouter.put(
 );
 
 adminRouter.post(
-  "/member/delete/:memberId",
+  "/member/:memberId",
   isAdmin,
   asyncHandler(adminController.deleteMember)
 );
