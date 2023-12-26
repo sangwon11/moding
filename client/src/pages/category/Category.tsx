@@ -236,7 +236,7 @@ function Category() {
                         ))}
                     </styeld.TabButtonsContainer>
                     {/* 탭 컨텐츠 */}
-                    <styeld.TabContentContainer>{renderFundingsMainSection(allImages)}</styeld.TabContentContainer>
+                    <styeld.TabContentContainer>{renderFundingsMainSection(fundingsImages)}</styeld.TabContentContainer>
                 </styeld.Section>
 
                 {/* 우측 섹션 - sticky 위치 지정 */}
@@ -253,7 +253,7 @@ function Category() {
 
             <styeld.EarlyBirdTitle>트렌드</styeld.EarlyBirdTitle>
             <styeld.FullWidthSliderContainer>
-                <styeld.TabContentContainer>{renderTrendSection(fundingsImages)}</styeld.TabContentContainer>
+                <styeld.TabContentContainer>{renderTrendSection(allImages)}</styeld.TabContentContainer>
             </styeld.FullWidthSliderContainer>
         </styeld.MainPageContainer>
     )
