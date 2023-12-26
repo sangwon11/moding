@@ -6,24 +6,9 @@ import {
   optionParams,
 } from '../interface/interfaces';
 
+import { Schema, Types } from 'mongoose';
+
 //회원주문조회
-interface orderParams {
-  userId: string;
-  orderId: string;
-  orderNumber: string;
-  orderedBy: string;
-  postCode: string;
-  address: string;
-  addressDetail: string;
-  phoneNumber: string;
-  fundingId: string;
-  orderList: optionParams[];
-  donation: number;
-  nameOpen: boolean;
-  priceOpen: boolean;
-  orderStatus: string;
-  paymentMethod: string;
-}
 
 interface updateOrderParams {
   orderedBy: string;
@@ -56,9 +41,12 @@ const orderService = {
       Date.now().toString().slice(5) +
       String(Math.floor(Math.random() * 10000)).padStart(4, '0');
 
+    // orderId 생성
+    const orderId = new Types.ObjectId();
+
     const newOrder = await orderModel.create({
       userId: userId,
-
+      orderId: orderId,
       orderedBy: orderedBy,
       postCode: postCode,
       address: address,
@@ -109,7 +97,7 @@ const orderService = {
 
   // 주문수정
   async updateOrder(
-    orderId: string,
+    id: string,
     {
       orderedBy,
       postCode,
@@ -118,7 +106,7 @@ const orderService = {
       phoneNumber,
     }: updateOrderParams
   ) {
-    const order = await orderModel.findById({ orderId }).lean();
+    const order = await orderModel.findById({ id }).lean();
 
     if (order === null) {
       const error = new CustomError('주문이 존재하지 않습니다.', 404);
@@ -131,7 +119,7 @@ const orderService = {
     }
 
     const updatedOrder = await orderModel.findByIdAndUpdate(
-      orderId,
+      id,
       {
         orderedBy: orderedBy,
         postCode: postCode,

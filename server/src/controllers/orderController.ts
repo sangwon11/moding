@@ -22,6 +22,7 @@ interface orderParams {
 
 interface newOrderParams {
   userId: string;
+  orderId: string;
   orderNumber: string;
   orderedBy: string;
   postCode: string;
@@ -96,9 +97,9 @@ const orderController = {
 
   // 주문수정
   async updateOrder(req: Request, res: Response) {
-    const orderId = req.params.orderId;
+    const id = req.params.id;
     const updatedOrder = await orderService.updateOrder(
-      orderId,
+      id,
       req.body as updateOrderParams
     );
 

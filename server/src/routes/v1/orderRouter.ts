@@ -35,7 +35,7 @@ orderRouter.get(
 
 //주문수정
 orderRouter.put(
-  '/me/:orderId',
+  '/me/:id',
   objectIdValidator,
   userOrderValidator,
   validateError,

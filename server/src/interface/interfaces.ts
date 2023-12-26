@@ -89,6 +89,7 @@ export interface orderParams {
 
 export interface newOrderParams {
   userId: string;
+  orderId: string;
   orderNumber: string;
   orderedBy: string;
   postCode: string;
