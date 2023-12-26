@@ -6,6 +6,7 @@ import "../main/Main.css"
 import Product from "../../components/Product"
 import { axiosInstance } from "../../utils/axios.utils"
 import * as styeld from "./Category.styles"
+import { Link } from "react-router-dom"
 
 // 메인 슬라이더 설정
 const sliderSettings = {
@@ -42,10 +43,12 @@ interface CategoryData {
 
 function Category() {
     const [fundingsImages, setFundingsImages] = useState<ImageData[]>([])
-    const [loading, setLoading] = useState<boolean>(true) // 로딩 상태 관리를 위한 상태
+    const [loading, setLoading] = useState(true) // 로딩 상태 관리를 위한 상태
 
     const [categories, setCategories] = useState<CategoryData[]>([])
-    const [activeCategory, setActiveCategory] = useState<string>("")
+    const [activeCategory, setActiveCategory] = useState("")
+
+    const [allImages, setAllImages] = useState<ImageData[]>([]) // 전체 이미지 데이터를 저장
 
     // 전체 카테고리 목록 데이터를 가져오는 함수
     useEffect(() => {
@@ -67,6 +70,7 @@ function Category() {
             const response = await axiosInstance.get(`/fundings`)
             console.log("response.data : ", response.data)
             setFundingsImages(response.data.data)
+            setAllImages(response.data.data) // 전체 이미지 데이터를 allImages에 저장
         } catch (error) {
             console.error("Fetching fundings images failed:", error)
         } finally {
@@ -89,7 +93,7 @@ function Category() {
         }
     }
     const handleCategoryClick = (categoryId: string) => {
-        console.log(`클라이언트에서 전송하는 categoryId: ${categoryId}`)
+        console.log(`Selected categoryId: ${categoryId}`)
 
         setActiveCategory(categoryId)
         if (categoryId) {
@@ -147,10 +151,53 @@ function Category() {
         )
     }
 
+    // 우측 섹션 함수
+    function renderFundingsRightSection(images: ImageData[]) {
+        // 로딩 상태와 데이터 유무를 체크하여 메시지를 표시
+        if (loading) {
+            return <div className="text-white">Loading...</div>
+        }
+        if (!allImages.length) {
+            return <div className="text-white">데이터가 없습니다.</div>
+        }
+
+        // 상위 5개의 이미지만 렌더링
+        const topImages = allImages.slice(0, 5)
+
+        return (
+            <div className="flex flex-col">
+                {topImages.map((image, index) => (
+                    <div key={image._id} className="flex items-center mb-2">
+                        <div className="text-white font-bold mr-2">{index + 1}.</div>
+                        <Product
+                            id={image._id}
+                            url={image.mainImageUrl}
+                            alt={image.title}
+                            description={image.title}
+                            isRightSection={true}
+                        />
+                    </div>
+                ))}
+            </div>
+        )
+    }
+
+    // 얼리버드 섹션을 렌더링하는 함수
+    function renderEarlyBirdSection(images: ImageData[]) {
+        const earlyBirdImages = allImages.slice(0, 4)
+        return renderFundingsSliderSection(earlyBirdImages)
+    }
+    // 트렌드 섹션을 렌더링하는 함수
+    function renderTrendSection(images: ImageData[]) {
+        const trendImages = [...allImages].reverse().slice(0, 4)
+        return renderFundingsSliderSection(trendImages)
+    }
+
     // 새로고침 시 로딩 화면
     if (loading) {
         return <div className="text-white">Loading...</div>
     }
+
     return (
         <styeld.MainPageContainer>
             {/* 슬라이드 광고 섹션 */}
@@ -188,45 +235,26 @@ function Category() {
                                 {category.categoryName}
                             </styeld.TabButton>
                         ))}
-                        {/* <styeld.TabButton
-                            className={activeCategory === "가구" ? "bg-[#333333]" : ""}
-                            onClick={() => handleCategoryClick("가구")}
-                        >
-                            가구
-                        </styeld.TabButton> */}
                     </styeld.TabButtonsContainer>
                     {/* 탭 컨텐츠 */}
-                    <styeld.TabContentContainer>
-                        {/* 추천상품, 인기상승, 펀딩랭킹 탭 컨텐츠 */}
-                        {/* {activeTab === "recommend" && renderTabContent(recommendImages)}
-                        {activeTab === "popular" && renderTabContent(popularImages)}
-                        {activeTab === "funding" && renderTabContent(fundingImages)} */}
-                        {renderFundingsMainSection(fundingsImages)}
-                    </styeld.TabContentContainer>
+                    <styeld.TabContentContainer>{renderFundingsMainSection(allImages)}</styeld.TabContentContainer>
                 </styeld.Section>
 
                 {/* 우측 섹션 - sticky 위치 지정 */}
                 <styeld.StickySection>
                     <styeld.RealTimeRankingTitle>실시간 랭킹</styeld.RealTimeRankingTitle>
-                    <styeld.RealTimeRankingList>
-                        <li className="mb-1">강동훈</li>
-                        <li className="mb-1">김도희</li>
-                        <li className="mb-1">류충현</li>
-                        <li className="mb-1">위동현</li>
-                        <li className="mb-1">윤상원</li>
-                        <li className="mb-1">최윤혁</li>
-                    </styeld.RealTimeRankingList>
+                    <styeld.RealTimeRankingList>{renderFundingsRightSection(allImages)}</styeld.RealTimeRankingList>
                 </styeld.StickySection>
             </styeld.ContentArea>
 
             <styeld.EarlyBirdTitle>얼리버드</styeld.EarlyBirdTitle>
             <styeld.FullWidthSliderContainer>
-                <styeld.TabContentContainer>{renderFundingsSliderSection(fundingsImages)}</styeld.TabContentContainer>
+                <styeld.TabContentContainer>{renderEarlyBirdSection(allImages)}</styeld.TabContentContainer>
             </styeld.FullWidthSliderContainer>
 
             <styeld.EarlyBirdTitle>트렌드</styeld.EarlyBirdTitle>
             <styeld.FullWidthSliderContainer>
-                <styeld.TabContentContainer>{renderFundingsSliderSection(fundingsImages)}</styeld.TabContentContainer>
+                <styeld.TabContentContainer>{renderTrendSection(fundingsImages)}</styeld.TabContentContainer>
             </styeld.FullWidthSliderContainer>
         </styeld.MainPageContainer>
     )

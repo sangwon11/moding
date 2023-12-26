@@ -37,7 +37,7 @@ interface ImageData {
 
 function MainPage() {
     const [fundingsImages, setFundingsImages] = useState<ImageData[]>([])
-    const [loading, setLoading] = useState<boolean>(true) // 로딩 상태 관리를 위한 상태
+    const [loading, setLoading] = useState(true) // 로딩 상태 관리를 위한 상태
 
     // 펀딩 이미지 데이터를 가져오는 함수
     const fetchFundingsImages = async () => {

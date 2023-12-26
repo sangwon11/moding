@@ -2,21 +2,38 @@ import React from "react"
 import { useNavigate } from "react-router-dom"
 import tw from "tailwind-styled-components"
 import { formatPercentage } from "../utils/format.utils"
+
 interface ProductProps {
     id: string
     url: string
     alt: string
-    description: string // 상품 설명
-    isSlider?: boolean // 슬라이더에서 사용되는지 여부를 나타내는 prop
-    currentAmount?: number // 현재 모금액
-    goalAmount?: number // 목표 모금액
+    description: string
+    isSlider?: boolean
+    isRightSection?: boolean
+    currentAmount?: number
+    goalAmount?: number
 }
 
-// Product 컴포넌트
-function Product({ id, url, alt, description, isSlider, currentAmount, goalAmount }: ProductProps) {
+function Product({ id, url, alt, description, isSlider, isRightSection, currentAmount, goalAmount }: ProductProps) {
     const containerClassName = isSlider ? "w-full" : "w-1/3"
     const percentage = currentAmount && goalAmount ? formatPercentage(currentAmount, goalAmount) : "0"
     const navigate = useNavigate()
+
+    if (isRightSection) {
+        return (
+            <div
+                className="flex justify-between items-center px-2 mb-4 cursor-pointer"
+                key={id}
+                onClick={() => navigate("/funding", { state: id })}
+            >
+                <p className="text-white text-sm font-semibold mr-3">{description}</p>
+                <ImageRightContainer>
+                    <RightImage src={url} alt={alt} />
+                </ImageRightContainer>
+            </div>
+        )
+    }
+
     return (
         <div className={`${containerClassName} px-2 mb-4`} key={id}>
             <ImageContainer>
@@ -29,9 +46,15 @@ function Product({ id, url, alt, description, isSlider, currentAmount, goalAmoun
         </div>
     )
 }
-// 스타일 컴포넌트
+const ImageRightContainer = tw.div`
+w-40 h-20 rounded-lg cursor-pointer overflow-hidden
+`
+const RightImage = tw.img`
+w-20 h-20 rounded-lg cursor-pointer overflow-hidden
+`
+
 const ImageContainer = tw.div`
-  w-full h-64 overflow-hidden rounded-lg bg-gray-200
+  w-full h-64 overflow-hidden rounded-lg bg-gray-200 cursor-pointer 
 `
 
 const Image = tw.img`
@@ -49,4 +72,5 @@ const Description = tw.p`
 const Manufacturer = tw.p`
   text-gray-500 text-sm
 `
+
 export default Product

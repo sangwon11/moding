@@ -10,6 +10,7 @@ import PaymentPage from "./pages/payment/PaymentPage"
 import FundingPage from "./pages/funding/FundingPage"
 import Category from "./pages/category/Category"
 import Footer from "./components/footer/Footer"
+import SellerPage from "./pages/seller/SellerPage"
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                     <Route path="/payment" element={<PaymentPage />} />
                     <Route path="/funding" element={<FundingPage />} />
                     <Route path="/category" element={<Category />} />
+                    <Route path="/seller/*" element={<SellerPage />} />
                 </Routes>
                 <Footer />
             </div>
