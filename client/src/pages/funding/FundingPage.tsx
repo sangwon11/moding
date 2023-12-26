@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import { axiosInstance } from "../../utils/axios.utils"
+import { axios, axiosInstance } from "../../utils/axios.utils"
 import { fundingProps, optionsProps } from "../../interface/schema.interface"
 import { formatPrice, formatDate, formatPercentage } from "../../utils/format.utils"
 import FundingInfo from "./components/FundingInfo"
@@ -10,7 +10,7 @@ import * as styled from "./FundingPage.styles"
 function FundingPage() {
     const state = useLocation().state
     const fundingId = state
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const [category, setCategory] = useState("")
     const [loading, setLoading] = useState(true)
     const [funding, setFunding] = useState<fundingProps>({
@@ -34,10 +34,12 @@ function FundingPage() {
                 info: "",
             },
         ],
+        infoDetail: "",
+        info: ""
     })
 
     const fetchData = async () => {
-        if(fundingId === null){
+        if (fundingId === null) {
             alert("올바른 접근이 아닙니다.")
             navigate("/")
         }
@@ -45,6 +47,10 @@ function FundingPage() {
             const response = await axiosInstance.get("/fundings/" + fundingId)
             setFunding(response.data)
         } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                window.alert("올바른 접근이 아닙니다.")
+                navigate("/")
+            }
         } finally {
             setLoading(false)
         }

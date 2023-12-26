@@ -104,7 +104,6 @@ function SignUpPage() {
       } else {
       }
     } catch (error) {
-      console.log(error);
       if (axios.isAxiosError(error) && error.response) {
         if (error.response.status === 409) {
           window.alert("이미 존재하는 이메일입니다.");

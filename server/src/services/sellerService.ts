@@ -32,7 +32,7 @@ const sellerService = {
 
       const funding = new fundingModel({
         title: params.title,
-        category: params.category,
+        categoryId: params.categoryId,
         goalAmount: params.goalAmount,
         startDate: params.startDate,
         endDate: params.endDate,
@@ -46,6 +46,8 @@ const sellerService = {
         seller: existingSeller._id,
         deliveryNumber: params.deliveryNumber,
         deliveryType: params.deliveryType,
+        info: params.info,
+        infoDetail: params.infoDetail,
       });
 
       await funding.save();
@@ -85,32 +87,6 @@ const sellerService = {
       };
     } catch (error) {
       throw new CustomError("펀딩 정보를 수정할 수 없습니다.", 403);
-    }
-  },
-  async deliveryUpdate(
-    fundingId: string,
-    deliveryNumber: string,
-    deliveryType: string
-  ) {
-    try {
-      const funding = await fundingModel.findById(fundingId);
-
-      if (!funding) {
-        return { success: false, message: "펀딩을 찾을 수 없습니다." };
-      }
-
-      funding.deliveryNumber = deliveryNumber;
-      funding.deliveryType = deliveryType;
-
-      await funding.save();
-
-      return {
-        success: true,
-        message: "배송 정보가 성공적으로 업데이트되었습니다.",
-      };
-    } catch (error) {
-      console.log(error);
-      throw new CustomError("배송 정보를 업데이트할 수 없습니다.", 500);
     }
   },
 };

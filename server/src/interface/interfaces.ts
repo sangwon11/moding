@@ -18,7 +18,7 @@ export interface SignUpParams {
 
 export interface FundingParams {
   title: string;
-  category: string;
+  categoryId: string;
   goalAmount: number;
   startDate: string;
   endDate: string;
@@ -33,6 +33,8 @@ export interface FundingParams {
   seller: string;
   deliveryNumber: string;
   deliveryType: string;
+  info: string;
+  infoDetail: string;
 }
 
 export interface DeliveryUpdateParams {
@@ -65,4 +67,45 @@ export interface UpdateUserData {
 
 export interface CategoryParams {
   categoryName: string;
+}
+
+export interface orderParams {
+  userId: string;
+  orderId: string;
+  orderNumber: string;
+  orderedBy: string;
+  postCode: string;
+  address: string;
+  addressDetail: string;
+  phoneNumber: string;
+  fundingId: string;
+  orderList: optionParams[];
+  donation: number;
+  nameOpen: boolean;
+  priceOpen: boolean;
+  orderStatus: string;
+  paymentMethod: string;
+}
+
+export interface newOrderParams {
+  userId: string;
+  orderId: string;
+  orderNumber: string;
+  orderedBy: string;
+  postCode: string;
+  address: string;
+  addressDetail: string;
+  phoneNumber: string;
+  fundingId: string;
+  orderList: optionParams[];
+  donation: number;
+  nameOpen: boolean;
+  priceOpen: boolean;
+  orderStatus: string;
+  paymentMethod: string;
+}
+
+export interface optionParams {
+  optionsId: string;
+  amount: number;
 }

@@ -6,6 +6,7 @@ import adminRouter from './adminRouter';
 import sellerRouter from './sellerRouter';
 import categoryRouter from './categoryRouter';
 import orderRouter from './orderRouter';
+import uploadRouter from './uploadRouter';
 
 const v1Router = Router();
 
@@ -22,5 +23,7 @@ v1Router.use('/seller', sellerRouter);
 v1Router.use('/category', categoryRouter);
 
 v1Router.use('/orders', orderRouter);
+
+v1Router.use('/upload', uploadRouter);
 
 export default v1Router;

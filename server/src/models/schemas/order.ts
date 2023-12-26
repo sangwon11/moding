@@ -1,17 +1,14 @@
 import { Schema } from 'mongoose';
-// import { userModel } from '../schemas'
-// import { fundingModel } from '../schemas'
 
 const orderSchema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
-      ref: 'userModel',
+      ref: 'user',
       required: true,
     },
     orderId: {
       type: Schema.Types.ObjectId,
-      required: true,
     },
     orderNumber: {
       type: Number,
@@ -39,14 +36,14 @@ const orderSchema = new Schema(
     },
     fundingId: {
       type: Schema.Types.ObjectId,
-      ref: 'fundingModel',
+      ref: 'funding',
       required: true,
     },
     orderList: {
       type: [
         {
           optionId: {
-            type: Object,
+            type: Schema.Types.ObjectId,
             required: true,
           },
           amount: {
@@ -75,13 +72,9 @@ const orderSchema = new Schema(
       required: true,
     },
 
-    selectedProduct: {
-      productId: { type: String, required: true },
-      quantity: { type: Number, required: true },
-    },
-
     paymentMethod: {
       type: String,
+      enum: ['카드', '토스', '카카오', '네이버'],
       required: true,
     },
   },

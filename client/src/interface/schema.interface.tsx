@@ -10,6 +10,8 @@ export interface fundingProps {
     options: optionsProps[];
     deliveryPrice: number;
     deliveryDate: Date;
+    info: "";
+    infoDetail: "";
   }
 
 export interface optionsProps {

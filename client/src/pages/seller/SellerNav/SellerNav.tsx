@@ -5,13 +5,11 @@ function SellerNav() {
     const navigate = useNavigate()
 
     return (
-        <styled.Container>
-            <styled.NavWrap>
-                <styled.NavBtn onClick={()=> navigate("/seller/register")}>등록하기</styled.NavBtn>
-                <styled.NavBtn>펀딩관리</styled.NavBtn>
-                <styled.NavBtn>주문관리</styled.NavBtn>
-            </styled.NavWrap>
-        </styled.Container>
+        <styled.NavWrap>
+            <styled.NavBtn onClick={() => navigate("/seller/register")}>펀딩등록</styled.NavBtn>
+            <styled.NavBtn>펀딩관리</styled.NavBtn>
+            <styled.NavBtn>주문관리</styled.NavBtn>
+        </styled.NavWrap>
     )
 }
 
