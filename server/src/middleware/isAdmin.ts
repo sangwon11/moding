@@ -10,11 +10,8 @@ interface UserWithRole extends JwtPayload {
 function isAdmin(req: any, res: any, next: NextFunction) {
   const secret = process.env.JWT_SECRET as Secret;
   if (req.headers["authorization"] === undefined) {
-    const error = new CustomError(
-      "권한이 없거나 인증되지 않은 유저입니다. 본인의 권한을 체크하거나 로그인 해주세요",
-      401
-    );
-    return next(error);
+    const error = new CustomError("관리자 권한이 필요합니다.", 401);
+    throw error;
   }
 
   const token = req.headers["authorization"].slice(7);
@@ -27,11 +24,11 @@ function isAdmin(req: any, res: any, next: NextFunction) {
       next();
     } else {
       const error = new CustomError("관리자 권한이 필요합니다.", 403);
-      next(error);
+      throw error;
     }
   } catch (err) {
-    const error = new CustomError("인증을 확인할 수 없습니다.", 401);
-    next(error);
+    const error = new CustomError("관리자 권한이 필요합니다", 401);
+    throw error;
   }
 }
 
