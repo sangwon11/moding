@@ -6,7 +6,6 @@ import "../main/Main.css"
 import Product from "../../components/Product"
 import { axiosInstance } from "../../utils/axios.utils"
 import * as styeld from "./Category.styles"
-import { Link } from "react-router-dom"
 
 // 메인 슬라이더 설정
 const sliderSettings = {

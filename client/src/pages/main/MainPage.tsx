@@ -38,13 +38,15 @@ interface ImageData {
 function MainPage() {
     const [fundingsImages, setFundingsImages] = useState<ImageData[]>([])
     const [loading, setLoading] = useState(true) // 로딩 상태 관리를 위한 상태
+    const [allImages, setAllImages] = useState<ImageData[]>([]) // 전체 이미지 데이터를 저장
 
-    // 펀딩 이미지 데이터를 가져오는 함수
+    // 전체 펀딩 이미지 데이터를 가져오는 함수
     const fetchFundingsImages = async () => {
         try {
             const response = await axiosInstance.get(`/fundings`)
             console.log("response.data : ", response.data)
             setFundingsImages(response.data.data)
+            setAllImages(response.data.data) // 전체 이미지 데이터를 allImages에 저장
         } catch (error) {
             console.error("Fetching fundings images failed:", error)
         } finally {
@@ -54,8 +56,8 @@ function MainPage() {
     useEffect(() => {
         fetchFundingsImages()
     }, [])
-
-    function renderFundingsSliderSection(images: ImageData[]) {
+    // 얼리버드 슬라이더 섹션 렌더링 함수
+    function REarlyBirdenderFundingsSliderSection(images: ImageData[]) {
         if (!Array.isArray(images)) {
             return null // images가 배열이 아니면 아무것도 렌더링하지 않음
         }
@@ -76,6 +78,31 @@ function MainPage() {
             </Slider>
         )
     }
+    // 트랜드 슬라이더 섹션 렌더링 함수
+    function TrandRenderFundingsSliderSection(images: ImageData[]) {
+        const reversedImages = [...images].reverse()
+
+        if (!Array.isArray(reversedImages)) {
+            return null // images가 배열이 아니면 아무것도 렌더링하지 않음
+        }
+        return (
+            <Slider {...EarlyBirdSliderSettings}>
+                {reversedImages.map((image) => (
+                    <Product
+                        key={image._id}
+                        id={image._id}
+                        url={image.mainImageUrl}
+                        alt={image.title}
+                        description={image.title}
+                        isSlider={true}
+                        currentAmount={image.currentAmount}
+                        goalAmount={image.goalAmount}
+                    />
+                ))}
+            </Slider>
+        )
+    }
+    // 전체상품 섹션 렌더링 함수
     function renderFundingsMainSection(images: ImageData[]) {
         if (loading) {
             return <div className="text-white">Loading...</div>
@@ -102,7 +129,36 @@ function MainPage() {
             </div>
         )
     }
+    // 우측 섹션 렌더링 함수
+    function renderFundingsRightSection(images: ImageData[]) {
+        // 로딩 상태와 데이터 유무를 체크하여 메시지를 표시
+        if (loading) {
+            return <div className="text-white">Loading...</div>
+        }
+        if (!allImages.length) {
+            return <div className="text-white">데이터가 없습니다.</div>
+        }
 
+        // 상위 5개의 이미지만 렌더링
+        const topImages = allImages.slice(0, 5)
+
+        return (
+            <div className="flex flex-col">
+                {topImages.map((image, index) => (
+                    <div key={image._id} className="flex items-center mb-2">
+                        <div className="text-white font-bold mr-2">{index + 1}.</div>
+                        <Product
+                            id={image._id}
+                            url={image.mainImageUrl}
+                            alt={image.title}
+                            description={image.title}
+                            isRightSection={true}
+                        />
+                    </div>
+                ))}
+            </div>
+        )
+    }
     if (loading) {
         return <div className="text-white">Loading...</div>
     }
@@ -131,28 +187,13 @@ function MainPage() {
                     <styeld.TabButtonsContainer></styeld.TabButtonsContainer>
                     {/* 탭 컨텐츠 */}
                     <styeld.EarlyBirdTitle>전체 상품</styeld.EarlyBirdTitle>
-                    <styeld.TabContentContainer>
-                        {/* 추천상품, 인기상승, 펀딩랭킹 탭 컨텐츠 */}
-                        {/* {activeTab === "recommend" && renderTabContent(recommendImages)}
-                        {activeTab === "popular" && renderTabContent(popularImages)}
-                        {activeTab === "funding" && renderTabContent(fundingImages)} */}
-
-                        {renderFundingsMainSection(fundingsImages)}
-                    </styeld.TabContentContainer>
+                    <styeld.TabContentContainer>{renderFundingsMainSection(fundingsImages)}</styeld.TabContentContainer>
                 </styeld.Section>
 
                 {/* 우측 섹션 - sticky 위치 지정 */}
                 <styeld.StickySection>
                     <styeld.RealTimeRankingTitle>실시간 랭킹</styeld.RealTimeRankingTitle>
-                    <styeld.RealTimeRankingList>
-                        <li className="mb-1">강동훈</li>
-                        <li className="mb-1">김도희</li>
-                        <li className="mb-1">류충현</li>
-                        <li className="mb-1">위동현</li>
-                        <li className="mb-1">윤상원</li>
-                        <li className="mb-1">최윤혁</li>
-                        {/* 추가 랭킹 아이템들 */}
-                    </styeld.RealTimeRankingList>
+                    <styeld.RealTimeRankingList>{renderFundingsRightSection(allImages)}</styeld.RealTimeRankingList>
                 </styeld.StickySection>
             </styeld.ContentArea>
 
@@ -160,7 +201,7 @@ function MainPage() {
             <styeld.FullWidthSliderContainer>
                 {/* 새로운 슬라이더 섹션 추가 */}
                 <styeld.TabContentContainer>
-                    {renderFundingsSliderSection(fundingsImages)} {/* 예시로 recommendImages를 사용 */}
+                    {REarlyBirdenderFundingsSliderSection(fundingsImages)}
                 </styeld.TabContentContainer>
             </styeld.FullWidthSliderContainer>
 
@@ -168,7 +209,7 @@ function MainPage() {
             <styeld.FullWidthSliderContainer>
                 {/* 새로운 슬라이더 섹션 추가 */}
                 <styeld.TabContentContainer>
-                    {renderFundingsSliderSection(fundingsImages)} {/* 예시로 recommendImages를 사용 */}
+                    {TrandRenderFundingsSliderSection(fundingsImages)}
                 </styeld.TabContentContainer>
             </styeld.FullWidthSliderContainer>
         </styeld.MainPageContainer>
