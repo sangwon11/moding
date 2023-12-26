@@ -118,17 +118,10 @@ const userService = {
 
       user.deletedAt = new Date();
       await user.save();
-
-      return {
-        success: true,
-        message: "사용자가 삭제되었습니다.",
-        status: 200,
-      };
     } catch (error) {
       return {
         success: false,
         message: "서버 오류입니다.",
-        status: 500,
       };
     }
   },
