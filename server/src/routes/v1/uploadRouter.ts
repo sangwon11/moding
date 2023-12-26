@@ -35,7 +35,7 @@ uploadRouter.post("/", upload.single("image"), (req: Request, res: Response) => 
 
 uploadRouter.delete('/:imageName', (req: Request, res: Response) => {
   const imageName: string = req.params.imageName;
-  const imagePath: string = path.join(__dirname, '..', 'client', 'public', 'uploads', imageName); 
+  const imagePath: string = path.join(__dirname, '../../../../', 'client', 'public', 'uploads', imageName); 
 
   fs.unlink(imagePath, (err: NodeJS.ErrnoException | null) => {
       if (err) {

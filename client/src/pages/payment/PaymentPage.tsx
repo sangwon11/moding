@@ -45,9 +45,12 @@ function PaymentPage() {
 
     const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+
+        
         const sanitizedValue =
           name === "phoneNumber" ? value.replace(/[^0-9]/g, "").replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3') : value;
-          setOrder({ ...order, [name]: sanitizedValue });
+          setOrder(prevOrder => ({
+            ...prevOrder, [name]: sanitizedValue }));
       };
 
     const fetchUser = async () => {
@@ -84,21 +87,7 @@ function PaymentPage() {
             Number(funding.deliveryPrice)
 
         setTotalPrice(sumTotalPrice)
-        setOrder(prevOrder => ({
-            ...prevOrder,
-            userId: userInfo._id,
-            orderedBy: "",
-            postCode: "",
-            address: "",
-            addressDetail: "",
-            phoneNumber: "",
-            fundingId: funding._id,
-            orderList: optionSelect,
-            donation : supPrice,
-            nameOpen : true,
-            priceOpen : true,
-            orderStatus : "주문완료"}))
-    },[userInfo, funding])
+    },[])
 
     const [orderIndex, setOrderIndex] = useState<number>(0)
     const [orderPg, setOrderPg] = useState<string>("tosspay")
