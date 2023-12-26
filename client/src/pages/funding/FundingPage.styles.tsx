@@ -1,6 +1,6 @@
 import tw from "tailwind-styled-components";
 
-export const Container = tw.div`text-white h-[2000px]`;
+export const Container = tw.div`text-white h-auto`;
 export const AttainmentWrap = tw.div`w-auto h-[300px] bg-[#D9D9D9]/[.1] overflow-hidden font-bold text-1xl`;
 export const InfoWrap = tw.div`flex max-w-[1440px] h-[160px] items-center justify-center m-auto`
 export const PercentWrap = tw.div`mx-20`;
@@ -19,18 +19,19 @@ export const CurrentPercentLabel =tw.p`text-black text-2xl`
 export const LeftPercent = tw.div`bg-[#D9D9D9]/[0.1] h-[50px] px-10 flex rounded-[24px] items-center min-w-[10%]`;
 export const LeftPercentLabel =tw.p`text-2xl `
 
-export const ContentsWrap = tw.div`my-20 mx-auto w-[1440px] flex`;
+export const ContentsWrap = tw.div`my-20 mx-auto w-[1440px] flex justify-center`;
 
-export const MainWrap = tw.div`w-[60%] pr-2`
+export const MainWrap = tw.div`w-[55%] pr-2 pb-20`
 export const NavWrap = tw.div`flex justify-between text-lg font-bold text-white`;
 export const NavBtn = tw.button`bg-[#D9D9D9]/[.1] w-[150px] h-[52px] rounded-[24px]`;
 export const NavOnWrap = tw.div`w-[240px] h-[60px] rounded-tl-[24px] border-b-[60px] border-b-[#D9D9D9]/[.1] border-r-[60px] border-l-[#D9D9D9]/[.1] border-r-[60px] border-r-transparent`;
 export const NavOnBtn = tw.button`w-[150px] h-[52px]`;
 export const FundingInfoWrap = tw.div`px-10 bg-[#D9D9D9]/[.1] h-auto py-12 text-white text-lg rounded-[24px] rounded-tl-[0px] flex flex-col justify-center items-center`;
-export const MainImgWrap = tw.div`w-full h-96`
-export const MainImg = tw.img` h-auto w-full object-cover`
+export const MainImgWrap = tw.div`w-[700px] h-[400px] overflow-hidden rounded-2xl`
+export const MainImg = tw.img` h-full w-full object-cover`
+export const MainInfoWrap = tw.div`w-[700px] py-6 my-12 bg-white rounded-2xl`
 
-export const FloatingWrap = tw.div`w-[40%] h-[1000px] relative flex flex-col`
+export const FloatingWrap = tw.div`w-[39%] h-[1000px] relative flex flex-col`
 export const FloatingSticky = tw.div`sticky top-20`
 export const FloatingNavWrap = tw.div`flex justify-end text-lg font-bold text-white`
 export const NavRightWrap = tw.div`w-[240px] h-[60px] rounded-tr-[24px] border-b-[60px] border-b-[#D9D9D9]/[.1] border-r-[60px] border-r-[#D9D9D9]/[.1] border-l-[60px] border-l-transparent`;
