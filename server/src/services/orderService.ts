@@ -97,7 +97,7 @@ const orderService = {
 
   // 주문수정
   async updateOrder(
-    id: string,
+    orderId: string,
     {
       orderedBy,
       postCode,
@@ -106,7 +106,7 @@ const orderService = {
       phoneNumber,
     }: updateOrderParams
   ) {
-    const order = await orderModel.findById({ id }).lean();
+    const order = await orderModel.findById({ orderId }).lean();
 
     if (order === null) {
       const error = new CustomError('주문이 존재하지 않습니다.', 404);
@@ -119,7 +119,7 @@ const orderService = {
     }
 
     const updatedOrder = await orderModel.findByIdAndUpdate(
-      id,
+      orderId,
       {
         orderedBy: orderedBy,
         postCode: postCode,

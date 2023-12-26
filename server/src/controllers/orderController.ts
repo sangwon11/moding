@@ -97,7 +97,7 @@ const orderController = {
 
   // 주문수정
   async updateOrder(req: Request, res: Response) {
-    const id = req.params.id;
+    const id = req.params.orderId;
     const updatedOrder = await orderService.updateOrder(
       id,
       req.body as updateOrderParams
