@@ -22,7 +22,7 @@ export const fundingRegAtom = atom({
         categoryId: "",
         info: "",
         mainImageUrl: "",
-        imageUrls: [{}],
+        imageUrls: [{url:"bdgbdfgb"},{url:"bdgbdfgb"}],
         goalAmount: "",
         startDate: "",
         endDate: "",

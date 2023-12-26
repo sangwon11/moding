@@ -18,6 +18,7 @@ function FundingInfo({ funding }: { funding: fundingProps }) {
                 <styled.MainImgWrap>
                     <styled.MainImg src={funding.mainImageUrl}></styled.MainImg>
                 </styled.MainImgWrap>
+                <div dangerouslySetInnerHTML={{ __html: funding.infoDetail }}></div>
             </styled.FundingInfoWrap>
         </styled.MainWrap>
     )

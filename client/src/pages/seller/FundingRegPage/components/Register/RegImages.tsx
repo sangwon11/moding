@@ -52,14 +52,14 @@ function RegImages() {
             <styled.RegLabel>사진</styled.RegLabel>
             <styled.RegWrap>
                 <styled.RegText>메인이미지</styled.RegText>
-                {previewUrl && (
+                {funding.mainImageUrl && (
                     <img
-                        src={previewUrl}
+                        src={funding.mainImageUrl}
                         alt="Preview"
                         style={{ maxWidth: "200px", maxHeight: "200px", marginBottom: "10px" }}
                     />
                 )}
-                <styled.RegImageInput type="file" value={funding.title} onChange={handleMainImageChange} />
+                <styled.RegImageInput type="file" onChange={handleMainImageChange} />
                 <styled.RegBtn onClick={nextClick}>진행하기</styled.RegBtn>
             </styled.RegWrap>
         </styled.RegContainer>
