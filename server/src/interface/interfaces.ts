@@ -109,3 +109,11 @@ export interface optionParams {
   optionsId: string;
   amount: number;
 }
+
+export interface updateOrderParams {
+  orderedBy: string;
+  postCode: string;
+  address: string;
+  addressDetail: string;
+  phoneNumber: string;
+}
