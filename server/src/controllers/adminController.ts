@@ -52,7 +52,7 @@ const sellerController = {
 
     const deletionResult = await userService.deleteMember(memberId);
 
-    res.status(201).json({
+    res.status(204).json({
       error: null,
       data: deletionResult,
     });
