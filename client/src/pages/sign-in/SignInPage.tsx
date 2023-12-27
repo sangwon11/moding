@@ -114,7 +114,10 @@ function SignInPage() {
       const response = await axiosInstance.post("/auth/sign-in", {
         email,
         password,
-      });
+        
+      },{ withCredentials: true });
+      
+      
       if (response.status === 201) {
         window.alert("성공적으로 로그인되었습니다.");
         Cookies.set("jwt", response.data.data.toString(), { expires: 1 });
@@ -202,7 +205,7 @@ function SignInPage() {
         </NaverButton>
         <KakaoButton 
         type="submit"
-        onClick={handleNaverLogin}
+        onClick={handleKakaoLogin}
         disabled={!isFormValid()}
         className={isFormValid() ? "bg-yellow-500 hover:bg-yellow-700" : "bg-gray-500"}
 >

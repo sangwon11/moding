@@ -12,6 +12,7 @@ import Category from "./pages/category/Category"
 import Footer from "./components/footer/Footer"
 import SellerPage from "./pages/seller/SellerPage"
 import MyPage from "./pages/me/MyPage"
+import AdminLogin from "./pages/admin/AdminLogin"
 
 function App() {
     return (
@@ -30,6 +31,7 @@ function App() {
                     <Route path="/category" element={<Category />} />
                     <Route path="/seller/*" element={<SellerPage />} />
                     <Route path="/mypage/*" element={<MyPage />} />
+                    <Route path="/admin" element={<AdminLogin />} />
                 </Routes>
                 <Footer />
             </div>
