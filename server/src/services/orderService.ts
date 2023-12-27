@@ -13,7 +13,6 @@ const orderService = {
   // 주문하기
   async createOrder({
     userId,
-
     orderedBy,
     postCode,
     address,
@@ -24,7 +23,6 @@ const orderService = {
     donation,
     nameOpen,
     priceOpen,
-    orderStatus,
     paymentMethod,
   }: newOrderParams) {
     // 서버연결없이도 겹치지않는 난수만들기

@@ -6,6 +6,7 @@ import { formatPrice, formatDate, formatPercentage } from "../../utils/format.ut
 import FundingInfo from "./components/FundingInfo"
 import FloatingBar from "./components/FloatingBar"
 import * as styled from "./FundingPage.styles"
+import Loading from "../../components/loading/Loading"
 
 function FundingPage() {
     const state = useLocation().state
@@ -15,7 +16,7 @@ function FundingPage() {
     const [loading, setLoading] = useState(true)
     const [funding, setFunding] = useState<fundingProps>({
         title: "",
-        category: "",
+        categoryId: "",
         mainImageUrl: "",
         goalAmount: 0,
         currentAmount: 0,
@@ -55,15 +56,16 @@ function FundingPage() {
             setLoading(false)
         }
     }
-
+    
     useEffect(() => {
+        window.scrollTo(0, 0);
         fetchData()
     }, [])
 
     const percentAmount = Math.floor((funding.currentAmount / funding.goalAmount) * 100)
 
     if (loading) {
-        return <div className="text-white">Loading...</div>
+        return <Loading />
     }
 
     return (

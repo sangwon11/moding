@@ -20,6 +20,11 @@ function PaymentPage() {
     const supPrice = state.supPrice
     const selectedOptions = funding.options.filter((item: optionsProps) => optionSelect.includes(item._id))
 
+    const mappedOptions = optionSelect.map((optionId: string) => ({
+        optionId,
+        amount: 1
+    }));
+
     const [userInfo, setUserInfo] = useState({
         _id: "",
         email: "",
@@ -31,18 +36,18 @@ function PaymentPage() {
     })
 
     const [order, setOrder] = useState({
-        userId: "asd",
-        orderedBy: "asd",
-        postCode: "asd",
-        address: "asd",
-        addressDetail: "asd",
-        phoneNumber: "asd",
+        userId: userInfo._id,
+        orderedBy: "",
+        postCode: "",
+        address: "",
+        addressDetail: "가상의값",
+        phoneNumber: "",
         fundingId: funding._id,
-        orderList: optionSelect,
+        orderList: mappedOptions,
         donation: supPrice,
         nameOpen: true,
         priceOpen: true,
-        orderStatus: "주문완료",
+        paymentMethod: "카드",
     })
 
     const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,6 +81,7 @@ function PaymentPage() {
     const [totalPrice, setTotalPrice] = useState(0)
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         if (userInfo._id.length === 0) {
             fetchUser()
         }
@@ -85,7 +91,16 @@ function PaymentPage() {
             Number(funding.deliveryPrice)
 
         setTotalPrice(sumTotalPrice)
-    }, [])
+        setOrder(prevOrder => ({
+            ...prevOrder,
+            userId: userInfo._id,
+            orderedBy: userInfo.username,
+            postCode: userInfo.postCode,
+            address: userInfo.address,
+            addressDetail: userInfo.addressDetail,
+            phoneNumber: userInfo.phoneNumber,
+        }));
+    }, [userInfo])
 
     const [orderIndex, setOrderIndex] = useState<number>(0)
     const [orderPg, setOrderPg] = useState<string>("tosspay")
@@ -117,23 +132,28 @@ function PaymentPage() {
 
     const insertData = async () => {
         try {
-          const response = await axiosInstance.post("/orders", order);
-          if (response.status === 201) {
-            window.alert("성공적으로 결제되었습니다.");
-          } else {
-          }
-        } catch (error) {
-          if (axios.isAxiosError(error) && error.response) {
-            if (error.response.status === 409) {
-              window.alert("결제에 실패하였습니다.");
+            const config = await frontEndAuthMiddleware({
+                method: "post",
+                url: "/orders",
+                data: order
+            })
+
+            const response = await axiosInstance.request(config)
+            if (response.status === 201) {
+                window.alert("성공적으로 결제되었습니다.")
             } else {
             }
-          }
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                if (error.response.status === 409) {
+                    window.alert("결제에 실패하였습니다.")
+                } else {
+                }
+            }
         }
-      };
+    }
 
     const nextClick = () => {
-        console.log(order)
         insertData()
     }
 
