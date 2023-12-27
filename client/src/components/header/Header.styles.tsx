@@ -5,7 +5,7 @@ interface NavStateProps{
 }
 
 export const Container = tw.div`text-white w-[1440px] mx-auto px-9 py-5 flex items-center justify-between`
-export const Logo = tw.div`w-2/12`
+export const Logo = tw.button`w-2/12 hover:`
 export const LogoImg = tw.img`w-full h-full`
 
 export const NavWrap = tw.nav`
