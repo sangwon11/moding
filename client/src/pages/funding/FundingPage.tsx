@@ -15,7 +15,7 @@ function FundingPage() {
     const [loading, setLoading] = useState(true)
     const [funding, setFunding] = useState<fundingProps>({
         title: "",
-        category: "",
+        categoryId: "",
         mainImageUrl: "",
         goalAmount: 0,
         currentAmount: 0,
@@ -55,6 +55,7 @@ function FundingPage() {
             setLoading(false)
         }
     }
+    
 
     useEffect(() => {
         fetchData()

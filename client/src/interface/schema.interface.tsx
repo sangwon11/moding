@@ -1,6 +1,6 @@
 export interface fundingProps {
     title: string;
-    category: string;
+    categoryId: string;
     mainImageUrl: string;
     goalAmount: number;
     currentAmount: number;
