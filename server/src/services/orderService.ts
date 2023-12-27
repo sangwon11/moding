@@ -1,22 +1,13 @@
 import { orderModel } from '../models';
 import CustomError from '../utils/customError';
 import {
-  // orderParams,
+  orderParams,
   newOrderParams,
   optionParams,
+  updateOrderParams,
 } from '../interface/interfaces';
 
 import { Schema, Types } from 'mongoose';
-
-//회원주문조회
-
-interface updateOrderParams {
-  orderedBy: string;
-  postCode: string;
-  address: string;
-  addressDetail: string;
-  phoneNumber: string;
-}
 
 const orderService = {
   // 주문하기
@@ -97,7 +88,7 @@ const orderService = {
 
   // 주문수정
   async updateOrder(
-    orderId: string,
+    id: string,
     {
       orderedBy,
       postCode,
@@ -106,20 +97,22 @@ const orderService = {
       phoneNumber,
     }: updateOrderParams
   ) {
-    const order = await orderModel.findById({ orderId }).lean();
+    const order = await orderModel.findById(id).lean();
 
     if (order === null) {
       const error = new CustomError('주문이 존재하지 않습니다.', 404);
       throw error;
     }
 
-    if (order.orderStatus !== '배송중') {
+    if (
+      !(order.orderStatus === '펀딩진행중' || order.orderStatus === '주문완료')
+    ) {
       const error = new CustomError('주문수정이 불가능합니다.', 400);
       throw error;
     }
 
     const updatedOrder = await orderModel.findByIdAndUpdate(
-      orderId,
+      id,
       {
         orderedBy: orderedBy,
         postCode: postCode,
@@ -134,8 +127,8 @@ const orderService = {
   },
 
   // 주문수정(주문취소후 배송상태 변경 때문)
-  async updateOrderStatus(orderId: string, orderStatus: string) {
-    const order = await orderModel.findById(orderId).lean();
+  async updateOrderStatus(id: string, orderStatus: string) {
+    const order = await orderModel.findById(id).lean();
 
     if (!order) {
       const error = new CustomError('주문이 존재하지 않습니다.', 401);
@@ -143,7 +136,7 @@ const orderService = {
     }
 
     const updatedOrderStatus = await orderModel.updateOne(
-      { orderId },
+      { id },
       {
         orderStatus,
       }
@@ -153,15 +146,15 @@ const orderService = {
   },
 
   // 주문취소
-  async deleteOrder(orderId: string) {
-    const order = await orderModel.findById(orderId).lean();
+  async deleteOrder(id: string) {
+    const order = await orderModel.findById(id).lean();
 
     if (!order) {
       const error = new CustomError('주문이 존재하지 않습니다.', 401);
       throw error;
     }
 
-    const deletedOrder = await orderModel.findOneAndDelete({ orderId });
+    const deletedOrder = await orderModel.findByIdAndDelete(id);
 
     return deletedOrder;
   },

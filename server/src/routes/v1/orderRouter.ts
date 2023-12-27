@@ -26,16 +26,16 @@ orderRouter.get(
   asyncHandler(orderController.getOrders)
 );
 
-// 주문조회(userId)
+// 주문조회(orderId)
 orderRouter.get(
-  '/:userId',
+  '/:orderId',
   isAuthenticated,
   asyncHandler(orderController.getOneOrder)
 );
 
 //주문수정
 orderRouter.put(
-  '/me/:orderId',
+  '/me/:id',
   objectIdValidator,
   userOrderValidator,
   validateError,
