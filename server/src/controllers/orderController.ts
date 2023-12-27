@@ -1,55 +1,12 @@
 import { Request, Response } from 'express';
 import orderService from '../services/orderService';
 import CustomError from '../utils/customError';
-
-interface orderParams {
-  userId: string;
-  orderId: string;
-  orderNumber: string;
-  orderedBy: string;
-  postCode: string;
-  address: string;
-  addressDetail: string;
-  phoneNumber: string;
-  fundingId: string;
-  orderList: optionParams[];
-  donation: number;
-  nameOpen: boolean;
-  priceOpen: boolean;
-  orderStatus: string;
-  paymentMethod: string;
-}
-
-interface newOrderParams {
-  userId: string;
-  orderId: string;
-  orderNumber: string;
-  orderedBy: string;
-  postCode: string;
-  address: string;
-  addressDetail: string;
-  phoneNumber: string;
-  fundingId: string;
-  orderList: optionParams[];
-  donation: number;
-  nameOpen: boolean;
-  priceOpen: boolean;
-  orderStatus: string;
-  paymentMethod: string;
-}
-
-interface optionParams {
-  optionsId: string;
-  amount: number;
-}
-
-interface updateOrderParams {
-  orderedBy: string;
-  postCode: string;
-  address: string;
-  addressDetail: string;
-  phoneNumber: string;
-}
+import {
+  orderParams,
+  newOrderParams,
+  optionParams,
+  updateOrderParams,
+} from '../interface/interfaces';
 
 const orderController = {
   // 주문하기
@@ -97,7 +54,7 @@ const orderController = {
 
   // 주문수정
   async updateOrder(req: Request, res: Response) {
-    const id = req.params.orderId;
+    const { id } = req.params;
     const updatedOrder = await orderService.updateOrder(
       id,
       req.body as updateOrderParams
@@ -111,10 +68,10 @@ const orderController = {
 
   // 주문수정(주문취소후 배송상태 변경 때문)
   async updateOrderStatus(req: Request, res: Response) {
-    const orderId = req.params.orderId;
+    const { id } = req.params;
     const { orderStatus } = req.body;
     const updatedOrderStatus = await orderService.updateOrderStatus(
-      orderId,
+      id,
       orderStatus
     );
 
@@ -126,8 +83,8 @@ const orderController = {
 
   // 주문취소
   async deleteOrder(req: Request, res: Response) {
-    const { orderId } = req.params;
-    const deletedOrder = await orderService.deleteOrder(orderId);
+    const { id } = req.params;
+    const deletedOrder = await orderService.deleteOrder(id);
 
     res.status(204).json({
       error: null,
