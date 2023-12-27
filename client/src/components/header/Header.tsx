@@ -110,6 +110,7 @@ function Header() {
                             <styled.GnbSvg
                                 alt=""
                                 src={require("../../assets/svg/user_icon.svg").default}
+                                onClick={() => navigate("/mypage")}
                             ></styled.GnbSvg>
                         </styled.MyPageBtn>
                         <styled.ProjectBtn onClick={logoutClick}>로그아웃</styled.ProjectBtn>

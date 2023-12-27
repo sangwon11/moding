@@ -22,8 +22,10 @@ const fundingSchema = new Schema(
     },
     imageUrls: [
       {
-        type: String,
-        required: true,
+        url: {
+          type: String,
+          required: true,
+        },
       },
     ],
     goalAmount: {

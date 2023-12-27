@@ -11,6 +11,7 @@ import FundingPage from "./pages/funding/FundingPage"
 import Category from "./pages/category/Category"
 import Footer from "./components/footer/Footer"
 import SellerPage from "./pages/seller/SellerPage"
+import MyPage from "./pages/me/MyPage"
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                     <Route path="/funding" element={<FundingPage />} />
                     <Route path="/category" element={<Category />} />
                     <Route path="/seller/*" element={<SellerPage />} />
+                    <Route path="/mypage/*" element={<MyPage />} />
                 </Routes>
                 <Footer />
             </div>

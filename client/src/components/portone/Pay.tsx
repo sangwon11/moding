@@ -30,7 +30,7 @@ function Payment(props:any) {
   }
 
   return (
-    <styled.PayBtn onClick={()=>onClickPayment(props.data)}>결제하기</styled.PayBtn>)
+    <styled.PayBtn onClick={()=>onClickPayment(props.data)}>가상결제하기</styled.PayBtn>)
 }
 
 export default Payment;

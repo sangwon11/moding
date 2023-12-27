@@ -53,7 +53,7 @@ const authService = {
       { em: user.email, ro: user.role, userId: user._id },
       JWT_SECRET,
       {
-        expiresIn: "1h",
+        expiresIn: "1d",
       }
     );
 

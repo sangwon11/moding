@@ -1,8 +1,5 @@
 import { Routes, Route } from "react-router-dom"
 
-import { useRecoilState } from "recoil"
-import { fundingRegAtom } from "../../../recoil/FundingReg.Atom"
-
 import RegStart from "./components/Register/RegStart"
 import RegTitle from "./components/Register/RegTitle"
 import RegCategory from "./components/Register/RegCategory"
@@ -18,7 +15,6 @@ import RegImages from "./components/Register/RegImages"
 import * as styled from "../FundingRegPage/FundingRegPage.styles"
 
 function RegRouter() {
-    const [funding, setFunding] = useRecoilState(fundingRegAtom)
     return (
         <styled.Container>
             <RegNav />
@@ -36,7 +32,6 @@ function RegRouter() {
                     <Route path="/editor" element={<RegEditor />} />
                     <Route path="/complete" element={<RegComplete />} />
                 </Routes>
-                <pre className="text-white">{JSON.stringify(funding, null, 2)}</pre>
             </styled.RoutesWrap>
         </styled.Container>
     )

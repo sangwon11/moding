@@ -1,27 +1,27 @@
-import mongoose from "mongoose";
-import Express, { Request, Response, NextFunction } from "express";
+import mongoose from 'mongoose';
+import Express, { Request, Response, NextFunction } from 'express';
 import * as path from 'path';
 const cors = require('cors');
-import router from "./routes";
-import CustomError from "./utils/customError";
-require("dotenv").config({ path: path.join(process.cwd(), '.env') });
+import router from './routes';
+import CustomError from './utils/customError';
+require('dotenv').config({ path: path.join(process.cwd(), '.env') });
 
 const app = Express();
-const port = 8080;
+const port = process.env.PORT;
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: true }));
 app.use(cors());
 
-const mongoURI: string = process.env.MONGODB || "";
+const mongoURI: string = process.env.MONGODB || '';
 
 // 몽고DB 서버 연결
 mongoose
   .connect(mongoURI)
-  .then(() => console.log("mongodb connected"))
+  .then(() => console.log('mongodb connected'))
   .catch((err) => console.log(err)); // 이후 서버연결 실패시 404페이지로 연결되도록 설계
 
 //api 호출
-app.use("/api", router);
+app.use('/api', router);
 
 app.listen(port, () => {
   console.log(`localhost:${port} connected`);
@@ -39,4 +39,3 @@ app.use(
     });
   }
 );
-
