@@ -81,6 +81,7 @@ function PaymentPage() {
     const [totalPrice, setTotalPrice] = useState(0)
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         if (userInfo._id.length === 0) {
             fetchUser()
         }
@@ -153,7 +154,6 @@ function PaymentPage() {
     }
 
     const nextClick = () => {
-        console.log(order)
         insertData()
     }
 

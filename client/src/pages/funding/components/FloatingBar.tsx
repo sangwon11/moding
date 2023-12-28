@@ -20,7 +20,7 @@ function FloatingBar({ funding }: { funding: fundingProps }) {
 
     const fetchCategory = async () => {
         try {
-            const response = await axiosInstance.get("/category/"+funding.categoryId)
+            const response = await axiosInstance.get("/category/" + funding.categoryId)
             setCategories(response.data.data)
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
@@ -35,38 +35,39 @@ function FloatingBar({ funding }: { funding: fundingProps }) {
 
     return (
         <styled.FloatingWrap>
-            <styled.FloatingSticky>
-                <styled.FloatingNavWrap>
-                    <styled.NavRightWrap>
-                        <styled.NavRightBtn>펀딩</styled.NavRightBtn>
-                    </styled.NavRightWrap>
-                </styled.FloatingNavWrap>
+            <styled.FloatingNavWrap>
+                <styled.NavRightWrap>
+                    <styled.NavRightBtn>펀딩</styled.NavRightBtn>
+                </styled.NavRightWrap>
+            </styled.FloatingNavWrap>
 
-                <styled.FloatingInfoWrap>
-                    <styled.FundingCategory>{categories.categoryName}</styled.FundingCategory>
-                    <styled.FundingTitle>{funding.title}</styled.FundingTitle>
-                    <styled.FundingInfo>{funding.info}</styled.FundingInfo>
-                    <styled.FundingDate>펀딩시작일 : {formatDate(funding.startDate)}</styled.FundingDate>
-                    <styled.FundingDate>펀딩종료일 : {formatDate(funding.endDate)}</styled.FundingDate>
-                    <styled.FundingAmountWrap>
-                        <styled.FundingCurrent>{formatPrice(funding.currentAmount)}</styled.FundingCurrent>
-                        <styled.FundingCurrentLabel>원 달성</styled.FundingCurrentLabel>
-                        <styled.FundingPercent>
-                            {formatPercentage(funding.currentAmount, funding.goalAmount)}% 달성
-                        </styled.FundingPercent>
-                    </styled.FundingAmountWrap>
-                    <styled.BtnWrap>
-                        <styled.LikeBtn>
-                            <styled.LikeSvg
-                                alt=""
-                                src={require("../../../assets/svg/heart_icon.svg").default}
-                            ></styled.LikeSvg>
-                        </styled.LikeBtn>
-                        <styled.FundingBtn onClick={() => navigate("/options", { state: { funding: funding } })}>
-                            펀딩하기
-                        </styled.FundingBtn>
-                    </styled.BtnWrap>
-                </styled.FloatingInfoWrap>
+            <styled.FloatingInfoWrap>
+                <styled.FundingCategory>{categories.categoryName}</styled.FundingCategory>
+                <styled.FundingTitle>{funding.title}</styled.FundingTitle>
+                <styled.FundingInfo>{funding.info}</styled.FundingInfo>
+                <styled.FundingDate>펀딩시작일 : {formatDate(funding.startDate)}</styled.FundingDate>
+                <styled.FundingDate>펀딩종료일 : {formatDate(funding.endDate)}</styled.FundingDate>
+                <styled.FundingAmountWrap>
+                    <styled.FundingCurrent>{formatPrice(funding.currentAmount)}</styled.FundingCurrent>
+                    <styled.FundingCurrentLabel>원 달성</styled.FundingCurrentLabel>
+                    <styled.FundingPercent>
+                        {formatPercentage(funding.currentAmount, funding.goalAmount)}% 달성
+                    </styled.FundingPercent>
+                </styled.FundingAmountWrap>
+                <styled.BtnWrap>
+                    <styled.LikeBtn>
+                        <styled.LikeSvg
+                            alt=""
+                            src={require("../../../assets/svg/heart_icon.svg").default}
+                        ></styled.LikeSvg>
+                    </styled.LikeBtn>
+                    <styled.FundingBtn onClick={() => navigate("/options", { state: { funding: funding } })}>
+                        펀딩하기
+                    </styled.FundingBtn>
+                </styled.BtnWrap>
+            </styled.FloatingInfoWrap>
+
+            <styled.FloatingSticky>
                 <styled.OptionsWrap>
                     {funding.options.map((item, index) => (
                         <styled.OptWrap key={index}>
@@ -92,6 +93,17 @@ function FloatingBar({ funding }: { funding: fundingProps }) {
                             </styled.OptBot>
                         </styled.OptWrap>
                     ))}
+                    <styled.BtnWrap>
+                        <styled.LikeBtn>
+                            <styled.LikeSvg
+                                alt=""
+                                src={require("../../../assets/svg/heart_icon.svg").default}
+                            ></styled.LikeSvg>
+                        </styled.LikeBtn>
+                        <styled.FundingBtn onClick={() => navigate("/options", { state: { funding: funding } })}>
+                            펀딩하기
+                        </styled.FundingBtn>
+                    </styled.BtnWrap>
                 </styled.OptionsWrap>
             </styled.FloatingSticky>
         </styled.FloatingWrap>

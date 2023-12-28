@@ -5,7 +5,7 @@ import { fundingRegAtom } from "../../../../../recoil/FundingReg.Atom"
 import { useRecoilState } from "recoil"
 
 import { CKEditor } from "@ckeditor/ckeditor5-react"
-import Editor from "ckeditor5-custom-build/build/ckeditor"
+//import Editor from "ckeditor5-custom-build/build/ckeditor"
 import "./../ckediter/CKEditer.styles.css"
 import { editorConfig } from "../ckediter/CKEditer.config"
 import * as styled from "../../FundingRegPage.styles"
@@ -45,7 +45,7 @@ function RegEditor() {
             <styled.RegLabel>스토리</styled.RegLabel>
             <styled.RegWrap>
                 <styled.CKEitorWrap>
-                    <CKEditor
+                    {/* <CKEditor
                         editor={Editor}
                         data={funding.infoDetail}
                         config={editorConfig}
@@ -79,7 +79,7 @@ function RegEditor() {
                             }
                         }}
                         onChange={handleInfoDetailChange}
-                    />
+                    /> */}
 
                     <styled.RegBtn onClick={() => navigate("../complete")}>진행하기</styled.RegBtn>
                 </styled.CKEitorWrap>
