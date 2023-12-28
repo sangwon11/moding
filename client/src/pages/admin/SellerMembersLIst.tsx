@@ -10,14 +10,14 @@ interface MemberData {
   createdAt: string;
 }
 
-const UserMembersList: React.FC = () => {
+const SellerMembersList: React.FC = () => {
   const [members, setMembers] = useState<MemberData[]>([]);
 
   const fetchMembers = async () => {
     try {
       const config = await frontEndAuthMiddleware({
         method: "get",
-        url: "/admin/members",
+        url: "/admin/sellers",
       });
 
       const response = await axiosInstance.request(config);
@@ -28,29 +28,28 @@ const UserMembersList: React.FC = () => {
       console.error('Error fetching members:', error);
     }
   };
-
-  const handleDelete = async (memberId: string) => {
-    try {
-      const config = await frontEndAuthMiddleware({
-        method: "post",
-        url: `/admin/member/${memberId}`, // URL 수정
-      });
-
-      await axiosInstance.request(config);
-      // 삭제후 회원목록 다시불러오기
-      await fetchMembers();
-    } catch (error) {
-      console.error('Error deleting member:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchMembers(); 
+    
+    const handleDelete = async (memberId: string) => {
+      try {
+        const config = await frontEndAuthMiddleware({
+          method: "post",
+          url: `/admin/member/${memberId}`, // URL 수정
+        });
+  
+        await axiosInstance.request(config);
+        // 삭제후 회원목록 다시불러오기
+        await fetchMembers();
+      } catch (error) {
+        console.error('Error deleting member:', error);
+      }
+    };
+    useEffect(() => {
+    fetchMembers();
   }, []);
-
+  
   return (
     <Container>
-      <Title>회원 관리</Title>
+      <Title>셀러 관리</Title>
       <Table>
         <TableHeader>
           <TableRow>
@@ -79,4 +78,4 @@ const UserMembersList: React.FC = () => {
   );
 };
 
-export default UserMembersList;
+export default SellerMembersList;

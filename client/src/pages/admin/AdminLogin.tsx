@@ -1,9 +1,8 @@
 import React from "react";
-import { Routes, Route, useNavigate} from "react-router-dom"
+import { Routes, Route, useNavigate} from "react-router-dom";
 import UserMembersList from "./UserMembersList";
-import {Container, NavWrap, NavBtn} from './AdminLogin.styles'
-import SellerApplicationForm from "./SellerApplicationForm";
-
+import {Container, NavWrap, NavBtn} from './AdminLogin.styles';
+import SellerApplicationForm from "./SellerMembersLIst";
 
 
 function AdminLogin() {
@@ -15,9 +14,6 @@ function AdminLogin() {
             <NavBtn onClick={()=>navigate("/userlist")}>회원 관리</NavBtn>
             <NavBtn onClick={()=>navigate("/sellerlist")}>샐러 관리</NavBtn>
         </NavWrap>
-        
-
-                
                 <Routes>
                     <Route path="/userlist" element={<UserMembersList/>} />
                     <Route path="/sellerlist" element={<SellerApplicationForm/>} />

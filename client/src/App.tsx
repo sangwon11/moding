@@ -14,7 +14,7 @@ import SellerPage from "./pages/seller/SellerPage"
 import MyPage from "./pages/me/MyPage"
 import AdminLogin from "./pages/admin/AdminLogin"
 import UserMembersList from "./pages/admin/UserMembersList"
-import SellerApplicationForm from "./pages/admin/SellerApplicationForm"
+import SellerApplicationForm from "./pages/admin/SellerMembersLIst"
 
 function App() {
     return (

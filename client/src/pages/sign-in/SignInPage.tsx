@@ -24,6 +24,8 @@ import {
   checkValidPassword
 } from "../../utils/regExp.utils"
 import { axiosInstance } from "../../utils/axios.utils";
+import Naver from "./Naver";
+import Kakao from "./Kakao";
 
 const showError = (message: string) => alert(message);
 
@@ -109,30 +111,28 @@ function SignInPage() {
   };
 
   // 위동현: 에러처리방식, 헤더리렌더 전역변수 추가
-  const adminAuthToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbSI6ImFkbWluQGFkbWluLmNvbSIsInJvIjoiYWRtaW4iLCJ1c2VySWQiOiI2NTgyZjJhOTdhZDQwMTZkY2VmYjAzMjYiLCJpYXQiOjE3MDM3NDY1NTUsImV4cCI6MTcwMzgzMjk1NX0.LwdjSIegnf3lRbh5zfKwjwA8T0HhrAbCnbgWSWqK4Xk';
-
+  // const adminId = 'admin@admin.com'
   const handleLoginClick = async () => {
     try {
       const response = await axiosInstance.post("/auth/sign-in", { email,
         password,
-      //   headers: {
-      //   'Authorization': `Bearer ${SpecificAuthToken}`  
-      // } 
     });
       if (response.status === 201) {
-        const receivedToken = response.data.data.toString();
+        const receivedToken = response.data.data;
         Cookies.set('jwt', receivedToken, { expires: 1 });
         window.alert("성공적으로 로그인되었습니다.");
 
-        
         headerRender();
-        
-  
-        // 특정 authToken 확인
-        if (receivedToken === adminAuthToken) {
-          navigate('/admin'); // 관리자용 회원 관리 페이지로 이동
+        console.log("Login attempt email:", email);
+        const adminEmails = ['admin@admin.com', 'admin@naver.com'];
+
+        // 로그인 응답에서 직접 이메일 주소 확인
+        if (adminEmails.includes(email.toLowerCase())) {
+          console.log("Navigating to /admin");
+          navigate('/admin');
         } else {
-          navigate('/'); // 일반 사용자 페이지로 이동
+          console.log("Navigating to home");
+          navigate('/');
         }
       }
     } catch (error) {
@@ -208,18 +208,16 @@ function SignInPage() {
         <NaverButton 
         type="submit"
         onClick={handleNaverLogin}
-        disabled={!isFormValid()}
-        className={isFormValid() ? "bg-green-500 hover:bg-green-700" : "bg-gray-500"}
+        className={isFormValid() ? "bg-green-500 hover:bg-green-700" : "bg-green-500"}
 >
-          네이버로 로그인하기
+  <Naver/>
         </NaverButton>
         <KakaoButton 
         type="submit"
         onClick={handleKakaoLogin}
-        disabled={!isFormValid()}
-        className={isFormValid() ? "bg-yellow-500 hover:bg-yellow-700" : "bg-gray-500"}
+        className={isFormValid() ? "bg-yellow-500 hover:bg-yellow-700" : "bg-yellow-500"}
 >
-          카카오로 로그인하기
+         <Kakao/>
         </KakaoButton>
       </StyledForm>
     </Container>

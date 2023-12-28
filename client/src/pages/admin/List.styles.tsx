@@ -1,12 +1,15 @@
 import tw from 'tailwind-styled-components';
 
+// interface NavLinkProps {
+//     to: string;
+// }
 
 export const Container = tw.div`
  container mx-auto p-56
 `;
 
 export const Title = tw.h1`
-    text-5xl font-bold mb-4
+    text-5xl font-bold mb-4 text-white
 `;
 
 export const Table = tw.table`
@@ -24,5 +27,5 @@ export const TableHeaderCell = tw.th`
 export const TableBody = tw.tbody``;
 
 export const TableCell = tw.td`
-    border p-2
+    border p-2 text-white text-center
 `;
