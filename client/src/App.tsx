@@ -13,6 +13,8 @@ import Footer from "./components/footer/Footer"
 import SellerPage from "./pages/seller/SellerPage"
 import MyPage from "./pages/me/MyPage"
 import AdminLogin from "./pages/admin/AdminLogin"
+import UserMembersList from "./pages/admin/UserMembersList"
+import SellerApplicationForm from "./pages/admin/SellerApplicationForm"
 
 function App() {
     return (
@@ -32,6 +34,8 @@ function App() {
                     <Route path="/seller/*" element={<SellerPage />} />
                     <Route path="/mypage/*" element={<MyPage />} />
                     <Route path="/admin" element={<AdminLogin />} />
+                    <Route path="/userlist" element={<UserMembersList/>} />
+                    <Route path="/sellerlist" element={<SellerApplicationForm/>} />
                 </Routes>
                 <Footer />
             </div>

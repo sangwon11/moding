@@ -6,8 +6,6 @@ import { StyledFooter,
     FooterCt2,
     FooterNum2,
     FooterCopyright,
-
-
  } from './Footer.styles';
 
 const Footer: React.FC = () => {

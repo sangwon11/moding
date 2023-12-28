@@ -109,21 +109,31 @@ function SignInPage() {
   };
 
   // 위동현: 에러처리방식, 헤더리렌더 전역변수 추가
+  const adminAuthToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbSI6ImFkbWluQGFkbWluLmNvbSIsInJvIjoiYWRtaW4iLCJ1c2VySWQiOiI2NTgyZjJhOTdhZDQwMTZkY2VmYjAzMjYiLCJpYXQiOjE3MDM3NDY1NTUsImV4cCI6MTcwMzgzMjk1NX0.LwdjSIegnf3lRbh5zfKwjwA8T0HhrAbCnbgWSWqK4Xk';
+
   const handleLoginClick = async () => {
     try {
-      const response = await axiosInstance.post("/auth/sign-in", {
-        email,
+      const response = await axiosInstance.post("/auth/sign-in", { email,
         password,
-        
-      },{ withCredentials: true });
-      
-      
+      //   headers: {
+      //   'Authorization': `Bearer ${SpecificAuthToken}`  
+      // } 
+    });
       if (response.status === 201) {
+        const receivedToken = response.data.data.toString();
+        Cookies.set('jwt', receivedToken, { expires: 1 });
         window.alert("성공적으로 로그인되었습니다.");
-        Cookies.set("jwt", response.data.data.toString(), { expires: 1 });
-        headerRender();
-        navigate("/");
 
+        
+        headerRender();
+        
+  
+        // 특정 authToken 확인
+        if (receivedToken === adminAuthToken) {
+          navigate('/admin'); // 관리자용 회원 관리 페이지로 이동
+        } else {
+          navigate('/'); // 일반 사용자 페이지로 이동
+        }
       }
     } catch (error) {
       console.error(error);
