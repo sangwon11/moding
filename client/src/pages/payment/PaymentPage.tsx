@@ -6,6 +6,7 @@ import { optionsProps } from "../../interface/schema.interface"
 import { frontEndAuthMiddleware } from "../../utils/jwtUtils"
 import { axios, axiosInstance } from "../../utils/axios.utils"
 import { formatPrice } from "../../utils/format.utils"
+import Loading from "../../components/loading/Loading"
 
 interface OrderMethodProps {
     label: string
@@ -14,6 +15,8 @@ interface OrderMethodProps {
 
 function PaymentPage() {
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(true)
+
     const state = useLocation().state
     const funding = state.funding
     const optionSelect = state.optionSelect
@@ -40,7 +43,7 @@ function PaymentPage() {
         orderedBy: "",
         postCode: "",
         address: "",
-        addressDetail: "가상의값",
+        addressDetail: "",
         phoneNumber: "",
         fundingId: funding._id,
         orderList: mappedOptions,
@@ -75,6 +78,8 @@ function PaymentPage() {
                     window.alert("올바른 접근이 아닙니다.")
                 }
             }
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -141,6 +146,7 @@ function PaymentPage() {
             const response = await axiosInstance.request(config)
             if (response.status === 201) {
                 window.alert("성공적으로 결제되었습니다.")
+                navigate("/")
             } else {
             }
         } catch (error) {
@@ -148,13 +154,33 @@ function PaymentPage() {
                 if (error.response.status === 409) {
                     window.alert("결제에 실패하였습니다.")
                 } else {
+                    window.alert("결제에 실패하였습니다.")
                 }
             }
         }
     }
 
+    const isOrderValid = (order: any) => {
+        for (const key in order) {
+            if (order.hasOwnProperty(key)) {
+                if (order[key] === "" || order[key] === null || order[key] === undefined) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+    
     const nextClick = () => {
-        insertData()
+        if (!isOrderValid(order)) {
+            window.alert("모든 값을 입력해주세요.")
+        } else {
+            insertData()
+        }
+    }
+
+    if (loading) {
+        return <Loading />
     }
 
     return (
@@ -169,9 +195,11 @@ function PaymentPage() {
                         </styled.OptionWrap>
                     ))}
                     <styled.SupPriceWrap>
+                        <styled.SupPrice>후원비용</styled.SupPrice>
                         <styled.SupPrice>{formatPrice(supPrice)}원</styled.SupPrice>
                     </styled.SupPriceWrap>
                     <styled.DeliveryPriceWrap>
+                        <styled.DeliveryPrice>배송비</styled.DeliveryPrice>
                         <styled.DeliveryPrice>{formatPrice(funding.deliveryPrice)}원</styled.DeliveryPrice>
                     </styled.DeliveryPriceWrap>
                     <styled.TotalPriceWrap>
@@ -219,7 +247,7 @@ function PaymentPage() {
                 </styled.OrderWrap>
                 <styled.NextWrap>
                     <Payment data={paymentData}></Payment>
-                    <styled.NextBtn onClick={nextClick}>결제하기</styled.NextBtn>
+                    <styled.NextBtn onClick={nextClick} disabled={!isOrderValid(order)}>결제하기</styled.NextBtn>
                 </styled.NextWrap>
             </styled.ContentsWrap>
         </styled.Container>
