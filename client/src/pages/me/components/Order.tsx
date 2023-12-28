@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { axiosInstance } from "../../../utils/axios.utils"
@@ -6,25 +6,63 @@ import { frontEndAuthMiddleware } from "../../../utils/jwtUtils"
 import * as styled from "../MyPage.styles"
 
 function Order() {
-    const [userInfo, setUserInfo] = useState({
-        _id: "",
-        email: "",
-        username: "",
-        phoneNumber: "",
-        postCode: "",
-        address: "",
-        adressDetail: "",
-    })
+    const userInfo = useLocation().state.userInfo
 
-    const fetchUser = async () => {
+    const [orderList, setOrderList] = useState([
+        {
+            orderedBy: "",
+            phoneNumber: "",
+            postCode: "",
+            address: "",
+            addressDetail: "",
+            fundingId: "",
+            orderList: [
+                {
+                    optionId: "",
+                    amount: "",
+                },
+            ],
+            orderNumber: "",
+            orderStatus: "",
+            paymentMethod: "",
+            donation: "",
+            priceOpen: true,
+            nameOpen: true,
+            updatedAt: "",
+        },
+    ])
+
+    const fetchOrder = async () => {
         try {
             const config = await frontEndAuthMiddleware({
                 method: "get",
-                url: "/user/me",
+                url: "/orders/" + userInfo._id,
             })
 
             const response = await axiosInstance.request(config)
-            setUserInfo(response.data.data)
+            setOrderList(response.data.data)
+            console.log(response.data.data)
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                if (error.response.status === 409) {
+                    window.alert("올바른 접근이 아닙니다.")
+                } else {
+                    window.alert("올바른 접근이 아닙니다.")
+                }
+            }
+        }
+    }
+
+    const fetchProduct = async () => {
+        try {
+            const config = await frontEndAuthMiddleware({
+                method: "get",
+                url: "/orders/" + userInfo._id,
+            })
+
+            const response = await axiosInstance.request(config)
+            setOrderList(response.data.data)
+            console.log(response.data.data)
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 if (error.response.status === 409) {
@@ -37,21 +75,22 @@ function Order() {
     }
 
     useEffect(() => {
-        fetchUser()
+        fetchOrder()
     }, [])
 
     return (
-        <styled.MeWrap>
+        <styled.OrdersWrap>
             <styled.PageLabel>구매목록</styled.PageLabel>
-            <styled.InputWrap>
-                <styled.Input value={userInfo.username} disabled></styled.Input>
-                <styled.Input value={userInfo.email} disabled></styled.Input>
-                <styled.Input value={userInfo.phoneNumber} disabled></styled.Input>
-                <styled.Input value={userInfo.postCode} disabled></styled.Input>
-                <styled.Input value={userInfo.address} disabled></styled.Input>
-                <styled.Input value={userInfo.adressDetail} disabled></styled.Input>
-            </styled.InputWrap>
-        </styled.MeWrap>
+            {orderList.map((item, index) => (
+                <styled.OrderWrap key={index}>
+                    <styled.OrderNumber>
+                        주문날짜:{item.updatedAt.slice(0, 10)} 
+                        {item.updatedAt.slice(11, 16)}
+                    </styled.OrderNumber>
+                    <styled.OrderNumber>주문번호:{item.orderNumber}</styled.OrderNumber>
+                </styled.OrderWrap>
+            ))}
+        </styled.OrdersWrap>
     )
 }
 
