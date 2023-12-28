@@ -6,6 +6,7 @@ import "../main/Main.css"
 import Product from "../../components/Product"
 import { axiosInstance } from "../../utils/axios.utils"
 import * as styeld from "./Category.styles"
+import Loading from "../../components/loading/Loading"
 
 // 메인 슬라이더 설정
 const sliderSettings = {
@@ -194,7 +195,7 @@ function Category() {
 
     // 새로고침 시 로딩 화면
     if (loading) {
-        return <div className="text-white">Loading...</div>
+        return <Loading />
     }
 
     return (

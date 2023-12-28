@@ -1,6 +1,6 @@
 export interface fundingProps {
     title: string;
-    category: string;
+    categoryId: string;
     mainImageUrl: string;
     goalAmount: number;
     currentAmount: number;
@@ -10,6 +10,8 @@ export interface fundingProps {
     options: optionsProps[];
     deliveryPrice: number;
     deliveryDate: Date;
+    info: "";
+    infoDetail: "";
   }
 
 export interface optionsProps {

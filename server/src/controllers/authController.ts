@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import authService from "../services/authService";
-import { SignUpParams } from "../interface/interfaces";
+import { Request, Response } from 'express';
+import authService from '../services/authService';
+import { SignUpParams } from '../interface/interfaces';
 
 const authController = {
   async authSignUp(req: Request, res: Response) {

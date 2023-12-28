@@ -11,11 +11,12 @@ import FundingPage from "./pages/funding/FundingPage"
 import Category from "./pages/category/Category"
 import Footer from "./components/footer/Footer"
 import SellerPage from "./pages/seller/SellerPage"
+import MyPage from "./pages/me/MyPage"
 
 function App() {
     return (
         <BrowserRouter>
-            <div className="scrollbar bg-[#03000C] min-w-[1440px] w-auto min-h-screen h-auto">
+            <div className="scrollbar bg-cover min-w-[1440px] w-auto min-h-screen h-auto bg-[url('./assets/background1.jpg')]" >
                 <Header />
                 <Routes>
                     <Route path="/" element={<MainPage />} />
@@ -28,6 +29,7 @@ function App() {
                     <Route path="/funding" element={<FundingPage />} />
                     <Route path="/category" element={<Category />} />
                     <Route path="/seller/*" element={<SellerPage />} />
+                    <Route path="/mypage/*" element={<MyPage />} />
                 </Routes>
                 <Footer />
             </div>

@@ -6,6 +6,7 @@ import "../main/Main.css"
 import Product from "../../components/Product"
 import { axiosInstance } from "../../utils/axios.utils"
 import * as styeld from "./MainPage.styles"
+import Loading from "../../components/loading/Loading"
 // 메인 슬라이더 설정
 const sliderSettings = {
     dots: true,
@@ -160,7 +161,7 @@ function MainPage() {
         )
     }
     if (loading) {
-        return <div className="text-white">Loading...</div>
+        return <Loading />
     }
     return (
         <styeld.MainPageContainer>

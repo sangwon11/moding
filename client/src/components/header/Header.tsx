@@ -62,7 +62,9 @@ function Header() {
 
     return (
         <styled.Container>
-            <styled.Logo>Logo</styled.Logo>
+            <styled.Logo onClick={() => navigate("/")}>
+                <styled.LogoImg src={require("../../assets/logo.png")} />
+            </styled.Logo>
 
             <styled.NavWrap>
                 <styled.Nav $state={navState}>
@@ -110,6 +112,7 @@ function Header() {
                             <styled.GnbSvg
                                 alt=""
                                 src={require("../../assets/svg/user_icon.svg").default}
+                                onClick={() => navigate("/mypage")}
                             ></styled.GnbSvg>
                         </styled.MyPageBtn>
                         <styled.ProjectBtn onClick={logoutClick}>로그아웃</styled.ProjectBtn>

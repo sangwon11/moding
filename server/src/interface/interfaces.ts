@@ -68,3 +68,52 @@ export interface UpdateUserData {
 export interface CategoryParams {
   categoryName: string;
 }
+
+export interface orderParams {
+  userId: string;
+  orderId: string;
+  orderNumber: string;
+  orderedBy: string;
+  postCode: string;
+  address: string;
+  addressDetail: string;
+  phoneNumber: string;
+  fundingId: string;
+  orderList: optionParams[];
+  donation: number;
+  nameOpen: boolean;
+  priceOpen: boolean;
+  orderStatus: string;
+  paymentMethod: string;
+}
+
+export interface newOrderParams {
+  userId: string;
+  orderId: string;
+  orderNumber: string;
+  orderedBy: string;
+  postCode: string;
+  address: string;
+  addressDetail: string;
+  phoneNumber: string;
+  fundingId: string;
+  orderList: optionParams[];
+  donation: number;
+  nameOpen: boolean;
+  priceOpen: boolean;
+  orderStatus: string;
+  paymentMethod: string;
+}
+
+export interface optionParams {
+  optionsId: string;
+  amount: number;
+}
+
+export interface updateOrderParams {
+  orderedBy: string;
+  postCode: string;
+  address: string;
+  addressDetail: string;
+  phoneNumber: string;
+}
