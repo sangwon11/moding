@@ -6,6 +6,7 @@ import { frontEndAuthMiddleware } from "../../../utils/jwtUtils"
 import * as styled from "../MyPage.styles"
 
 function Order() {
+    const navigate = useNavigate();
     const userInfo = useLocation().state.userInfo
 
     const [orderList, setOrderList] = useState([
@@ -75,6 +76,10 @@ function Order() {
     }
 
     useEffect(() => {
+        if(!userInfo){
+            window.alert("올바른 접근이 아닙니다.")
+            navigate("/404")
+        }
         fetchOrder()
     }, [])
 
