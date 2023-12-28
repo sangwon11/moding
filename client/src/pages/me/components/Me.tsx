@@ -6,6 +6,7 @@ import { frontEndAuthMiddleware } from "../../../utils/jwtUtils"
 import * as styled from "../MyPage.styles"
 
 function Me() {
+    
     const [userInfo, setUserInfo] = useState({
         _id: "",
         email: "",
