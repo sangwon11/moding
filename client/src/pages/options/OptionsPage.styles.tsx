@@ -1,11 +1,11 @@
 import tw from "tailwind-styled-components"
 
-export const Container = tw.div`flex flex-col text-white items-center p-8`
+export const Container = tw.div`flex flex-col text-white items-center p-8 my-12`
 
-export const FundingTitleWrap = tw.div`bg-[#D9D9D9]/[.5] w-[1080px] p-4 rounded-3xl`
+export const FundingTitleWrap = tw.div`bg-[#D9D9D9]/[.3] w-[1080px] p-4 rounded-3xl`
 export const FundingTitle = tw.p` text-center text-3xl`
 
-export const ContentsWrap = tw.div`bg-[#D9D9D9]/[.1] w-[1080px] my-10 rounded-3xl`
+export const ContentsWrap = tw.div`bg-[#D9D9D9]/[.1] w-[1080px] my-16 rounded-3xl`
 
 export const OptionsWrap = tw.div`p-8`
 export const OptWrap = tw.div`p-6 border-b-2 border-[#D9D9D9]/[0.2]`

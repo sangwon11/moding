@@ -62,7 +62,9 @@ function Header() {
 
     return (
         <styled.Container>
-            <styled.Logo>Logo</styled.Logo>
+            <styled.Logo onClick={() => navigate("/")}>
+                <styled.LogoImg src={require("../../assets/logo.png")} />
+            </styled.Logo>
 
             <styled.NavWrap>
                 <styled.Nav $state={navState}>

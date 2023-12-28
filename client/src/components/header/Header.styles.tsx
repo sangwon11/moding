@@ -4,10 +4,10 @@ interface NavStateProps{
     $state: boolean;
 }
 
-export const Container = tw.div`
-text-white w-[1440px] mx-auto px-12 py-5 flex items-center justify-between`
-export const Logo = tw.div`
-text-3xl font-bold w-1/12`
+export const Container = tw.div`text-white w-[1440px] mx-auto px-9 py-5 flex items-center justify-between`
+export const Logo = tw.button`w-2/12 hover:`
+export const LogoImg = tw.img`w-full h-full`
+
 export const NavWrap = tw.nav`
 flex w-9/12 mx-12 justify-between items-center`
 export const Nav = tw.nav<NavStateProps>`
