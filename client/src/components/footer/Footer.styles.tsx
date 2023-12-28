@@ -13,8 +13,7 @@ export const CorInfo = tw. p`text-base`
 
 export const RuleInfo = tw.p` text-gray-300 text-center pb-7`
 
-export const FooterCopyright = tw.div`
-w-full bg-neutral-200 p-4 text-center text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200
+export const FooterCopyright = tw.div`w-full bg-neutral-200 p-4 text-center text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200
 `
 
 
