@@ -134,20 +134,7 @@ client
 ```
 
 ### 🕑개발 기간
-2023.12.7 ~ 2023.12.30
-
-<table>
-  <tbody>
-    <tr>
-      <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20230301/u1f60b/u1f60b_u1f430.png?fbx" width="150px;" alt=""/><br /><sub><b>프론트엔드 팀장 : 위동현</b></sub></a><br /></td>
-      <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20201001/u1f994/u1f994_u1f30d.png?fbx" width="150px;" alt=""/><br /><sub><b>프론트엔드 팀원 : 최윤혁</b></sub></a><br /></td>
-      <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20230803/u1f438/u1f438_u1f30d.png?fbx" width="150px;" alt=""/><br /><sub><b>프론트엔드 팀원 : 윤상원</b></sub></a><br /></td>
-      <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20201001/u1f9a5/u1f9a5_u1f30d.png?fbx" width="150px;" alt=""/><br /><sub><b>프론트엔드 팀원 : 류충현</b></sub></a><br /></td>
-            <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20210831/u1f43b/u1f43b_u1f3a7.png?fbx" width="150px;" alt=""/><br /><sub><b>백엔드 팀원 : 강동훈</b></sub></a><br /></td>
-      <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20230803/u1f438/u1f438_u1f436.png?fbx" width="150px;" alt=""/><br /><sub><b>백엔드 팀원 : 김도희</b></sub></a><br /></td>
-     </tr>
-  </tbody>
-</table>
+2023.12.7 ~ 2023.12.29
 
 
 라이센스
