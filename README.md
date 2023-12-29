@@ -22,7 +22,6 @@
 ## 🖥️ 기술 스택
 <img src="https://img.shields.io/badge/visualstudiocode-007ACC?style=flat-square&logo=visualstudiocode&logoColor=white"/>
 <img src="https://img.shields.io/badge/gitlab-FC6D26?style=flat-square&logo=gitlab&logoColor=white"/>
-<img src="https://img.shields.io/badge/Typescript-%233178C6?style=flat-square&logo=typescript&logoColor=white">
 
 ### 💻 Frontend
 <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=white"/>
