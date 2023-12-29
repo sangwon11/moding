@@ -12,7 +12,6 @@ function FundingPage() {
     const state = useLocation().state
     const fundingId = state
     const navigate = useNavigate()
-    const [category, setCategory] = useState("")
     const [loading, setLoading] = useState(true)
     const [funding, setFunding] = useState<fundingProps>({
         title: "",
@@ -62,7 +61,12 @@ function FundingPage() {
         fetchData()
     }, [])
 
+
     const percentAmount = Math.floor((funding.currentAmount / funding.goalAmount) * 100)
+    let percentLeft = 100 - percentAmount;
+    if(percentLeft < 0) {
+        percentLeft = 0
+    }
 
     if (loading) {
         return <Loading />
@@ -94,7 +98,7 @@ function FundingPage() {
                             <styled.CurrentPercentLabel>{percentAmount}%</styled.CurrentPercentLabel>
                         </styled.CurrentPercent>
                         <styled.LeftPercent style={{ width: `${100 - percentAmount}%` }}>
-                            <styled.LeftPercentLabel>{100 - percentAmount}%</styled.LeftPercentLabel>
+                            <styled.LeftPercentLabel>{percentLeft}%</styled.LeftPercentLabel>
                         </styled.LeftPercent>
                     </styled.PercentBarWrap>
                 </styled.ProcessWrap>

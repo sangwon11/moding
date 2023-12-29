@@ -108,7 +108,6 @@ function RegOptions() {
                 ))}
                 <styled.RegBtn onClick={handleAddClick}>옵션추가</styled.RegBtn>
                 <styled.RegBtn onClick={nextClick}>진행하기</styled.RegBtn>
-                <pre className="text-white">{JSON.stringify(options, null, 2)}</pre>
             </styled.RegWrap>
         </styled.RegContainer>
     )

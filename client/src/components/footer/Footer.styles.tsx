@@ -1,7 +1,7 @@
 import tw from "tailwind-styled-components";
 
 export const StyledFooter = tw.footer`
-flex flex-col items-center bg-gray-700 text-center dark:bg-neutral-900 lg:text-left w-[1440px] text-white`
+flex flex-col items-center bg-gray-700 text-center dark:bg-neutral-900 lg:text-left text-white`
 
 export const UpperWrap = tw.div`flex pt-10 pb-7 justify-between px-20 w-[1080px]`
 export const Logo = tw.button`w-[300px] h-[70px]`
