@@ -6,7 +6,8 @@ import { frontEndAuthMiddleware } from "../../../utils/jwtUtils"
 import * as styled from "../MyPage.styles"
 
 function Me() {
-    
+    const navigate = useNavigate()
+
     const [userInfo, setUserInfo] = useState({
         _id: "",
         email: "",
@@ -30,8 +31,10 @@ function Me() {
             if (axios.isAxiosError(error) && error.response) {
                 if (error.response.status === 409) {
                     window.alert("올바른 접근이 아닙니다.")
+                    navigate("/")
                 } else {
                     window.alert("올바른 접근이 아닙니다.")
+                    navigate("/")
                 }
             }
         }

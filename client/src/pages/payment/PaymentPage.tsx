@@ -74,6 +74,7 @@ function PaymentPage() {
             if (axios.isAxiosError(error) && error.response) {
                 if (error.response.status === 409) {
                     window.alert("올바른 접근이 아닙니다.")
+                    navigate("/")
                 } else {
                     window.alert("올바른 접근이 아닙니다.")
                 }
