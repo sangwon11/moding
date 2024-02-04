@@ -24,10 +24,6 @@
 <img src="https://img.shields.io/badge/gitlab-FC6D26?style=flat-square&logo=gitlab&logoColor=white"/>
 
 ### 💻 Frontend
-<img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=white"/>
-<img src="https://img.shields.io/badge/TailwindCSS-%2306B6D4?style=flat-square&logo=tailwindcss&logoColor=white">
-<img src="https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=typescript&logoColor=white"/>
-<img src="https://img.shields.io/badge/recoil-3578E5?style=flat-square&logo=recoil&logoColor=white">
 
 
 ### ⌨️ Backend
@@ -134,7 +130,20 @@ client
 ```
 
 ### 🕑개발 기간
-2023.12.7 ~ 2023.12.29
+2023.12.11 ~ 2023.12.30
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20230301/u1f60b/u1f60b_u1f430.png?fbx" width="150px;" alt=""/><br /><sub><b>프론트엔드 팀장 : </b></sub></a><br /></td>
+      <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20201001/u1f994/u1f994_u1f30d.png?fbx" width="150px;" alt=""/><br /><sub><b>프론트엔드 팀원 : </b></sub></a><br /></td>
+      <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20230803/u1f438/u1f438_u1f30d.png?fbx" width="150px;" alt=""/><br /><sub><b>프론트엔드 팀원 : </b></sub></a><br /></td>
+      <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20201001/u1f9a5/u1f9a5_u1f30d.png?fbx" width="150px;" alt=""/><br /><sub><b>프론트엔드 팀원 : </b></sub></a><br /></td>
+            <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20210831/u1f43b/u1f43b_u1f3a7.png?fbx" width="150px;" alt=""/><br /><sub><b>백엔드 팀장 : </b></sub></a><br /></td>
+      <td align="center"><a href=""><img src="https://www.gstatic.com/android/keyboard/emojikitchen/20230803/u1f438/u1f438_u1f436.png?fbx" width="150px;" alt=""/><br /><sub><b>백엔드 팀원 : </b></sub></a><br /></td>
+     </tr>
+  </tbody>
+</table>
 
 
 라이센스
